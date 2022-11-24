@@ -1,22 +1,7 @@
-<<<<<<< Updated upstream
-import { View, Text } from 'react-native'
-import React from 'react'
-
-const SignUpScreen = () => {
-  return (
-    <View>
-      <Text>SignUpScreen</Text>
-    </View>
-  )
-}
-
-export default SignUpScreen
-=======
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import {Formik} from 'formik';
-
 import {
-  TextInput,
+//   TextInput,
   View,
   StyleSheet,
   Text,
@@ -28,7 +13,7 @@ import {
 } from 'react-native';
 import * as Yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
-
+import {TextInput} from 'react-native-paper';
 const SignUpScreen = () => {
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-])|(\\([0-9]{2,3}\\)[ \\-])|([0-9]{2,4})[ \\-])?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -48,24 +33,29 @@ const SignUpScreen = () => {
       .required()
       .min(6, 'Your password has to have at least 6 characters'),
   });
-  const [selectedDate, setSelectedDate] = useState('');
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [confirmSecureTextEntry,setConfirmSecureTextEntry,] = useState(true);
   return (
     <View style={styles.wrapper}>
-      <View>
-      <Image style={{marginLeft:'auto',marginRight:'auto',marginTop:15}}
-            source={require('../assets/logoap.png')}
-          />
+      <Image
+        style={{
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginTop: 10,
+          height: '9%',
+          width: '45%',
+        }}
+        source={require('../assets/toplogo.jpeg')}
+      />
       <Text
         style={{
           textAlign: 'center',
           fontWeight: 'bold',
           marginTop: 30,
           fontSize: 30,
-          marginBottom: -50,
         }}>
         Sign Up
       </Text>
-</View>
       <Formik
         initialValues={{
           firstname: '',
@@ -92,10 +82,10 @@ const SignUpScreen = () => {
           <>
             <ScrollView
               style={{
-                height: Dimensions.get('screen').height * 0.54,
+                height: Dimensions.get('screen').height * 0.44,
               }}
               contentContainerStyle={{
-                paddingVertical: '20%',
+                paddingVertical: '15%',
               }}
               showsVerticalScrollIndicator={false}
               bounces={false}
@@ -107,13 +97,14 @@ const SignUpScreen = () => {
                     borderColor:
                       1 > values.firstname.length ||
                       values.firstname.length >= 2
-                        ? '#ccc'
+                        ? '#FAFAFA'
                         : 'red',
                   },
                 ]}>
                 <TextInput
                   style={styles.inputFieldText}
                   placeholder="First Name"
+                  label="First Name"
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
                   textContentType="username"
@@ -129,13 +120,14 @@ const SignUpScreen = () => {
                   {
                     borderColor:
                       1 > values.lastname.length || values.lastname.length >= 2
-                        ? '#ccc'
+                        ? '#FAFAFA'
                         : 'red',
                   },
                 ]}>
                 <TextInput
                   style={styles.inputFieldText}
                   placeholder="Last Name"
+                  label="Last Name"
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
                   textContentType="username"
@@ -152,13 +144,14 @@ const SignUpScreen = () => {
                     borderColor:
                       1 > values.dateofbirth.length ||
                       values.dateofbirth.length >= 2
-                        ? '#ccc'
+                        ? '#FAFAFA'
                         : 'red',
                   },
                 ]}>
                 <TextInput
                   style={styles.inputFieldText}
                   placeholder="Date Of Birth"
+                  label="Date Of Birth"
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
                   textContentType="username"
@@ -172,13 +165,8 @@ const SignUpScreen = () => {
                 <PhoneInput
                   placeholder={'Mobile Number'}
                   value={values.phoneNumber}
-                  // ref={phoneInput}
-                  // defaultValue={phoneNumber}
                   defaultCode="IN"
                   layout="first"
-                  // onChangeText={(v) => setValue(v)}
-                  // onChangeFormattedText={(v) => setValue(v)}
-                  // withDarkTheme
                   containerStyle={{
                     borderRadius: 10,
                     width: '95%',
@@ -189,7 +177,7 @@ const SignUpScreen = () => {
                     margin: 10,
                     alignSelf: 'center',
                   }}
-                  // textInputStyle={{height: 30}}
+                 
                   textContainerStyle={{}}
                 />
                 <Text style={styles.error}>{errors.phoneNumber}</Text>
@@ -199,14 +187,12 @@ const SignUpScreen = () => {
                   styles.inputField,
                   {
                     borderColor:
-                      values.email.length < 1 || isValid ? '#ccc' : 'red',
+                      values.email.length < 1 || isValid ? '#FAFAFA' : 'red',
                   },
                 ]}>
                 <TextInput
-                  //   name="email"
-                  //   placeholder="Enter your email address"
-                  //   style={styles.emailInput}
                   style={styles.inputFieldText}
+                  label="Email"
                   placeholder="Email"
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
@@ -225,12 +211,13 @@ const SignUpScreen = () => {
                   {
                     borderColor:
                       1 > values.city.length || values.city.length >= 2
-                        ? '#ccc'
+                        ? '#FAFAFA'
                         : 'red',
                   },
                 ]}>
                 <TextInput
                   style={styles.inputFieldText}
+                  label="City"
                   placeholder="City"
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
@@ -247,21 +234,31 @@ const SignUpScreen = () => {
                   {
                     borderColor:
                       1 > values.password.length || values.password.length >= 6
-                        ? '#ccc'
+                        ? '#FAFAFA'
                         : 'red',
                   },
                 ]}>
                 <TextInput
                   style={styles.inputFieldText}
+                  label="Password"
                   placeholder="Password"
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
                   autoCorrect={false}
-                  secureTextEntry={true}
+                  secureTextEntry={secureTextEntry}
                   textContentType="password"
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
+                  right={
+                    <TextInput.Icon
+                      name="eye"
+                      onPress={() => {
+                        setSecureTextEntry(!secureTextEntry);
+                        return false;
+                      }}
+                    />
+                  }
                 />
                 <Text style={styles.error}>{errors.password}</Text>
               </View>
@@ -272,21 +269,31 @@ const SignUpScreen = () => {
                     borderColor:
                       1 > values.confirmpassword.length ||
                       values.confirmpassword.length >= 6
-                        ? '#ccc'
+                        ? '#FAFAFA'
                         : 'red',
                   },
                 ]}>
                 <TextInput
                   style={styles.inputFieldText}
                   placeholder="Confirm Password"
+                  label="Confirm Password"
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
                   autoCorrect={false}
-                  secureTextEntry={true}
+                  secureTextEntry={confirmsecureTextEntry}
                   textContentType="confirmpassword"
                   onChangeText={handleChange('confirmpassword')}
                   onBlur={handleBlur('confirmpassword')}
                   value={values.confirmpassword}
+                  right={
+                    <TextInput.Icon
+                      name="eye"
+                      onPress={() => {
+                        confirmsetSecureTextEntry(!confirmsecureTextEntry);
+                        return false;
+                      }}
+                    />
+                  }
                 />
                 <Text style={styles.error}>{errors.confirmpassword}</Text>
               </View>
@@ -327,7 +334,7 @@ const styles = StyleSheet.create({
   },
   inputField: {
     borderRadius: 4,
-    padding: 12,
+    // padding: 12,
     marginLeft: 10,
     marginRight: 10,
     backgroundColor: '#FAFAFA',
@@ -370,4 +377,3 @@ const styles = StyleSheet.create({
   },
 });
 export default SignUpScreen;
->>>>>>> Stashed changes
