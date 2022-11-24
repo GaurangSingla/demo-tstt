@@ -9,6 +9,14 @@ export const ProfileService = {
     const data = await API.get('/api/consumer/promotions',header);
     return data;
   },
+  googleLogin: async args => {
+    const data = await API.post('api/consumer/google-login', args);
+    return data;
+  },
+  facebookLogin: async args => {
+    const data = await API.post('api/consumer/facebook-login', args);
+    return data;
+  },
   accountDetails: async (header) => {
     const data = await API.get(`/api/consumer/user/account/`,header);
     return data;

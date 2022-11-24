@@ -7,19 +7,22 @@ import {
   Button,
   TouchableOpacity,
   Pressable,
-  SafeAreaView,Dimensions
+  SafeAreaView,
+  Dimensions,
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import {useIsFocused} from '@react-navigation/native';
+import {LoginButton, AccessToken} from 'react-native-fbsdk-next';
 import {Modal, TextInput} from 'react-native-paper';
-import { LoadingAnimation  } from 'react-native-loading-animation-image';
+import {LoadingAnimation} from 'react-native-loading-animation-image';
 import {RFValue} from 'react-native-responsive-fontsize';
 import Tab_navi from '../android/Tab_navi';
 import messaging from '@react-native-firebase/messaging';
+import {ProfileService} from '../ProfileService';
 import {useDispatch, useSelector} from 'react-redux';
 import {login} from '../redux/actions/action';
-import {ProfileService} from '../ProfileService';
 import CommonModal from '../Modal/Modal';
+import {FacebookAuth} from '../utils/auth';
 import {store} from '../redux/store/store';
 
 import notificationService from '../Services.js/notificationService';
@@ -84,6 +87,7 @@ const Login = ({navigation}) => {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [press, setPress] = useState(false);
+  const [fbToken, setFBToken] = useState('');
   const [alertBody, setAlertBody] = useState({
     dialogBoxType: '',
     headerText: '',
@@ -161,16 +165,73 @@ const Login = ({navigation}) => {
       setLoaderVisible(false);
     }
   }
-  function api() {
-    if (!emptyPassword && !emptyPhone) {
-      hitApi();
+  async function fbHit(args) {
+    try {
+      const response = await ProfileService.facebookLogin(args);
+      console.log('fbHit Response::::: ' + JSON.stringify(response));
+      //   if (response.data.success) {
+      //     if (!response.data.result.token) {
+      //       fbHit(args);
+      //     } else {
+      //       await setItem(ASYNC_KEY.auth, 'Bearer ' + response.data.result.token);
+      //       await setItem(ASYNC_KEY.facebookIdToken, args.token);
+      //       ProfileApi(async () => {
+      //         navigation.reset({
+      //           index: 0,
+      //           routes: [{name: 'TabNavigation'}],
+      //         });
+      //       });
+      //       await setItem(ASYNC_KEY.loginMethod, 'facebook');
+      //       checked ? await setItem(ASYNC_KEY.LOGGEDIN, 'true') : null;
+      //     }
+      //   } else {
+      //     setAlertBody({
+      //       dialogBoxType: 'Error',
+      //       headerText: 'Error',
+      //       messageText: response.data.message,
+      //     });
+      //     setshowAlertDialog(true);
+      //   }
+      // } catch (e) {
+      //   console.log('Status----->', e.response.status);
+      //   if (e?.response?.status == 406) {
+      //     versionUpdate(
+      //       e?.response?.data?.result?.updateAndroidAppURL,
+      //       e?.response?.data?.result?.updateIosAppURL,
+      //     );
+      //   } else {
+      //     throw new Error(e.message);
+      //   }
+    } catch (e) {
+      console.log('fbError', e);
     }
   }
-
-  async function phone() {
-    await setItem(ASYNC_KEY.loginMethod, 'phoneNumber');
-    var p = await getItem(ASYNC_KEY.loginMethod);
-  }
+  const faceBookPressed = async () => {
+    try {
+      var facebookAuthenticated = await FacebookAuth.login();
+      console.log('fbauthenticated', facebookAuthenticated);
+      if (facebookAuthenticated) {
+        const args = {
+          token: facebookAuthenticated.token,
+        };
+        await fbHit(args);
+      } else {
+        console.log('error else');
+        setAlertBody({
+          dialogBoxType: 'Error',
+          headerText: 'Error',
+          messageText: 'Something Went Wrong',
+        });
+      }
+    } catch (e) {
+      console.log('error catch ' + e.message);
+      setAlertBody({
+        dialogBoxType: 'Error',
+        headerText: 'Error',
+        messageText: 'Something Went Wrong',
+      });
+    }
+  };
 
   function handleErrorField() {
     const phonevalid = validatePhone();
@@ -200,7 +261,7 @@ const Login = ({navigation}) => {
   return (
     <View>
       <SafeAreaView>
-      <Loader animating={loadervisible} />
+        <Loader animating={loadervisible} />
         {modalVisible ? (
           <CommonModal
             modalVisible={modalVisible}
@@ -428,7 +489,9 @@ const Login = ({navigation}) => {
               borderRadius: 5,
               height: 50,
             }}>
-            <TouchableOpacity style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+              style={{flexDirection: 'row'}}
+              onPress={faceBookPressed}>
               <View>
                 <Image
                   style={{
