@@ -13,8 +13,8 @@ const Stacks = () => {
           component={Login}
          
         />
-        <Stack.Screen   name="Login" component={SignUpScreen} options={{headerTintColor:'red',headerBackTitle:"false"}} />
-        <Stack.Screen  name="Signup" component={Tab_navi}  options={{headerTintColor:'red'}} />
+        <Stack.Screen   name="SignUpScreen" component={SignUpScreen} options={{headerTintColor:'red',headerBackTitle:"false"}} />
+        <Stack.Screen  name="Tab_navi" component={Tab_navi}  options={{headerTintColor:'red'}} />
      
       </Stack.Navigator>
   )

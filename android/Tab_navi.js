@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Home from '../Screens/Home';
 import Promotion from '../Screens/Promotion';
 import Topup from '../Screens/Topup';
@@ -30,7 +30,7 @@ function Tab_navi() {
         name="Promotion"
         component={Promotion}
         options={{
-          tabBarLabel: 'Updates',headerShown: false,
+          tabBarLabel: 'Promotion',headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="bell" color={color} size={size} />
           ),
@@ -41,9 +41,9 @@ function Tab_navi() {
         name="Paybill"
         component={Paybill}
         options={{
-          tabBarLabel: 'Profile',headerShown: false,
+          tabBarLabel: 'Paybill',headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
+            <MaterialCommunityIcons name="book-marker" color={color} size={size} />
           ),
         }}
       />
@@ -51,9 +51,9 @@ function Tab_navi() {
         name="Topup"
         component={Topup}
         options={{
-          tabBarLabel: 'Profile',headerShown: false,
+          tabBarLabel: 'Toneup',headerShown: false,
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color={color} size={size} />
+            <MaterialCommunityIcons name="blender-software" color={color} size={size} />
           ),
         }}
       />
@@ -61,7 +61,7 @@ function Tab_navi() {
         name="Sport"
         component={Sport}
         options={{
-          tabBarLabel: 'Profile',headerShown: false,
+          tabBarLabel: 'Sport',headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />
           ),
