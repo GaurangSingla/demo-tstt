@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="83" height="82" viewBox="0 0 83 82">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.297" y1="0.063" x2="0.835" y2="1.093" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#00e556"/>
+      <stop offset="1" stop-color="#16b953"/>
+    </linearGradient>
+  </defs>
+  <g id="Group_10372" data-name="Group 10372" transform="translate(-37 -173)">
+    <path id="Polygon_30" data-name="Polygon 30" d="M35.8,8.017a7,7,0,0,1,11.408,0l1.66,2.333a7,7,0,0,0,7.46,2.718l2.764-.716a7,7,0,0,1,8.735,7.322l-.228,2.918a7,7,0,0,0,3.956,6.859l2.631,1.26a7,7,0,0,1,1.979,11.211l-2.058,2.1a7,7,0,0,0-1.372,7.79L73.947,54.5a7,7,0,0,1-5.7,9.861l-2.869.278a7,7,0,0,0-6.071,5.1l-.772,2.79a7,7,0,0,1-10.718,3.9l-2.345-1.616a7,7,0,0,0-7.944,0l-2.345,1.616a7,7,0,0,1-10.718-3.9l-.772-2.79a7,7,0,0,0-6.071-5.1l-2.869-.278a7,7,0,0,1-5.7-9.861l1.218-2.682A7,7,0,0,0,8.9,44.023l-2.058-2.1A7,7,0,0,1,8.82,30.711l2.631-1.26a7,7,0,0,0,3.956-6.859l-.228-2.918a7,7,0,0,1,8.735-7.322l2.764.716a7,7,0,0,0,7.46-2.718Z" transform="translate(37 173)" fill="url(#linear-gradient)"/>
+    <text id="_" data-name="!" transform="translate(79 229)" fill="#fff" font-size="42" font-family="StagSans-Semibold, Stag Sans" font-weight="600"><tspan x="-6.321" y="0">!</tspan></text>
+  </g>
+</svg>

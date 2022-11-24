@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21.151" height="17.911" viewBox="0 0 21.151 17.911">
+  <g id="Group_3335" data-name="Group 3335" transform="translate(0.7 0.7)">
+    <g id="Group_3334" data-name="Group 3334" transform="translate(0 0)">
+      <path id="Icon_feather-message-square" data-name="Icon feather-message-square" d="M20.63,14.848a1.759,1.759,0,0,1-1.792,1.725H8.085L4.5,20.021V6.225A1.759,1.759,0,0,1,6.292,4.5H18.838A1.759,1.759,0,0,1,20.63,6.225Z" transform="translate(-4.5 -4.5)" fill="none" stroke="#707070" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.4"/>
+      <line id="Line_769" data-name="Line 769" x2="4.923" transform="translate(3.271 6.759)" fill="none" stroke="#707070" stroke-linecap="round" stroke-width="1.4"/>
+      <line id="Line_770" data-name="Line 770" x2="9.688" transform="translate(3.271 4.02)" fill="none" stroke="#707070" stroke-linecap="round" stroke-width="1.4"/>
+    </g>
+    <g id="Group_3333" data-name="Group 3333" transform="translate(8.451 5.211)">
+      <g id="Ellipse_748" data-name="Ellipse 748" fill="#707070" stroke="#fff" stroke-width="1.5">
+        <circle cx="6" cy="6" r="6" stroke="none"/>
+        <circle cx="6" cy="6" r="5.25" fill="none"/>
+      </g>
+      <g id="Group_3237" data-name="Group 3237" transform="translate(3.85 4.511)">
+        <g id="Group_859" data-name="Group 859" transform="translate(0 0)">
+          <g id="Group_857" data-name="Group 857">
+            <line id="Line_27" data-name="Line 27" x2="1.276" y2="1.064" transform="translate(0 1.702)" fill="none" stroke="#fff" stroke-linecap="square" stroke-width="1"/>
+            <line id="Line_28" data-name="Line 28" x1="2.34" y2="2.765" transform="translate(1.276)" fill="none" stroke="#fff" stroke-linecap="square" stroke-width="1"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
