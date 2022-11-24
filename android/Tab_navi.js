@@ -1,10 +1,11 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Home from '../Screens/Home';
 import Promotion from '../Screens/Promotion';
 import Topup from '../Screens/Topup';
-import Sport from '../Screens/Sport';
+import Support from '../Screens/Support';
 import Paybill from '../Screens/Paybill';
+
 
 const Tab = createBottomTabNavigator();
 function Tab_navi() {
@@ -22,49 +23,46 @@ function Tab_navi() {
         name="Home"
         component={Home}
         options={{
-          tabBarLabel: 'Home',headerShown: true,
+          tabBarLabel: 'Home',headerShown:false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
         }}
-
       />
       <Tab.Screen
         name="Promotion"
         component={Promotion}
         options={{
-          tabBarLabel: 'Promotion',headerShown: true,
+          tabBarLabel: 'Promotion',headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="bell" color={color} size={size} />
           ),
           tabBarBadge: 3,
         }}
       />
-      <Tab.Screen  
+      <Tab.Screen
         name="Paybill"
         component={Paybill}
         options={{
-          tabBarLabel: 'Paybill',headerShown: true,
+          tabBarLabel: 'Paybill',headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="book-marker" color={color} size={size} />
           ),
         }}
       />
-      <Tab.Screen  
+      <Tab.Screen
         name="Topup"
         component={Topup}
         options={{
-          tabBarLabel: 'Toneup',headerShown: false,
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="blender-software" color={color} size={size} />
-          ),
+          tabBarLabel: 'account',
+          headerShown: false,
         }}
       />
-       <Tab.Screen  
-        name="Sport"
-        component={Sport}
+      <Tab.Screen
+        name="Support"
+        component={Support}
         options={{
-          tabBarLabel: 'Sport',headerShown: true,
+          tabBarLabel: 'Support',headerShown: false,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />
           ),

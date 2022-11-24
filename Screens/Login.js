@@ -1,22 +1,24 @@
-import React,{useState,useRef} from 'react'
+import React,{useState,useEffect} from 'react'
 import {View,Text,Image,StyleSheet,TextInput,Button, TouchableOpacity} from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SignUpScreen from './SignUpScreen';
+import {SocialIcon} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {useIsFocused} from '@react-navigation/native';
+import Tab_navi from '../android/Tab_navi';
+import Verify from './Verify';
+
 const Login=({navigation})=>{
-    const [phoneNumber, setPhoneNumber] = useState('');
-    const phoneInput = useRef(null);
-    const [email,setEmail]=useState('')
-    const [password,setPassword]=useState('')
+  const isFocused = useIsFocused();
+  const [usrName, setUsrName] = useState('');
+  const [pass, setPass] = useState('');
+  const [usrNameValid, setUsrNameValid] = useState(true);
+  const [passValid, setPassValid] = useState(true);
   
-          handleLogin = async (email, password) => {
-       try {
-         await firebase.auth().signInWithEmailAndPassword(email, password);
-       } catch (error) {
-         alert(error.message);
-       }
-     }
-   
  
+
+
     return (
       
         <>
@@ -29,14 +31,16 @@ const Login=({navigation})=>{
     <Text style={styles.txt}>Welcome To <Text style={styles.clr}>bMobile</Text></Text>
       </View>
       <PhoneInput 
-  ref={phoneInput}
-  defaultValue={phoneNumber}
+  
+  
   defaultCode="IN"
   // defaultCode="DM"
   layout="first"
-  onChangeText={(v) => setValue(v)}
-  onChangeFormattedText={(v) => setValue(v)}
+
+  onChangeText={(v) => setPhoneNumber(v)}
+ 
   placeholder={' Mobile Number '}
+  
   withDarkTheme
   withShadow
   autoFocus
@@ -55,14 +59,14 @@ const Login=({navigation})=>{
   
   }}
   textInputStyle={{height: 35}}
-  textContainerStyle={{}}
+  
 
 />
 
 <TextInput secureTextEntry={true} style={{backgroundColor:'black',borderWidth:2,borderColor:'white',  borderRadius: 10,bottom:90,
-    width: '90%',  alignSelf:'center'}} placeholder={'password'} />
+    width: '90%',  alignSelf:'center'}} placeholder={'password'}  maxLength={12} minLength={8}/>
     
-    <TouchableOpacity  style={{marginTop:20,alignContent:'center',bottom:85}} onPress={() => navigation.navigate('SignUpScreen')}>
+    <TouchableOpacity  style={{marginTop:20,alignContent:'center',bottom:85}} onPress={() => navigation.navigate('Verify')}>
        <Text
           style={styles.btn}>
        Sign In</Text>
@@ -71,14 +75,25 @@ const Login=({navigation})=>{
    {/* <View style={{width:'40%',borderWidth:1,borderColor:'white',marginLeft:28,marginTop:20,flexDirection:'column'}}></View> */}
    {/* <Text style={{Color:'white',flexDirection:'column'}}>or</Text>
    <View style={{width:'40%',borderWidth:1,borderColor:'white',marginLeft:28,marginTop:20,flexDirection:'column'}}></View> */}
-       <Text style={{color:"white",fontSize:20, textAlign:'center',marginTop:10,marginBottom:10,bottom:75}}>or</Text>
-       <View style={{flexDirection:'row',alignItems:'center',marginLeft:30,bottom:20,fontSize:8}}>
-       <TouchableOpacity style={{borderWidth:1,borderColor:'orange',bottom:60, width:'40%', borderRadius:10, padding:8}}>
-       <Text style={{color:'white',textAlign:'center'}}>Sign In with google</Text>
+       <Text style={{color:"white",fontSize:20, textAlign:'center',marginTop:10,marginBottom:10,bottom:85}}>or</Text>
+       <View style={{flexDirection:'row',alignItems:'center',marginLeft:10,bottom:20,fontSize:8}}>
+       <TouchableOpacity style={{borderWidth:1,borderColor:'orange',bottom:60, width:'46%', borderRadius:10, padding:8,flexDirection:'row'}}>
+       <Icon.Button name="google" backgroundColor={"orange"} size={15} onPress={()=>{Alert.alert("You are directed to our Facebook Page")}}>
+</Icon.Button>
+       <Text style={{color:'white',textAlign:'center',marginTop:5,marginLeft:2}}>Sign In with google</Text>
        </TouchableOpacity>
-       <TouchableOpacity style={{borderWidth:1,borderColor:'blue',bottom:60, width:'40%', borderRadius:10, padding:8,fontSize:10}}>
-       <Text style={{color:'white',textAlign:'center'}}>Sign In with facebook</Text>
+       <TouchableOpacity style={{borderWidth:1,borderColor:'blue',bottom:60, width:'50%', borderRadius:10, padding:8,fontSize:10,marginLeft:10,flexDirection:'row'}}>
+       <Icon.Button name="facebook" backgroundColor="#3358de" size={15} onPress={()=>{Alert.alert("You are directed to our Facebook Page")}}>
+</Icon.Button>
+       <Text style={{color:'white',textAlign:'center',marginTop:5,marginLeft:2}}>Sign In with facebook</Text>
        </TouchableOpacity></View>
+       <View style={{bottom:70,color:'white',alignSelf:'center',flexDirection:'row'}}>
+        <Text style={{color:'white'}}>Don't have an account</Text>
+        <TouchableOpacity style={{bottom:50,fontSize:10,marginLeft:10}} onPress={()=>navigation.navigate('SignUpScreen')}>
+      
+       <Text style={{color:'green',textAlign:'center',marginTop:5,bottom:-45}}>Sign Up</Text>
+       </TouchableOpacity>
+       </View>
  </>
     )
 }

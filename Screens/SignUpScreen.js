@@ -1,5 +1,6 @@
 import React,{useState} from 'react';
 import {Formik} from 'formik';
+import axios from 'axios';
 import {
 //   TextInput,
   View,
@@ -10,13 +11,73 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
+  KeyboardAvoidingView
 } from 'react-native';
 import * as Yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {TextInput} from 'react-native-paper';
 import Tab_navi from '../android/Tab_navi';
+import DateTimePicker from '@react-native-community/datetimepicker';
 import Login from './Login';
 const SignUpScreen = ({navigation}) => {
+  const [date, setDate] = useState(new Date(1598051730000));
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+  const [name,setName]=useState('')
+  const [last,setLast]=useState('')
+  const [dob,setDob]=useState('')
+  const [number,setNumber]=useState('')
+  const [email,setEmail]=useState('')
+  const [city,setCity]=useState('')
+  const[password,setPassword]=useState('')
+  const[confirmpassword,setConfirmPassword]=useState('')
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setDate(currentDate);
+  };
+
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+  
+  const postUser=() => {
+    axios({
+      method: 'post',
+      url: 'https://dev-cim-api.tstt.co.tt/api/consumer/registration/basic-details',
+      data:{
+        firstName: {name},
+  lastName: {last},
+  "username": "john_doe",
+  dob: {dob},
+  city: {city},
+  phone: {number},
+  email: {email},
+   password: {password},
+      },
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+
+      }
+    })
+    .then(function (response) {
+      console.log("response", JSON.stringify(response.data))
+    })
+    .catch(function (error) {
+      console.log("error", error)
+    })
+  }
+     
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-])|(\\([0-9]{2,3}\\)[ \\-])|([0-9]{2,4})[ \\-])?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const emailValidationSchema = Yup.object().shape({
@@ -36,25 +97,26 @@ const SignUpScreen = ({navigation}) => {
       .min(6, 'Your password has to have at least 6 characters'),
   });
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [confirmSecureTextEntry,setConfirmSecureTextEntry,] = useState(true);
+  const [confirmsecureTextEntry, confirmsetSecureTextEntry] = useState(true);
+ 
   return (
+    <KeyboardAvoidingView>
+      <View style={{color:'lightgrey'}}>
+        <Image style={{height:110,width:"100%",Color:'grey'}}
+        source={require('../src/assets/bmobilsecurity.png')}>
+
+        </Image>
+      </View>
     <View style={styles.wrapper}>
-      {/* <Image
-        style={{
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          marginTop: 10,
-          height: '9%',
-          width: '45%',
-        }}
-        source={require('../src/assets/toplogo.jpeg')}
-      /> */}
+    
       <Text
         style={{
           textAlign: 'center',
           fontWeight: 'bold',
-          marginTop: 30,
+        
           fontSize: 30,
+        
+        
         }}>
         Sign Up
       </Text>
@@ -84,10 +146,12 @@ const SignUpScreen = ({navigation}) => {
           <>
             <ScrollView
               style={{
-                height: Dimensions.get('screen').height * 0.44,
+                height: Dimensions.get('screen').height * 0.54,
               }}
               contentContainerStyle={{
-                paddingVertical: '15%',
+                
+            
+                
               }}
               showsVerticalScrollIndicator={false}
               bounces={false}
@@ -128,12 +192,17 @@ const SignUpScreen = ({navigation}) => {
                 ]}>
                 <TextInput
                   style={styles.inputFieldText}
-                  placeholder="Last Name"
+                  placeholder={ <Text>
+                    Select Subject
+                    <Text style={{color: 'red', fontSize:15}}>
+                      *
+                    </Text>
+                  </Text>}
                   label="Last Name"
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
                   textContentType="username"
-                  onChangeText={handleChange('lastname')}
+                  onChangeText={handleChange('last')}
                   onBlur={handleBlur('lastname')}
                   value={values.lastname}
                 />
@@ -160,7 +229,8 @@ const SignUpScreen = ({navigation}) => {
                   onChangeText={handleChange('dateofbirth')}
                   onBlur={handleBlur('dateofbirth')}
                   value={values.dateofbirth}
-                />
+
+                />            
                 <Text style={styles.error}>{errors.dateofbirth}</Text>
               </View>
               <View>
@@ -172,15 +242,15 @@ const SignUpScreen = ({navigation}) => {
                   containerStyle={{
                     borderRadius: 10,
                     width: '95%',
-                    backgroundColor: '#fff',
+                    backgroundColor: 'white',
                     borderWidth: 2,
-                    borderColor: '#ccc',
-                    bottom: -80,
-                    margin: 10,
+                    borderColor: '#B5B5B5',
+                   height:80,
+               
                     alignSelf: 'center',
                   }}
                  
-                  textContainerStyle={{}}
+                  textContainerStyle={{color:'white'}}
                 />
                 <Text style={styles.error}>{errors.phoneNumber}</Text>
               </View>
@@ -282,7 +352,7 @@ const SignUpScreen = ({navigation}) => {
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
                   autoCorrect={false}
-                  secureTextEntry={confirmSecureTextEntry}
+                  secureTextEntry={confirmsecureTextEntry}
                   textContentType="confirmpassword"
                   onChangeText={handleChange('confirmpassword')}
                   onBlur={handleBlur('confirmpassword')}
@@ -291,7 +361,7 @@ const SignUpScreen = ({navigation}) => {
                     <TextInput.Icon
                       name="eye"
                       onPress={() => {
-                        setConfirmSecureTextEntry(!confirmSecureTextEntry);
+                        setConfirmSecureTextEntry(!confirmsecureTextEntry);
                         return false;
                       }}
                     />
@@ -305,7 +375,9 @@ const SignUpScreen = ({navigation}) => {
                 titleSize={20}
                 style={styles.button(isValid)}
                
-                 onPress={() => navigation.navigate('Tab_navi')}>
+              
+                onPress={() => navigation.navigate('Login')}
+                >
                   
                 <Text style={{color: '#fff', fontSize: 17, fontWeight: '600'}}>
                   Submit
@@ -315,7 +387,7 @@ const SignUpScreen = ({navigation}) => {
 
             <View style={styles.signUpContainer}>
               <TouchableOpacity
-              onPress={() => navigation.navigate('Login')}
+              onPress={postUser}
               >
                 <Text style={{color: 'green', fontWeight: '600'}}>
                   Previous
@@ -326,26 +398,36 @@ const SignUpScreen = ({navigation}) => {
         )}
       </Formik>
     </View>
+    </KeyboardAvoidingView>
   );
+
 };
 const styles = StyleSheet.create({
   wrapper: {
-    marginTop: 10,
+  
+    borderRadius:20,
+    backgroundColor:'white',
   },
   inputFieldText: {
     fontSize: 15,
     padding: 5,
+    backgroundColor:"white",
+    width:'100%',
+    borderRadius:10,
+    height:45,
+    borderWidth: 1,
+    borderColor:'#B5B5B5',
+    color:'#989898',
   },
   inputField: {
     borderRadius: 4,
-    // padding: 12,
-    marginLeft: 10,
-    marginRight: 10,
-    backgroundColor: '#FAFAFA',
-    marginBottom: 10,
-    borderWidth: 1,
-    top: 80,
-    marginTop: 10,
+   alignSelf:'center',
+ width:'95%',
+    backgroundColor: 'white',
+  
+  
+    
+   
   },
   emailInput: {
     width: 250,
@@ -364,7 +446,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     padding: 15,
-    marginTop: 15,
+    marginTop: "4%",
   }),
   buttonText: {
     color: 'white',
@@ -378,6 +460,8 @@ const styles = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     marginTop: '20%',
+
+   
   },
 });
 export default SignUpScreen;

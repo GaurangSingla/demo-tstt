@@ -55,11 +55,11 @@ const Topup = () => {
       <Text style={{color:"white",padding:15,fontSize:15 }}>
   2.Enter Amount
   </Text>
-  <TextInput style={{backgroundColor:'black',width:300,borderWidth:1,borderColor:"white",alignSelf:'center',borderRadius:10, height:50}} placeholder={"Amount ($)*"} placeholderTextColor={"white"}>
+  <TextInput  onChangeText={(v) => setValue(v)} style={{backgroundColor:'black',width:300,borderWidth:1,borderColor:"white",alignSelf:'center',borderRadius:10, height:50}} placeholder={"Amount ($)*"} placeholderTextColor={"white"}>
 
   </TextInput>
   <View style={{flexDirection:'row',alignSelf:'center',marginTop:10}}>
-<TouchableOpacity style={{borderWidth:2,borderColor:'white',height:50,alignSelf:'center',width:90,borderRadius:10,backgroundColor:'lightgreen',padding:10}}>
+<TouchableOpacity   style={{borderWidth:2,borderColor:'white',height:50,alignSelf:'center',width:90,borderRadius:10,backgroundColor:'lightgreen',padding:10}}>
   <Text style={{color:'green',fontSize:18,alignSelf:'center'}}>
     $20
   </Text>
