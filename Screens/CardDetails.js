@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, Image, ScrollView,FlatList, Pressable} from 'react-native';
+import {View, Text, TouchableOpacity, Image, ScrollView,FlatList, Pressable,Alert} from 'react-native';
 import React, { useEffect, useState } from 'react';
 import {TextInput} from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -23,8 +23,57 @@ const CardDetails = ({navigation}) => {
   const [ HolderName,setHolderName]=useState('');
   const [number,setNumber]=useState('');
   const [expirydate,setExpiryDate]=useState('');
+  const [street,setStreet]=useState('');
+  const [month,setMonth]=useState('');
+  const [date,setDate]=useState('');
+  const [cvv,setCvv]=useState('');
   const [checked,setChecked]=useState(false);
   const [cardData,setCardData]=useState([]);
+  const [city,setCity]=useState('');
+  const [zipCode,setZipCode]=useState('');
+  const [country,setCountry]=useState('')
+  
+ async function hitApi() {
+  try {
+    setLoading(true);
+    const authToken = await getItem(ASYNC_KEY.auth);
+    const header = {
+      headers: {
+        Authorization: authToken,
+      },
+    };
+    const args = {
+      cardNumber: number,
+      expiryDate: cvv,
+    };
+    const response = await PaymentService.saveCards(args, header);
+    console.log('Add NewCard respones == ', JSON.stringify(response));
+
+    if (response.data.success == true) {
+      setAlertBody({
+        dialogBoxType: 'Success',
+        headerText: 'Success',
+        messageText: response.data.message,
+        handlerFunction: () => {
+          setModalVisible(false);
+        },
+      });
+      setModalVisible(true);
+      fetchCardsData();
+    } else {
+      setAlertBody({
+        dialogBoxType: 'Error',
+        headerText: 'Error',
+        messageText: response.data.message,
+        handlerFunction: () => {
+          setConfirmAlertDialog(false);
+        },
+      });
+      setshowAlertDialog(true);
+    }
+  } catch (e) {
+   
+}}
   async function fetchCardsData() {
     
    console.log('fetch cards api hit ===== ');
@@ -201,6 +250,7 @@ function renderItemname(item, index) {
               }}
               placeholder='Card Number*'
               placeholderTextColor='#989898'
+              maxLength={16}
               onChangeText={number => setNumber(number)}
               defaultValue={number} />
             <View style={{ flexDirection: 'row' }}>
@@ -216,8 +266,8 @@ function renderItemname(item, index) {
                 }}
                 placeholder='month*'
                 placeholderTextColor='#989898'
-                onChangeText={expirydate => setExpiryDate(expirydate)}
-                defaultValue={expirydate} />
+                onChangeText={month => setMonth(month)}
+                defaultValue={month} />
               <Text style={{ top: 25, fontSize: 30, color: 'grey' }}> {" /"}</Text>
               <TextInput
                 style={{
@@ -231,8 +281,8 @@ function renderItemname(item, index) {
                 }}
                 placeholder='date*'
                 placeholderTextColor='#989898'
-                onChangeText={expirydate => setExpiryDate(expirydate)}
-                defaultValue={expirydate} />
+                onChangeText={date => setDate(date)}
+                defaultValue={date} />
               <TextInput
                 style={{
                   width: 90,
@@ -246,8 +296,8 @@ function renderItemname(item, index) {
                 }}
                 placeholder='CVV*'
                 placeholderTextColor='#989898'
-                onChangeText={expirydate => setExpiryDate(expirydate)}
-                defaultValue={expirydate} />
+                onChangeText={cvv => setCvv(cvv)}
+                defaultValue={cvv} />
             </View>
             <Text style={{ top: 14, color: 'grey', left: 20 }}>Billing Address</Text>
             <TextInput
@@ -262,9 +312,11 @@ function renderItemname(item, index) {
                 height: 45
               }}
               placeholder='Street*'
-              placeholderTextColor='#989898'
-              onChangeText={number => setNumber(number)}
-              defaultValue={number} />
+              placeholderTextColor='#989898' 
+             
+              onChangeText={street => setStreet(street)}
+             
+              defaultValue={street} />
             <TextInput
               style={{
                 width: '90%',
@@ -278,8 +330,8 @@ function renderItemname(item, index) {
               }}
               placeholder='City*'
               placeholderTextColor='#989898'
-              onChangeText={number => setNumber(number)}
-              defaultValue={number} />
+              onChangeText={city => setCity(city)}
+              defaultValue={city} />
             <View style={{ flexDirection: "row" }}>
               <TextInput
                 style={{
@@ -294,8 +346,8 @@ function renderItemname(item, index) {
                 }}
                 placeholder='Country*'
                 placeholderTextColor='#989898'
-                onChangeText={number => setNumber(number)}
-                defaultValue={number} />
+                onChangeText={country => setCountry(country)}
+                defaultValue={country} />
               <TextInput
                 style={{
                   width: '42%',
@@ -309,8 +361,8 @@ function renderItemname(item, index) {
                 }}
                 placeholder='Zip code*'
                 placeholderTextColor='#989898'
-                onChangeText={number => setNumber(number)}
-                defaultValue={number} />
+                onChangeText={zipCode => setZipCode(zipCode)}
+                defaultValue={zipCode} />
             </View>
             <View style={{marginVertical:10}}>
           <CheckBox  
@@ -334,7 +386,8 @@ function renderItemname(item, index) {
               Cancel
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={fetchCardsData} style={{ backgroundColor: 'green', height: 50, width: 150, left: 34, marginTop: 10, borderRadius: 10, padding: 10 }}>
+          <TouchableOpacity onPress={()=>{fetchCardsData()
+          hitApi()}} style={{ backgroundColor: 'green', height: 50, width: 150, left: 34, marginTop: 10, borderRadius: 10, padding: 10 }}>
             <Text style={{ alignSelf: 'center', color: 'black', fontSize: 20 }}>
               Confirm
             </Text>

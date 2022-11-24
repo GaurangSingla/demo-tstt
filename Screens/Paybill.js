@@ -60,7 +60,7 @@ const Paybill = ({navigation}) => {
    
       
   }}catch( error){
-    Alert.alert(message)
+    Alert.alert("invalid number")
   }}
   return (
     

@@ -10,47 +10,41 @@ import {
 } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const CommonModal = ({name,modalVisible,setModalVisible,alertBody}) => {
-  // console.log(name)
-  // console.log(alertBody)
-  function showModal(){
-    setModalVisible(true)
-  }
-  function hideModal(){
-    setModalVisible(false)
-  }
+const CommonModal = ({modalVisible, alertBody,onRequestClose}) => {
+
   return (
     <Modal
       animationType="slide"
       transparent={true}
       visible={modalVisible}
-      onRequestClose={() => {
-        Alert.alert('Modal has been closed.');
-        setModalVisible(!modalVisible);
-      }}>
+      onRequestClose={onRequestClose}>
       <View style={styles.centeredView}>
         <View style={styles.modalView}>
-         {alertBody.dialogBoxType=="Error"? <MaterialCommunityIcons
-            name="alert"
-            color={'red'}
-            size={70}
-            style={{bottom: '70%'}}
-          />:<MaterialCommunityIcons
-          name="account"
-          color={'green'}
-          size={70}
-          style={{bottom: '70%'}}
-        />}
+          {alertBody.dialogBoxType == 'Error' ? (
+            <MaterialCommunityIcons
+              name="alert"
+              color={'red'}
+              size={70}
+              style={{bottom: '70%'}}
+            />
+          ) : (
+            <MaterialCommunityIcons
+              name="account"
+              color={'green'}
+              size={70}
+              style={{bottom: '70%'}}
+            />
+          )}
           <Text style={styles.modalText}>{alertBody.dialogBoxType}</Text>
           <Text style={{bottom: '80%'}}> {alertBody.messageText} </Text>
           <Pressable
             style={[styles.button, styles.buttonClose]}
-            onPress={() => setModalVisible(!modalVisible)}>
+            onPress={onRequestClose}>
             <Text style={styles.textStyle}>OK</Text>
           </Pressable>
         </View>
-     </View>  </Modal>
-   
+      </View>
+    </Modal>
   );
 };
 
