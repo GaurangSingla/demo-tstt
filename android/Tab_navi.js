@@ -54,8 +54,10 @@ function Tab_navi() {
         name="Topup"
         component={Topup}
         options={{
-          tabBarLabel: 'account',
-          headerShown: false,
+          tabBarLabel: 'Toneup',headerShown: false,
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="blender-software" color={color} size={size} />
+          ),
         }}
       />
       <Tab.Screen

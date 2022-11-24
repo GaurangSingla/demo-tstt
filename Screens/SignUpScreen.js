@@ -146,7 +146,7 @@ const SignUpScreen = ({navigation}) => {
           <>
             <ScrollView
               style={{
-                height: Dimensions.get('screen').height * 0.54,
+                height: Dimensions.get('screen').height * 0.44,
               }}
               contentContainerStyle={{
                 
