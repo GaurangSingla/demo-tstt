@@ -22,6 +22,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import {RFValue} from 'react-native-responsive-fontsize';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { FacebookAuth, GoogleAuth } from '../utils/auth';
 const Profile = ({navigation}) => {
   const [switchTheme, setSwitchTheme] = useState(true);
   const {colors} = useTheme();
@@ -47,6 +48,8 @@ const Profile = ({navigation}) => {
       console.log('singla', response);
       if (response.data.success) {
         AsyncStorage.removeItem(ASYNC_KEY.auth);
+        await GoogleAuth.logout();
+        await FacebookAuth.logout();
         await setItem(ASYNC_KEY.LOGGEDIN, 'false');
         navigation.reset({
           index: 0,

@@ -215,6 +215,10 @@ android {
     }
          signingConfigs {
         release {
+            storePassword 'Staging@123'
+            storeFile file('tstt.keystore')
+            keyAlias 'tstt-demo-alias'
+            keyPassword 'Staging@123'
             if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
                 storeFile file(MYAPP_UPLOAD_STORE_FILE)
                 storePassword MYAPP_UPLOAD_STORE_PASSWORD
@@ -262,6 +266,8 @@ android {
 
 dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:11.1.0'
+     implementation 'com.facebook.android:facebook-login:11.1.0'
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation platform('com.google.firebase:firebase-bom:31.1.0')
     implementation "com.android.support:appcompat-v7:23.0.1"

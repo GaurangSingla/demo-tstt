@@ -52,6 +52,7 @@ export const FacebookAuth = {
       const result = await LoginManager.logInWithPermissions([
         'public_profile',
         'email',
+        'user_friends'
       ]);
 
       // If the user cancels the login process, the result will have a

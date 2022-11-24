@@ -197,6 +197,7 @@ const Login = ({navigation}) => {
   }
   const signinwithgoogle = async () => {
     try {
+      setLoaderVisible(true);
       var googleAuthenticated = await GoogleAuth.login();
       console.log('google Authentication login screen ', googleAuthenticated);
       if (googleAuthenticated) {
@@ -228,6 +229,8 @@ const Login = ({navigation}) => {
         },
       });
       setModalVisible(true);
+    }finally {
+      setLoaderVisible(false);
     }
   };
   async function fbHit(args) {
@@ -274,6 +277,7 @@ const Login = ({navigation}) => {
   const faceBookPressed = async () => {
     setFBPress(true);
     try {
+      setLoaderVisible(true);
       var facebookAuthenticated = await FacebookAuth.login();
       console.log('fbauthenticated', facebookAuthenticated);
       if (facebookAuthenticated) {
@@ -297,6 +301,8 @@ const Login = ({navigation}) => {
         headerText: 'Error',
         messageText: 'Something Went Wrong',
       });
+    }finally {
+      setLoaderVisible(false);
     }
   };
   const dispatch = useDispatch();
