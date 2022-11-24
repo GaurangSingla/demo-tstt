@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "157745098950",
+    "project_id": "tstt-ce805",
+    "storage_bucket": "tstt-ce805.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:157745098950:android:71e7f268c2bb3b49cea7c7",
+        "android_client_info": {
+          "package_name": "com.tstt_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "157745098950-7tl1fjjf7urk51pa04crqonih8vna3p0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2E0DdWf_OvGeNNNrciFXkfTUdn_SOpJo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "157745098950-7tl1fjjf7urk51pa04crqonih8vna3p0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
