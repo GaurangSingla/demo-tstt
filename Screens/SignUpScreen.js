@@ -14,7 +14,9 @@ import {
 import * as Yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
 import {TextInput} from 'react-native-paper';
-const SignUpScreen = () => {
+import Tab_navi from '../android/Tab_navi';
+import Login from './Login';
+const SignUpScreen = ({navigation}) => {
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-])|(\\([0-9]{2,3}\\)[ \\-])|([0-9]{2,4})[ \\-])?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const emailValidationSchema = Yup.object().shape({
@@ -37,7 +39,7 @@ const SignUpScreen = () => {
   const [confirmSecureTextEntry,setConfirmSecureTextEntry,] = useState(true);
   return (
     <View style={styles.wrapper}>
-      <Image
+      {/* <Image
         style={{
           marginLeft: 'auto',
           marginRight: 'auto',
@@ -45,8 +47,8 @@ const SignUpScreen = () => {
           height: '9%',
           width: '45%',
         }}
-        source={require('../assets/toplogo.jpeg')}
-      />
+        source={require('../src/assets/toplogo.jpeg')}
+      /> */}
       <Text
         style={{
           textAlign: 'center',
@@ -280,7 +282,7 @@ const SignUpScreen = () => {
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
                   autoCorrect={false}
-                  secureTextEntry={confirmsecureTextEntry}
+                  secureTextEntry={confirmSecureTextEntry}
                   textContentType="confirmpassword"
                   onChangeText={handleChange('confirmpassword')}
                   onBlur={handleBlur('confirmpassword')}
@@ -289,7 +291,7 @@ const SignUpScreen = () => {
                     <TextInput.Icon
                       name="eye"
                       onPress={() => {
-                        confirmsetSecureTextEntry(!confirmsecureTextEntry);
+                        setConfirmSecureTextEntry(!confirmSecureTextEntry);
                         return false;
                       }}
                     />
@@ -302,7 +304,9 @@ const SignUpScreen = () => {
               <Pressable
                 titleSize={20}
                 style={styles.button(isValid)}
-                onPress={handleSubmit}>
+               
+                 onPress={() => navigation.navigate('Tab_navi')}>
+                  
                 <Text style={{color: '#fff', fontSize: 17, fontWeight: '600'}}>
                   Submit
                 </Text>
@@ -311,7 +315,7 @@ const SignUpScreen = () => {
 
             <View style={styles.signUpContainer}>
               <TouchableOpacity
-              //onPress={() => navigation.navigate('LoginScreen')}
+              onPress={() => navigation.navigate('Login')}
               >
                 <Text style={{color: 'green', fontWeight: '600'}}>
                   Previous

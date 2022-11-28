@@ -23,6 +23,7 @@
     "react-native-axios": "^0.17.1",
     "react-native-calendars": "^1.1291.1",
     "react-native-country-codes-picker": "^2.2.0",
+    "react-native-element-dropdown": "^2.4.0",
     "react-native-gesture-handler": "^2.8.0",
     "react-native-modern-datepicker": "^1.0.0-beta.91",
     "react-native-paper": "^4.12.5",

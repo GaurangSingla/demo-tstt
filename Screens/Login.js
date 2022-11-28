@@ -1,7 +1,7 @@
 import React,{useState,useRef} from 'react'
 import {View,Text,Image,StyleSheet,TextInput,Button, TouchableOpacity} from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
-import Tab_navi from '../android/Tab_navi';
+import SignUpScreen from './SignUpScreen';
 const Login=({navigation})=>{
     const [phoneNumber, setPhoneNumber] = useState('');
     const phoneInput = useRef(null);
@@ -49,20 +49,20 @@ const Login=({navigation})=>{
     bottom:2,
     margin:10,
     alignSelf:'center',
-    bottom:100
-
+    bottom:90,
+  position:"relative",
    
   
   }}
-  textInputStyle={{height: 40}}
+  textInputStyle={{height: 35}}
   textContainerStyle={{}}
 
 />
 
-<TextInput secureTextEntry={true} style={{backgroundColor:'black',borderWidth:2,borderColor:'white',  borderRadius: 10,bottom:100,
+<TextInput secureTextEntry={true} style={{backgroundColor:'black',borderWidth:2,borderColor:'white',  borderRadius: 10,bottom:90,
     width: '90%',  alignSelf:'center'}} placeholder={'password'} />
     
-    <TouchableOpacity  style={{marginTop:20,alignContent:'center',bottom:85}} onPress={() => navigation.navigate('Tab_navi')}>
+    <TouchableOpacity  style={{marginTop:20,alignContent:'center',bottom:85}} onPress={() => navigation.navigate('SignUpScreen')}>
        <Text
           style={styles.btn}>
        Sign In</Text>
@@ -72,11 +72,11 @@ const Login=({navigation})=>{
    {/* <Text style={{Color:'white',flexDirection:'column'}}>or</Text>
    <View style={{width:'40%',borderWidth:1,borderColor:'white',marginLeft:28,marginTop:20,flexDirection:'column'}}></View> */}
        <Text style={{color:"white",fontSize:20, textAlign:'center',marginTop:10,marginBottom:10,bottom:75}}>or</Text>
-       <View style={{flexDirection:'row'}}>
+       <View style={{flexDirection:'row',alignItems:'center',marginLeft:30,bottom:20,fontSize:8}}>
        <TouchableOpacity style={{borderWidth:1,borderColor:'orange',bottom:60, width:'40%', borderRadius:10, padding:8}}>
        <Text style={{color:'white',textAlign:'center'}}>Sign In with google</Text>
        </TouchableOpacity>
-       <TouchableOpacity style={{borderWidth:1,borderColor:'blue',bottom:60, width:'40%', borderRadius:10, padding:8,marginleft:20}}>
+       <TouchableOpacity style={{borderWidth:1,borderColor:'blue',bottom:60, width:'40%', borderRadius:10, padding:8,fontSize:10}}>
        <Text style={{color:'white',textAlign:'center'}}>Sign In with facebook</Text>
        </TouchableOpacity></View>
  </>
