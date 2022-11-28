@@ -34,8 +34,8 @@ const Login=({navigation})=>{
   defaultCode="IN"
   // defaultCode="DM"
   layout="first"
-  onChangeText={(v) => setValue(v)}
-  onChangeFormattedText={(v) => setValue(v)}
+  //onChangeText={(v) => setValue(v)}
+  //onChangeFormattedText={(v) => setValue(v)}
   placeholder={' Mobile Number '}
   withDarkTheme
   withShadow

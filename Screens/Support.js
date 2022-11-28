@@ -28,6 +28,7 @@ const data = [
       return null;
     };
 
+<<<<<<< Updated upstream:Screens/Sport.js
   return (
     <View>
 		<View style={{flexDirection:'row'}}> 
@@ -157,3 +158,14 @@ const styles = StyleSheet.create({
 	}
   });
 export default Sport
+=======
+const Support = () => {
+  return (
+    <View>
+      <Text>Support</Text>
+    </View>
+  )
+}
+
+export default Support
+>>>>>>> Stashed changes:Screens/Support.js

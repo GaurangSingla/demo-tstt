@@ -34,7 +34,8 @@ const SignUpScreen = () => {
       .min(6, 'Your password has to have at least 6 characters'),
   });
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [confirmSecureTextEntry,setConfirmSecureTextEntry,] = useState(true);
+  const [confirmsecureTextEntry, confirmsetSecureTextEntry] = useState(true);
+  
   return (
     <View style={styles.wrapper}>
       <Image
