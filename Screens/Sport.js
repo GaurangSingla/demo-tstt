@@ -1,7 +1,8 @@
 import { View, Text ,StyleSheet,TextInput,Image,TouchableOpacity} from 'react-native'
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import  {Dropdown}  from 'react-native-element-dropdown';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import axios from "axios";
 const data = [
 		{ label: 'Item 1', value: '1' },
 		{ label: 'Item 2', value: '2' },
@@ -16,6 +17,16 @@ const data = [
 	  const Sport = () => {
 	    const [value, setValue] = useState(null);
     const [isFocus, setIsFocus] = useState(false);
+    const [myData, setMyData] = useState([]);
+  const [isError, setIsError] = useState("");
+
+  // using Promises
+  useEffect(() => {
+    axios
+      .get("https://jsonplaceholder.typicode.com/posts")
+      .then((response) => setMyData(response.data))
+      .catch((error) => setIsError(error.message));
+  }, []);
 
     const renderLabel = () => {
       if (value || isFocus) {

@@ -13,13 +13,16 @@ function Tab_navi() {
       initialRouteName="Home"
       screenOptions={{
         tabBarActiveTintColor: '#e91e63',
+        
+        
       }}
+      options={{headerShown:false}}
     >
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
-          tabBarLabel: 'Home',headerShown: false,
+          tabBarLabel: 'Home',headerShown: true,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
@@ -30,7 +33,7 @@ function Tab_navi() {
         name="Promotion"
         component={Promotion}
         options={{
-          tabBarLabel: 'Promotion',headerShown: false,
+          tabBarLabel: 'Promotion',headerShown: true,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="bell" color={color} size={size} />
           ),
@@ -41,7 +44,7 @@ function Tab_navi() {
         name="Paybill"
         component={Paybill}
         options={{
-          tabBarLabel: 'Paybill',headerShown: false,
+          tabBarLabel: 'Paybill',headerShown: true,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="book-marker" color={color} size={size} />
           ),
@@ -61,7 +64,7 @@ function Tab_navi() {
         name="Sport"
         component={Sport}
         options={{
-          tabBarLabel: 'Sport',headerShown: false,
+          tabBarLabel: 'Sport',headerShown: true,
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />
           ),

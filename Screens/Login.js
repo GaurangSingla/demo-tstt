@@ -28,7 +28,7 @@ const Login=({navigation})=>{
         
     <Text style={styles.txt}>Welcome To <Text style={styles.clr}>bMobile</Text></Text>
       </View>
-      <PhoneInput style={{top:'200'}}
+      <PhoneInput 
   ref={phoneInput}
   defaultValue={phoneNumber}
   defaultCode="IN"
