@@ -1,7 +1,7 @@
-import { View, Text ,StyleSheet,TextInput,Image,TouchableOpacity} from 'react-native'
+import { View, Text ,StyleSheet,TextInput,Image,TouchableOpacity,Dropdown} from 'react-native'
 import React,{useState} from 'react'
-import  {Dropdown}  from 'react-native-element-dropdown';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+//import  {Dropdown}  from 'react-native-element-dropdown';
+//import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 const data = [
 		{ label: 'Item 1', value: '1' },
 		{ label: 'Item 2', value: '2' },
@@ -28,12 +28,11 @@ const data = [
       return null;
     };
 
-<<<<<<< Updated upstream:Screens/Sport.js
   return (
     <View>
 		<View style={{flexDirection:'row'}}> 
        <Image style={{left:150,fontSize:40,alignSelf:'center'}} source={require('../src/assets/bmobileNewWhite.png')}></Image>
-       <MaterialCommunityIcons style={{left:235,fontSize:40,alignSelf:'center'}} name="bell" size={25} />
+       {/* <MaterialCommunityIcons style={{left:235,fontSize:40,alignSelf:'center'}} name="bell" size={25} /> */}
        </View>
       <Text style={{top:60,fontSize:30,alignSelf:'center'}}>Help and Support</Text>
       <Text style={{top:72,fontSize:15,alignSelf:'center'}}>Please complete this form and click Submit</Text>
@@ -158,14 +157,3 @@ const styles = StyleSheet.create({
 	}
   });
 export default Sport
-=======
-const Support = () => {
-  return (
-    <View>
-      <Text>Support</Text>
-    </View>
-  )
-}
-
-export default Support
->>>>>>> Stashed changes:Screens/Support.js
