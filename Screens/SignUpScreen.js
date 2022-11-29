@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {Formik} from 'formik';
 import {
   //   TextInput,
@@ -14,6 +14,7 @@ import {
 import * as Yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
 import {TextInput} from 'react-native-paper';
+import axios from 'axios';
 //import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 const SignUpScreen = () => {
   const phoneRegExp =
@@ -36,6 +37,42 @@ const SignUpScreen = () => {
   });
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [confirmsecureTextEntry, confirmsetSecureTextEntry] = useState(true);
+  const [cityError, setCityError] = useState(false);
+  const [cityErrorMessage, setCityErrorMessage] = useState('');
+  const [citySelectPopup, setCitySelectPopup] = useState(false);
+  const [valid, setValid] = useState(false);
+
+//   const [values, setValues] = useState({
+//   firstName: "John",
+//   lastName: "Doe",
+//   dob: "2001-10-31",
+//   city: "Kingston",
+//   phone: "917906221470",
+//   email: "john.doe@tstt.com",
+//   password: "Staging123$"
+// });
+// const [loading, setLoading] = useState(false);
+// useEffect(() => {
+//   postUser();
+// }, []);
+// const handleSubmit = e => {
+//   e.preventDefault();
+//   setValues({...values});
+//   const { firstName, lastName,dob,city,phone, email, password } = values;
+//   const user = {firstName, lastName,dob,city,phone, email, password};
+  
+//   async function postUser () {
+//       const result = await axios.post('${API)/signup', user);
+//   };
+
+//     useEffect(() => {
+//       postUser();
+//     }, []);
+
+// };
+// const handleChange = name => e => {
+//   setValues({ ...values, [name]: e.target.value });
+// };
   return (
     <View style={styles.wrapper}>
       <Image
@@ -180,7 +217,16 @@ const SignUpScreen = () => {
                   }}
                   textContainerStyle={{}}
                 />
+                <TouchableOpacity
+            style={styles.button}
+            onPress={() => {
+              const checkValid = PhoneInput.current?.isValidNumber(value);
+              setShowMessage(true);
+              setValid(checkValid ? checkValid : false);
+            }}
+          >
                 <Text style={styles.error}>{errors.phoneNumber}</Text>
+                </TouchableOpacity>
               </View>
               <View
                 style={[
@@ -225,6 +271,14 @@ const SignUpScreen = () => {
                   onChangeText={handleChange('city')}
                   onBlur={handleBlur('city')}
                   value={values.city}
+                  rightIconName={'chevron-down'}
+                  error={cityError}
+                  fullerrormessage={cityErrorMessage}
+                  onPress={() => setCitySelectPopup(true)}
+                  onFocus={() => {
+                   // Keyboard.dismiss(),
+                    setCitySelectPopup(true)
+                  }}
                 />
                 <Text style={styles.error}>{errors.city}</Text>
               </View>
