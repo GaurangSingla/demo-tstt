@@ -52,7 +52,7 @@ function Tab_navi() {
         }}
       />
       <Tab.Screen
-        name="Sport"
+        name="Support"
         component={Support}
         options={{
           tabBarLabel: 'Sport',

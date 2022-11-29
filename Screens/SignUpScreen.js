@@ -1,7 +1,7 @@
-import React,{useState} from 'react';
+import React, {useState} from 'react';
 import {Formik} from 'formik';
 import {
-//   TextInput,
+  //   TextInput,
   View,
   StyleSheet,
   Text,
@@ -14,6 +14,7 @@ import {
 import * as Yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
 import {TextInput} from 'react-native-paper';
+//import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 const SignUpScreen = () => {
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-])|(\\([0-9]{2,3}\\)[ \\-])|([0-9]{2,4})[ \\-])?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -35,7 +36,6 @@ const SignUpScreen = () => {
   });
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [confirmsecureTextEntry, confirmsetSecureTextEntry] = useState(true);
-  
   return (
     <View style={styles.wrapper}>
       <Image
@@ -178,7 +178,6 @@ const SignUpScreen = () => {
                     margin: 10,
                     alignSelf: 'center',
                   }}
-                 
                   textContainerStyle={{}}
                 />
                 <Text style={styles.error}>{errors.phoneNumber}</Text>
@@ -251,12 +250,12 @@ const SignUpScreen = () => {
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
+                  secureTextEntry={secureTextEntry ? false : true}
                   right={
                     <TextInput.Icon
-                      name="eye"
+                      name={secureTextEntry ? 'eye' : 'eye-off'}
                       onPress={() => {
                         setSecureTextEntry(!secureTextEntry);
-                        return false;
                       }}
                     />
                   }
@@ -286,12 +285,12 @@ const SignUpScreen = () => {
                   onChangeText={handleChange('confirmpassword')}
                   onBlur={handleBlur('confirmpassword')}
                   value={values.confirmpassword}
+                  secureTextEntry={secureTextEntry ? false : true}
                   right={
                     <TextInput.Icon
-                      name="eye"
+                      name={secureTextEntry ? 'eye' : 'eye-off'}
                       onPress={() => {
-                        confirmsetSecureTextEntry(!confirmsecureTextEntry);
-                        return false;
+                        setSecureTextEntry(!secureTextEntry);
                       }}
                     />
                   }
