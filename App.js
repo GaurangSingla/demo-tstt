@@ -8,15 +8,5 @@ export default  ()=>{
   return(
   <NavigationContainer>
    <Stacks/>
-   {/* <Tab_navi/> */}
   </NavigationContainer>)
 };
-
-
-// import React from 'react';
-// import SignUpScreen from './Screens/SignUpScreen';
-// function App() {
-//   return <SignUpScreen/>
-// }
-
-// export default App;
