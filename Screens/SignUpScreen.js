@@ -1,6 +1,9 @@
 import React,{useState} from 'react';
 import {Formik} from 'formik';
+<<<<<<< Updated upstream
 import axios from 'axios';
+=======
+>>>>>>> Stashed changes
 import {
 //   TextInput,
   View,
@@ -15,6 +18,7 @@ import {
 } from 'react-native';
 import * as Yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
+<<<<<<< Updated upstream
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {TextInput} from 'react-native-paper';
 import Tab_navi from '../android/Tab_navi';
@@ -78,6 +82,10 @@ const SignUpScreen = ({navigation}) => {
     })
   }
      
+=======
+import {TextInput} from 'react-native-paper';
+const SignUpScreen = () => {
+>>>>>>> Stashed changes
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-])|(\\([0-9]{2,3}\\)[ \\-])|([0-9]{2,4})[ \\-])?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const emailValidationSchema = Yup.object().shape({
@@ -97,8 +105,12 @@ const SignUpScreen = ({navigation}) => {
       .min(6, 'Your password has to have at least 6 characters'),
   });
   const [secureTextEntry, setSecureTextEntry] = useState(true);
+<<<<<<< Updated upstream
   const [confirmsecureTextEntry, confirmsetSecureTextEntry] = useState(true);
  
+=======
+  const [confirmSecureTextEntry,setConfirmSecureTextEntry,] = useState(true);
+>>>>>>> Stashed changes
   return (
     <KeyboardAvoidingView>
       <View style={{color:'lightgrey'}}>
@@ -108,15 +120,31 @@ const SignUpScreen = ({navigation}) => {
         </Image>
       </View>
     <View style={styles.wrapper}>
+<<<<<<< Updated upstream
     
+=======
+      <Image
+        style={{
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginTop: 10,
+          height: '9%',
+          width: '45%',
+        }}
+        source={require('../assets/toplogo.jpeg')}
+      />
+>>>>>>> Stashed changes
       <Text
         style={{
           textAlign: 'center',
           fontWeight: 'bold',
         
           fontSize: 30,
+<<<<<<< Updated upstream
         
         
+=======
+>>>>>>> Stashed changes
         }}>
         Sign Up
       </Text>
@@ -149,9 +177,13 @@ const SignUpScreen = ({navigation}) => {
                 height: Dimensions.get('screen').height * 0.44,
               }}
               contentContainerStyle={{
+<<<<<<< Updated upstream
                 
             
                 
+=======
+                paddingVertical: '15%',
+>>>>>>> Stashed changes
               }}
               showsVerticalScrollIndicator={false}
               bounces={false}
@@ -192,12 +224,16 @@ const SignUpScreen = ({navigation}) => {
                 ]}>
                 <TextInput
                   style={styles.inputFieldText}
+<<<<<<< Updated upstream
                   placeholder={ <Text>
                     Select Subject
                     <Text style={{color: 'red', fontSize:15}}>
                       *
                     </Text>
                   </Text>}
+=======
+                  placeholder="Last Name"
+>>>>>>> Stashed changes
                   label="Last Name"
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
@@ -250,7 +286,11 @@ const SignUpScreen = ({navigation}) => {
                     alignSelf: 'center',
                   }}
                  
+<<<<<<< Updated upstream
                   textContainerStyle={{color:'white'}}
+=======
+                  textContainerStyle={{}}
+>>>>>>> Stashed changes
                 />
                 <Text style={styles.error}>{errors.phoneNumber}</Text>
               </View>
@@ -361,7 +401,11 @@ const SignUpScreen = ({navigation}) => {
                     <TextInput.Icon
                       name="eye"
                       onPress={() => {
+<<<<<<< Updated upstream
                         setConfirmSecureTextEntry(!confirmsecureTextEntry);
+=======
+                        confirmsetSecureTextEntry(!confirmsecureTextEntry);
+>>>>>>> Stashed changes
                         return false;
                       }}
                     />
@@ -421,6 +465,7 @@ const styles = StyleSheet.create({
   },
   inputField: {
     borderRadius: 4,
+<<<<<<< Updated upstream
    alignSelf:'center',
  width:'95%',
     backgroundColor: 'white',
@@ -428,6 +473,16 @@ const styles = StyleSheet.create({
   
     
    
+=======
+    // padding: 12,
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: '#FAFAFA',
+    marginBottom: 10,
+    borderWidth: 1,
+    top: 80,
+    marginTop: 10,
+>>>>>>> Stashed changes
   },
   emailInput: {
     width: 250,

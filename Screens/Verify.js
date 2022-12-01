@@ -34,6 +34,7 @@ const postUser=() => {
  
 //   }
 // }
+
   return (
   <>
   <Image

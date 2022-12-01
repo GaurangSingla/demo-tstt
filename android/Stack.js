@@ -44,7 +44,6 @@ const Stacks = () => {
         <Stack.Screen   name="SignUpScreen" component={SignUpScreen} options={{headerShown:false}} />
         <Stack.Screen  name="Tab_navi" component={Tab_navi}  options={{  headerBackTitleVisible: false, headerLeft : props => <ActionBarIcon {...props} />,
         headerRight:props => <ActionBarIcon1 {...props} />, headerTitle:props => <ActionBarIcon2 {...props} />
-    
   
    
     }} 
