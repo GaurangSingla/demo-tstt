@@ -6,6 +6,7 @@ import Tab_navi from './Tab_navi';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Welcome from '../Screens/Welcome';
+import CardDetails from '../Screens/CardDetails';
 const Stack = createNativeStackNavigator();
 const Stacks = () => {
   return (
@@ -13,11 +14,14 @@ const Stacks = () => {
         <Stack.Screen 
           name="Login"
           component={Login}
-         
         />
-        <Stack.Screen   name="SignUpScreen" component={SignUpScreen} options={{headerTintColor:'red',headerBackTitle:"false"}} />
-        <Stack.Screen  name="Tab_navi" component={Tab_navi}  options={{headerTintColor:'red'}} />
+        <Stack.Screen   name="SignUpScreen" component={SignUpScreen}// options={{headerTintColor:'red',headerBackTitle:"false"}}
+         />
+        <Stack.Screen  name="Tab_navi" component={Tab_navi}  options={{
+        }}  // options={{headerTintColor:'red'}} 
+        />
         <Stack.Screen  name="Welcome" component={Welcome}/>
+        <Stack.Screen  name="CardDetails" component={CardDetails}/>
       </Stack.Navigator>
   )
 }

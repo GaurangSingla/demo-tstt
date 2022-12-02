@@ -12,6 +12,7 @@ function Tab_navi() {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
+        tabBarHideOnKeyboard:true,
         tabBarActiveTintColor: '#e91e63',
       }}>
       <Tab.Screen
@@ -20,9 +21,6 @@ function Tab_navi() {
         options={{
           tabBarLabel: 'Home',
           headerShown: false,
-          // tabBarIcon: ({ color, size }) => (
-          //  // <MaterialCommunityIcons name="home" color={color} size={size} />
-          // ),
         }}
       />
       <Tab.Screen
