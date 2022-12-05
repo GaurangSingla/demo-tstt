@@ -1,11 +1,11 @@
-import React,{useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Formik} from 'formik';
 <<<<<<< Updated upstream
 import axios from 'axios';
 =======
 >>>>>>> Stashed changes
 import {
-//   TextInput,
+  //   TextInput,
   View,
   StyleSheet,
   Text,
@@ -84,6 +84,8 @@ const SignUpScreen = ({navigation}) => {
      
 =======
 import {TextInput} from 'react-native-paper';
+import axios from 'axios';
+//import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 const SignUpScreen = () => {
 >>>>>>> Stashed changes
   const phoneRegExp =
@@ -292,7 +294,15 @@ const SignUpScreen = () => {
                   textContainerStyle={{}}
 >>>>>>> Stashed changes
                 />
-                <Text style={styles.error}>{errors.phoneNumber}</Text>
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    const checkValid = PhoneInput.current?.isValidNumber(value);
+                    setShowMessage(true);
+                    setValid(checkValid ? checkValid : false);
+                  }}>
+                  <Text style={styles.error}>{errors.phoneNumber}</Text>
+                </TouchableOpacity>
               </View>
               <View
                 style={[
@@ -337,6 +347,14 @@ const SignUpScreen = () => {
                   onChangeText={handleChange('city')}
                   onBlur={handleBlur('city')}
                   value={values.city}
+                  rightIconName={'chevron-down'}
+                  error={cityError}
+                  fullerrormessage={cityErrorMessage}
+                  onPress={() => setCitySelectPopup(true)}
+                  onFocus={() => {
+                    // Keyboard.dismiss(),
+                    setCitySelectPopup(true);
+                  }}
                 />
                 <Text style={styles.error}>{errors.city}</Text>
               </View>
@@ -362,12 +380,12 @@ const SignUpScreen = () => {
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
                   value={values.password}
+                  secureTextEntry={secureTextEntry ? false : true}
                   right={
                     <TextInput.Icon
-                      name="eye"
+                      name={secureTextEntry ? 'eye' : 'eye-off'}
                       onPress={() => {
                         setSecureTextEntry(!secureTextEntry);
-                        return false;
                       }}
                     />
                   }
@@ -397,9 +415,10 @@ const SignUpScreen = () => {
                   onChangeText={handleChange('confirmpassword')}
                   onBlur={handleBlur('confirmpassword')}
                   value={values.confirmpassword}
+                  secureTextEntry={secureTextEntry ? false : true}
                   right={
                     <TextInput.Icon
-                      name="eye"
+                      name={secureTextEntry ? 'eye' : 'eye-off'}
                       onPress={() => {
 <<<<<<< Updated upstream
                         setConfirmSecureTextEntry(!confirmsecureTextEntry);

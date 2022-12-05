@@ -17,6 +17,7 @@ export default  ()=>{
   <NavigationContainer>
     <App/>
   <Stacks/>
+   <Stacks/>
   </NavigationContainer>)
 };
 

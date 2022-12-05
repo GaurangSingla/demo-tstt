@@ -272,26 +272,50 @@ const Home = () => {
                 width: 160,
                 marginLeft: '10%',
                 marginTop: 5,
-                borderRadius:20
+                borderRadius: 20,
               }}
               source={require('../assets/Carhub.png')}
             />
-            <Text style={{fontWeight:'bold',marginLeft:19,marginTop:10,textAlign:'center',height:30,width:160,padding:5,backgroundColor:'lightgreen'}}>CarHub</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                marginLeft: 19,
+                marginTop: 10,
+                textAlign: 'center',
+                height: 30,
+                width: 160,
+                padding: 5,
+                backgroundColor: 'lightgreen',
+              }}>
+              CarHub
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
             <Image
               style={{
                 height: 140,
                 width: 160,
                 marginLeft: '4%',
                 marginTop: 5,
-                borderRadius:20
+                borderRadius: 20,
               }}
               source={require('../assets/bmobilsecurity.png')}
             />
-            <Text style={{fontWeight:'bold',marginLeft:10,marginTop:10,textAlign:'center',height:30,width:160,padding:5,backgroundColor:'lightgreen'}}>CarHub</Text>
-            </TouchableOpacity>
-          </View>      
+            <Text
+              style={{
+                fontWeight: 'bold',
+                marginLeft: 10,
+                marginTop: 10,
+                textAlign: 'center',
+                height: 30,
+                width: 160,
+                padding: 5,
+                backgroundColor: 'lightgreen',
+              }}>
+              bMobile
+            </Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
 =======
      <TouchableOpacity  style={{marginTop:20,alignContent:'center',bottom:85}} onPress={() => navigation.navigate('Tab_navi')}>
@@ -392,6 +416,6 @@ const Home = () => {
        </View>
 >>>>>>> Stashed changes
     </View>
-  )
+  );
 };
 export default Home;

@@ -4,6 +4,8 @@ import Login from '../Screens/Login';
 import SignUpScreen from '../Screens/SignUpScreen';
 import Tab_navi from './Tab_navi';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import Welcome from '../Screens/Welcome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Paybill from '../Screens/Paybill';
 import Verify from '../Screens/Verify';
@@ -33,7 +35,7 @@ function ActionBarIcon2() {
 }
 const Stacks = () => {
   return (
-    <Stack.Navigator >
+    <Stack.Navigator initialRouteName='Welcome' screenOptions={{headerShown:false}}>
         <Stack.Screen 
           name="Login"
           component={Login}
@@ -47,7 +49,7 @@ const Stacks = () => {
   
    
     }} 
-   
+      <Stack.Screen  name="Welcome" component={Welcome}/>
          />
            <Stack.Screen   name="Topup" component={Topup} options={{headerShown:false}} />
            <Stack.Screen   name="Paybill" component={Paybill} options={{headerShown:false}} />
