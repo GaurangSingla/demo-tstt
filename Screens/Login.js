@@ -83,7 +83,6 @@ const Login = ({navigation}) => {
           width: '95%',
           backgroundColor: 'white',
           borderWidth: 1,
-          borderColor: 'white',
           bottom: 2,
           margin: 10,
           alignSelf: 'center',
@@ -121,9 +120,9 @@ const Login = ({navigation}) => {
             style={{
               height: 15,
               width: 15,
-              backgroundColor: rememberme ? 'green' : null,
-              borderWidth: 2,
-              borderColor: 'black',
+              backgroundColor: rememberme ? '#00E556' : null,
+              borderWidth: 3,
+              borderColor: '#DEDEDE',
               bottom: 26,
               marginLeft: 10,
               borderRadius: 15,
@@ -156,7 +155,7 @@ const Login = ({navigation}) => {
         </TouchableOpacity>
       </View>
       <TouchableOpacity
-        style={{marginTop: 60, alignContent: 'center', bottom: 79}}
+        style={{marginTop: 65, alignContent: 'center', bottom: 79}}
         onPress={() => navigation.navigate('Tab_navi')}
         //onPress={postUser}
       >
@@ -168,14 +167,14 @@ const Login = ({navigation}) => {
           color: 'white',
           fontSize: 20,
           textAlign: 'center',
-          bottom: 80,
+          bottom: 68,
         }}>
         <View>
           <Text
             style={{
               color: 'black',
               // left: -265,
-              Top: 75,
+
               fontWeight: 'bold',
               textAlign: 'center',
             }}>
@@ -183,29 +182,29 @@ const Login = ({navigation}) => {
           </Text>
         </View>
       </Text>
-      <View style={{flexDirection: 'row'}}>
+      {/* <View style={{flexDirection: 'row'}}>
         <TouchableOpacity
           style={{
             borderWidth: 2,
             borderColor: '#EA4335',
-            bottom: 78,
-            width: '48%',
+            bottom: 55,
+            width: '45%',
             borderRadius: 10,
-            padding: 1,
-            marginLeft: 10,
-            height: 47,
+            padding: 0,
+            marginLeft: 15,
+            height: 50,
           }}>
           <Text
             style={{
               color: '#989898',
               textAlign: 'center',
-              fontSize: 15,
+              fontSize: 12,
               fontWeight: 'bold',
-              bottom: 13,
+              bottom: 19,
             }}>
             <Image
               style={{
-                height: 40,
+                height: 49,
                 width: 40,
                 
               }}
@@ -218,33 +217,33 @@ const Login = ({navigation}) => {
           style={{
             borderWidth: 2,
             borderColor: '#3B5998',
-            bottom: 78,
+            bottom: 55,
             width: '45%',
             borderRadius: 10,
             padding: 3,
             marginLeft: 7,
-            height: 45,
+            height: 50,
           }}>
           <Text
             style={{
               color: '#989898',
               textAlign: 'center',
-              fontSize: 14,
+              fontSize: 10,
               fontWeight: 'bold',
+              bottom:9
             }}>
             <Image
-              style={{
-                marginTop: 5,
-                marginRight: 30,
-                height: 25,
-                width: 25,
+              style={{               
+                height: 40,
+                width: 35,
               }}
               source={require('../assets/facebook.webp')}
             />
             Sign In with facebook
           </Text>
         </TouchableOpacity>
-        <View style={{flexDirection: 'row', bottom: 20}}>
+        </View>
+        <View style={{flexDirection: 'row', bottom: 100}}>
           <Text style={{color: '#989898', marginLeft: -330, fontSize: 20}}>
             Don't have an account?
           </Text>
@@ -260,18 +259,103 @@ const Login = ({navigation}) => {
               Sign up
             </Text>
           </TouchableOpacity>
-        </View>
       </View>
       <View>
         <Text
           style={{
             color: '#989898',
-            position: 'absolute',
-            bottom: 5,
+            
+            bottom: 18,
             marginLeft: 120,
             fontWeight: 'bold',
           }}>
           Version: DEV - 1.0.0
+        </Text>
+      </View> */}
+      <View style={{flexDirection: 'row'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            borderWidth: 1,
+            borderColor: '#EA4335',
+            marginLeft: 12,
+            bottom: 54,
+            width: 180,
+          }}>
+          <View>
+            <Image
+              style={{
+                height: 49,
+                width: 40,
+              }}
+              source={require('../assets/google.png')}
+            />
+          </View>
+          <View>
+            <Text
+              style={{
+                marginTop: 14,
+                marginLeft: 10,
+                fontSize: 13,
+                color: '#4D4848',
+              }}>
+              Sign in with google
+            </Text>
+          </View>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            borderWidth: 1,
+            borderColor: '#3B5998',
+            marginLeft: 12,
+            bottom: 54,
+            width: 180,
+          }}>
+          <View>
+            <Image
+              style={{
+                height: 49,
+                width: 40,
+              }}
+              source={require('../assets/facebook.webp')}
+            />
+          </View>
+          <View>
+            <Text
+              style={{
+                marginTop: 14,
+                marginLeft: 10,
+                fontSize: 13,
+                color: '#4D4848',
+              }}>
+              Sign in with facebook
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View style={{flexDirection: 'row', bottom: 40, marginLeft: 80}}>
+        <View>
+          <Text style={{fontSize: 18, color: '#989898'}}>
+            Don't have an account
+          </Text>
+        </View>
+        <View>
+          <Text
+            style={{
+              marginLeft: 7,
+              color: 'green',
+              textDecorationLine: 'underline',
+              fontSize: 18,
+              color: '#00E556',
+            }}>
+            Sign up
+          </Text>
+        </View>
+      </View>
+      <View>
+        <Text style={{bottom: 34, textAlign: 'center', color: '#989898'}}>
+          Version: DEV - 1.0.0{' '}
         </Text>
       </View>
     </>

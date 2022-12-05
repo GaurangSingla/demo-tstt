@@ -6,6 +6,7 @@ import Tab_navi from './Tab_navi';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Welcome from '../Screens/Welcome';
+import CardDetails from '../Screens/CardDetails';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Paybill from '../Screens/Paybill';
 import Verify from '../Screens/Verify';
@@ -42,19 +43,8 @@ const Stacks = () => {
           options={{headerShown:false}}
          
         />
-          <Stack.Screen   name="Verify" component={Verify} options={{headerShown:false}} />
-        <Stack.Screen   name="SignUpScreen" component={SignUpScreen} options={{headerShown:false}} />
-        <Stack.Screen  name="Tab_navi" component={Tab_navi}  options={{  headerBackTitleVisible: false, headerLeft : props => <ActionBarIcon {...props} />,
-        headerRight:props => <ActionBarIcon1 {...props} />, headerTitle:props => <ActionBarIcon2 {...props} />
-  
-   
-    }} 
-      <Stack.Screen  name="Welcome" component={Welcome}/>
-         />
-           <Stack.Screen   name="Topup" component={Topup} options={{headerShown:false}} />
-           <Stack.Screen   name="Paybill" component={Paybill} options={{headerShown:false}} />
-           <Stack.Screen   name="Mycards" component={Mycards} options={{     headerRight:props => <ActionBarIcon1 {...props} />, headerTitle:props => <ActionBarIcon2 {...props} />}} />
-           <Stack.Screen   name="Transaction" component={Transaction} options={{     headerRight:props => <ActionBarIcon1 {...props} />, headerTitle:props => <ActionBarIcon2 {...props} />}} />
+        <Stack.Screen  name="Welcome" component={Welcome}/>
+        <Stack.Screen  name="CardDetails" component={CardDetails}/>
       </Stack.Navigator>
   )
 }

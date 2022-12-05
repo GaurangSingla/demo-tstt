@@ -17,6 +17,7 @@ function Tab_navi() {
     <Tab.Navigator
       initialRouteName="Home"
       screenOptions={{
+        tabBarHideOnKeyboard:true,
         tabBarActiveTintColor: '#e91e63',
         
         

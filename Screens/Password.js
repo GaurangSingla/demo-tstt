@@ -57,10 +57,13 @@ const Password = () => {
                 },
               ]}>
               <TextInput
-                style={styles.inputFieldText}
+                style={{backgroundColor:'white', fontSize: 13,borderWidth:1,borderColor:'#B5B5B5',
+                padding: 8,
+                height: 35,
+                marginTop:2}}
                 label="Password"
                 placeholder="Password"
-                placeholderStyle={{Top:5}}
+                placeholderStyle={{top:5,backgroundColor:'white'}}
                 placeholderTextColor="#979797"
                 autoCapitalize="none"
                 autoCorrect={false}
@@ -91,12 +94,6 @@ const Password = () => {
 
 export default Password;
 const styles = StyleSheet.create({
-  inputFieldText: {
-    fontSize: 13,
-    padding: 8,
-    height: 35,
-    marginTop:2
-  },
   error: {
     color: 'red',
     alignSelf: 'center',
@@ -110,6 +107,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     height: 50,
     borderColor:'#B5B5B5',
-    borderWidth:2
+    borderWidth:2,
+    backgroundColor:'white'
   },
 });
