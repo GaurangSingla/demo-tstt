@@ -1,4 +1,4 @@
-import API from './Api';
+import API from './Services.js/Api';
 
 const lookupRequest = {
   dropdown: [

@@ -1,34 +1,11 @@
-<<<<<<< Updated upstream
-import {View, Text, Image, TouchableOpacity,Dimensions,ScrollView} from 'react-native';
-import React from 'react';
-import Paybill from './Paybill';
-import Topup from './Topup';
-import Mycards from './Mycards';
-import Transaction from './Transaction';
-const Home = ({navigation}) => { 
-  const Icon=()=>{
-    <svg id="Group_10575" data-name="Group 10575" xmlns="http://www.w3.org/2000/svg" width="54" height="54" viewBox="0 0 54 54">
-  <circle id="Ellipse_47" data-name="Ellipse 47" cx="27" cy="27" r="27" fill="#fff"/>
-  <circle id="Ellipse_798" data-name="Ellipse 798" cx="27" cy="27" r="27" fill="#632f89" opacity="0.15"/>
-  <g id="noun-bill-4905109" transform="translate(16.395 13.503)">
-    <path id="Path_5" data-name="Path 5" d="M299.428,106.493a2.408,2.408,0,0,0-1.928,2.361v.056a2.41,2.41,0,0,0,2.41,2.41h.993a.453.453,0,0,1,.453.453v0a.453.453,0,0,1-.453.453h-2.439a.964.964,0,1,0,0,1.928h.964v.482a.964.964,0,1,0,1.928,0v-.526a2.382,2.382,0,0,0,1.928-2.338v0a2.382,2.382,0,0,0-2.381-2.381h-.993a.48.48,0,0,1-.482-.482v-.056a.481.481,0,0,1,.482-.482h2.41a.964.964,0,1,0,0-1.928h-.964v-.482a.964.964,0,1,0-1.928,0Z" transform="translate(-289.787 -101.142)" fill="#632f89" fill-rule="evenodd"/>
-    <path id="Path_6" data-name="Path 6" d="M178.71,37.41A2.41,2.41,0,0,0,176.3,35H159.91a2.41,2.41,0,0,0-2.41,2.41V59.585a2.41,2.41,0,0,0,2.41,2.41H176.3a2.41,2.41,0,0,0,2.41-2.41Zm-1.928,0V59.585a.482.482,0,0,1-.482.482H159.91a.482.482,0,0,1-.482-.482V37.41a.482.482,0,0,1,.482-.482H176.3a.482.482,0,0,1,.482.482Z" transform="translate(-157.5 -35)" fill="#632f89" fill-rule="evenodd"/>
-    <path id="Path_7" data-name="Path 7" d="M228.467,334.428h11.569a.964.964,0,1,0,0-1.928H228.467a.964.964,0,1,0,0,1.928Z" transform="translate(-223.645 -316.11)" fill="#632f89" fill-rule="evenodd"/>
-    <path id="Path_8" data-name="Path 8" d="M228.464,404.428h9.641a.964.964,0,0,0,0-1.928h-9.641a.964.964,0,0,0,0,1.928Z" transform="translate(-223.644 -382.254)" fill="#632f89" fill-rule="evenodd"/>
-  </g>
-</svg>
-
-    }
-=======
-import { View, Text,TouchableOpacity ,Image} from 'react-native'
+import { View, Text,TouchableOpacity ,Image,ScrollView,Dimensions} from 'react-native'
 import React from 'react'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-const Home = () => {
->>>>>>> Stashed changes
+import CardDetails from './CardDetails';
+const Home = ({navigation}) => {
   return (
    
     <View>
-<<<<<<< Updated upstream
     
  
       <ScrollView
@@ -147,7 +124,7 @@ const Home = () => {
             <Text style={{marginLeft: 70, marginTop: -32}}>My Cards</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={()=>navigation.navigate('Transaction')}style={{   shadowColor: 'rgba(0,0,0, .4)', // IOS
+        <TouchableOpacity onPress={()=>navigation.navigate('CardDetails')}style={{   shadowColor: 'rgba(0,0,0, .4)', // IOS
     shadowOffset: { height: 1, width: 1 },
     shadowOpacity: 20, 
     shadowRadius: 10, }}>
@@ -317,104 +294,6 @@ const Home = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-=======
-     <TouchableOpacity  style={{marginTop:20,alignContent:'center',bottom:85}} onPress={() => navigation.navigate('Tab_navi')}>
-       <Text
-          style={{  backgroundColor:'grey',
-          borderRadius:10,
-          height:50,
-          color:'white',
-         alignSelf:'center',
-         alignContent:'center',
-          fontSize:18,
-          justifyContent:'center',
-          width:'60%',
-          textAlign:'center',
-          justifyContent:'center',
-          paddingTop:11,top:130}}>
-       Add new Account</Text>
-     
-    </TouchableOpacity>
-    <View style={{flexDirection:'row',marginHorizontal:47}}> 
-      
-       <TouchableOpacity  style={{marginTop:20,bottom:85}} onPress={() => navigation.navigate('Tab_navi')}>
-     
-       <Text
-      style={{  backgroundColor:'grey',
-          borderRadius:10,
-          height:130,
-          color:'white',
-         alignSelf:'center',
-         alignContent:'center',
-          fontSize:18,
-          justifyContent:'center',
-          width:'139%',
-          textAlignVertical:'center',
-          textAlign:'center',
-          justifyContent:'center',
-          paddingTop:11,top:130}}>
-       Prepaid Top Up</Text>
-     
-    </TouchableOpacity>
-    <TouchableOpacity  style={{marginTop:20,bottom:85,marginLeft:80}} onPress={() => navigation.navigate('Tab_navi')}>
-      
-       <Text
-          style={{  backgroundColor:'grey',
-          borderRadius:10,
-          height:130,
-          color:'white',
-         alignSelf:'center',
-         alignContent:'center',
-          fontSize:18,
-          width:'250%',
-          textAlignVertical:'center',
-          textAlign:'center',
-          justifyContent:'center',
-          paddingTop:11,top:130}}>
-       Pay Bills</Text>
-     
-    </TouchableOpacity>
-       </View>
-       <View style={{flexDirection:'row',marginHorizontal:72}}> 
-       {/* <MaterialCommunityIcons style={{left:235,fontSize:40,alignSelf:'center'}} name="bell" size={25} /> */}
-       <TouchableOpacity  style={{marginTop:20,bottom:85}} onPress={() => navigation.navigate('Tab_navi')}>
-       <Text
-          style={{  backgroundColor:'grey',
-          borderRadius:10,
-          height:130,
-          color:'white',
-         alignSelf:'center',
-         alignContent:'center',
-          fontSize:18,
-          justifyContent:'center',
-          width:'225%',
-          textAlignVertical:'center',
-          textAlign:'center',
-          paddingTop:11,top:130}}>
-       My Cards</Text>
-     
-    </TouchableOpacity>
-    <TouchableOpacity  style={{marginTop:20,alignContent:'center',bottom:85,marginLeft:65}} onPress={() => navigation.navigate('Tab_navi')}>
-       <Text
-    
-          style={{  backgroundColor:'grey',
-          borderRadius:10,
-          height:130,
-          color:'white',
-         alignSelf:'center',
-         alignContent:'center',
-          fontSize:18,
-          justifyContent:'center',
-          width:'115%',
-        marginLeft:2,
-          textAlign:'center',
-         textAlignVertical:'center',
-          paddingTop:11,top:130}}>
-       Transaction History</Text>
-     
-    </TouchableOpacity>
-       </View>
->>>>>>> Stashed changes
     </View>
   );
 };

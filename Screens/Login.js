@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from 'react'
-import {View,Text,Image,StyleSheet,TextInput,Button, TouchableOpacity} from 'react-native';
+import React,{useState,useEffect,useRef} from 'react'
+import {View,Text,Image,StyleSheet,TextInput,Button, TouchableOpacity,Pressable} from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SignUpScreen from './SignUpScreen';
@@ -8,58 +8,71 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {useIsFocused} from '@react-navigation/native';
 import Tab_navi from '../android/Tab_navi';
 import Verify from './Verify';
+import {Divider} from 'react-native-elements';
+import axios from 'axios';
+import Password from './Password';
 
-const Login=({navigation})=>{
+
+const Login = ({navigation}) => {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const phoneInput = useRef(null);
+  const [email, setEmail] = useState('');
+;
+  const [rememberme, setrememberme] = useState(false);
   const isFocused = useIsFocused();
   const [usrName, setUsrName] = useState('');
   const [pass, setPass] = useState('');
   const [usrNameValid, setUsrNameValid] = useState(true);
   const [passValid, setPassValid] = useState(true);
-  
+  const [data, setData] = useState([]);
+  const [savenumber, setSaveNumber] = useState('');
  
-
-
-    return (
+  const [renderCards, setRenderCards] = useState(false);
+ async function hitApi() {
+    try {
+      const header = {
+        headers: {
+          Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiOWRkMjliZTkxMTk3ZmI2ZjEyZmM3YjlmNTZjNzEwOTkwZDhjMTM5MDQ3ODM5YzliNTc3OGFiYzYwYzQ4OGQzOTUzMjFjODc4MTkzNjdmMGUiLCJpYXQiOjE2NzA0MTc3OTIuNTY2OTU4LCJuYmYiOjE2NzA0MTc3OTIuNTY2OTYxLCJleHAiOjE3MDE5NTM3OTIuNTY0MDg0LCJzdWIiOiIzMiIsInNjb3BlcyI6WyJhZG1pbiJdfQ.cATWDGVyyc59YJpK8F8XooRXiPkLdwFq5pk8203a1zBBS8ZqHDRVIqGPVsdh6sJPzeZ02UYTe0AwUXWM3Y8YY5jYGozLFjzN7nAG50ZJ3tIz7Cbu6Cu97F2Oke8jOuepgHcqs6UmxMZ4Mhxs79XregY6aEla8x3NeaSpyR0SkWuWCp9on1G1T2lNqCwkMCZO23wrftxbxu8TJcLkRACxLTLGldrb2qj0viMu_RPoYcjgZkuKOXDAKzzMzmweQxR-U9QqtS5OnBdtPZWq0qKFBiMr3doEEpOktn4ve8YCu971XiQaclTPwM5a_sr1foiqRiOheytmkmAlAXHLLFp0s_QslKlCbvnWjW_FWKj43xCiCsRQu7yamciyWqa3vYnpRYFhTHoMUXZMc9aHRuLB26TVRUUrEsG5T-DLyMSj-67Az5wAn9WoANFLNsYZdd_qTnm2iDbmNm7-TEBA5donuimhFisXmIVuZybTV6oeWcNZbZj8LvqgvSc8Aj6bhsd105v7J51I35TV1B76mzPIvhEQk-QqAonn0-oe8UIqByPIFnkpBIukLPHYaS-OjueSW70njYG6IPHVL4stS_qoMMRAZO48rkqJF7EPksMtPfeZwsZUB0_DbZhMtCdLotK-Bth6qy6r0PseWaUMUIVQq0wbEF7D8sLBRj6rZIR-qeo",
+        },
+        params: {
+          loginId:phoneNumber,
+          password:password
+          ,
+           
+        },
+      };
+      console.log('header ===== ', header);
+      const response = await PaymentService.billPayGet(header);
+      console.log(
+        '==========> billpay response',
+        JSON.stringify(response.data),
+      );
+      if (response.data.success == true) {
+        console.log(
+          '==========> billpay responseId',
+          response.data.result.requestId,
+        );
+        setData(response.data.result);
+        renderCards(true);
+      } else {
+        renderCards(false);
+        setAlertBody({
+          dialogBoxType: 'Error',
+          messageText: response.data.message,
+        });
+     
+   
       
-        <>
-    <Image
-    style={styles.img}
-import {Divider} from 'react-native-elements';
-import axios from 'axios';
-import Password from './Password';
-const Login = ({navigation}) => {
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const phoneInput = useRef(null);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [rememberme, setrememberme] = useState(false);
+  }}catch( error){
 
-  const postUser = () => {
-    axios({
-      method: 'POST',
-      url: 'https://dev-cim-api.tstt.co.tt/api/consumer/login',
-      data: {
-        loginId: '917906221470',
-        password: 'Staging123$',
-      },
-      headers: {
-        accept: 'application/json',
-        'Content-Type': 'application/json',
-        'notification-token':
-          'qwertyuiop12347890-zxcvbnm./qwertyuiopasdfghjkzxcvbnm',
-        'client-type': 'IOS',
-        'client-version': '1.0.0',
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': '',
-      },
-    })
-      .then(function (response) {
-        console.log('response', JSON.stringify(response.data));
-      })
-      .catch(function (error) {
-        console.log('error', error);
-      });
-  };
+  }}
+  function next(){
+    if(data.success){
+   navigation.navigate('Tab_navi');
+    }else{
+    console.warn('check credentials');
+    }
+  }
   return (
     <>
       <Image
@@ -73,7 +86,7 @@ const Login = ({navigation}) => {
       </View>
       <PhoneInput
         style={{top: '200'}}
-        ref={phoneInput}
+        onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
         defaultValue={phoneNumber}
         defaultCode="IN"
         layout="first"
@@ -107,6 +120,8 @@ const Login = ({navigation}) => {
           paddingLeft:10
         }}
         placeholder={'password*'}
+        onChangeText={password => setPassword(password)}
+        defaultValue={password}
         placeholderTextColor='#ccc'
         withShadow
         
@@ -156,7 +171,8 @@ const Login = ({navigation}) => {
       </View>
       <TouchableOpacity
         style={{marginTop: 65, alignContent: 'center', bottom: 79}}
-        onPress={() => navigation.navigate('Tab_navi')}
+        
+       onPress={()=>navigation.navigate('Verify')}
         //onPress={postUser}
       >
         <Text style={styles.btn}>Sign In</Text>

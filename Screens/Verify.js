@@ -1,4 +1,4 @@
-import { View, Text,StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text,StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 import { Image } from 'react-native-elements';
 import { CheckBox } from 'react-native-elements';
@@ -34,7 +34,13 @@ const postUser=() => {
  
 //   }
 // }
-
+ function next(){
+  if(checked&&checked1){
+    navigation.navigate('Tab_navi');
+  }else{
+    Alert.alert('click both')
+  }
+ }
   return (
   <>
   <Image
@@ -58,6 +64,7 @@ const postUser=() => {
      checkedColor={'green'}
     
      onPress={()=>setChecked(!checked)}
+     
      >
          
      </CheckBox >
@@ -72,7 +79,7 @@ const postUser=() => {
      </CheckBox>
     </View>
     <TouchableOpacity style={{backgroundColor:'green',height:60,borderRadius:10,alignSelf:'center',justifySelf:'center',width:'90%',marginTop:'3%'}}
-    onPress={()=>navigation.navigate('Tab_navi')}>
+    onPress={next}>
         <Text style={{alignSelf:'center',justifySelf:'center',fontSize:20,padding:15,color:"black"}}>Agree & proceed</Text>
     </TouchableOpacity>
     <TouchableOpacity style={{backgroundColor:'grey',height:60,borderRadius:10,alignSelf:'center',justifySelf:'center',width:'90%',margin:'1%'}}>

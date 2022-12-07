@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-=======
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
->>>>>>> Stashed changes
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Home from '../Screens/Home';
 import Promotion from '../Screens/Promotion';
@@ -69,11 +65,7 @@ function Tab_navi() {
         name="Support"
         component={Support}
         options={{
-<<<<<<< Updated upstream
           tabBarLabel: 'Support',headerShown: false,
-=======
-          tabBarLabel: 'Sport',headerShown: false,
->>>>>>> Stashed changes
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color={color} size={size} />
           ),

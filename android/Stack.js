@@ -14,7 +14,7 @@ import Topup from '../Screens/Topup';
 import Mycards from '../Screens/Mycards';
 import Transaction from '../Screens/Transaction';
 const Stack = createNativeStackNavigator();
-function ActionBarIcon({navigation}) {
+function ActionBarIcon({Navigation}) {
   return (
     <TouchableOpacity >
     <Image
@@ -36,15 +36,31 @@ function ActionBarIcon2() {
 }
 const Stacks = () => {
   return (
-    <Stack.Navigator initialRouteName='Welcome' screenOptions={{headerShown:false}}>
+    <Stack.Navigator initialRouteName='Welcome' >
+        <Stack.Screen   name="Welcome" component={Welcome} options={{headerShown:false}} />
         <Stack.Screen 
           name="Login"
           component={Login}
           options={{headerShown:false}}
          
         />
-        <Stack.Screen  name="Welcome" component={Welcome}/>
-        <Stack.Screen  name="CardDetails" component={CardDetails}/>
+   
+        <Stack.Screen  name="CardDetails" component={CardDetails} options={{headerRight:props => <ActionBarIcon1 {...props} />, headerTitle:props => <ActionBarIcon2 {...props} />}}/>
+          <Stack.Screen   name="Verify" component={Verify} options={{headerShown:false}} />
+        <Stack.Screen   name="SignUpScreen" component={SignUpScreen} options={{headerShown:false}} />
+        <Stack.Screen  name="Tab_navi" component={Tab_navi}  options={{  headerBackTitleVisible: false, headerLeft : props => <ActionBarIcon {...props} />,
+        headerRight:props => <ActionBarIcon1 {...props} />, headerTitle:props => <ActionBarIcon2 {...props} />
+  
+   
+    }} 
+   
+         />
+           <Stack.Screen   name="Topup" component={Topup} options={{headerShown:false}} />
+           <Stack.Screen   name="Paybill" component={Paybill} options={{headerShown:false}} />
+           <Stack.Screen   name="Mycards" component={Mycards} options={{     headerRight:props => <ActionBarIcon1 {...props} />, headerTitle:props => <ActionBarIcon2 {...props} />}} />
+        
+           <Stack.Screen   name="Transaction" component={Transaction} options={{     headerRight:props => <ActionBarIcon1 {...props} />, headerTitle:props => <ActionBarIcon2 {...props} />}} />
+    
       </Stack.Navigator>
   )
 }

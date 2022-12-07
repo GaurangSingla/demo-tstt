@@ -15,9 +15,9 @@ const App=()=>{
 export default  ()=>{
   return(
   <NavigationContainer>
-    <App/>
+ 
   <Stacks/>
-   <Stacks/>
+ 
   </NavigationContainer>)
 };
 

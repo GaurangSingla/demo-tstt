@@ -1,9 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Formik} from 'formik';
-<<<<<<< Updated upstream
 import axios from 'axios';
-=======
->>>>>>> Stashed changes
+import { SignService } from '../Services.js/SignUpService';
 import {
   //   TextInput,
   View,
@@ -14,11 +12,11 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  
 } from 'react-native';
 import * as Yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
-<<<<<<< Updated upstream
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {TextInput} from 'react-native-paper';
 import Tab_navi from '../android/Tab_navi';
@@ -53,41 +51,8 @@ const SignUpScreen = ({navigation}) => {
   const showTimepicker = () => {
     showMode('time');
   };
-  
-  const postUser=() => {
-    axios({
-      method: 'post',
-      url: 'https://dev-cim-api.tstt.co.tt/api/consumer/registration/basic-details',
-      data:{
-        firstName: {name},
-  lastName: {last},
-  "username": "john_doe",
-  dob: {dob},
-  city: {city},
-  phone: {number},
-  email: {email},
-   password: {password},
-      },
-      headers: {
-        "Accept": "application/json",
-        "Content-Type": "application/json"
-
-      }
-    })
-    .then(function (response) {
-      console.log("response", JSON.stringify(response.data))
-    })
-    .catch(function (error) {
-      console.log("error", error)
-    })
-  }
+ 
      
-=======
-import {TextInput} from 'react-native-paper';
-import axios from 'axios';
-//import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-const SignUpScreen = () => {
->>>>>>> Stashed changes
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-])|(\\([0-9]{2,3}\\)[ \\-])|([0-9]{2,4})[ \\-])?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const emailValidationSchema = Yup.object().shape({
@@ -107,12 +72,45 @@ const SignUpScreen = () => {
       .min(6, 'Your password has to have at least 6 characters'),
   });
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-<<<<<<< Updated upstream
   const [confirmsecureTextEntry, confirmsetSecureTextEntry] = useState(true);
- 
-=======
-  const [confirmSecureTextEntry,setConfirmSecureTextEntry,] = useState(true);
->>>>>>> Stashed changes
+  const hitSignUpApi = async () => {
+    try {
+      const args = {
+        firstName: name,
+        lastName: last,
+        username: 'user',
+        dob: dob,
+        city: city,
+        phone:  number,
+        email: email,
+        password: password,
+      };
+
+      console.log('signup request == >', JSON.stringify(args));
+      const response = await SignService.signUpDetails(args);
+      console.log('signup response == >', JSON.stringify(response));
+
+      if (response.data.success) {
+        // setItem(ASYNC_KEY.token, response.headers['access-medium']);
+        console.log("check",response.data.result)
+       
+      } else {
+        setAlertBody({
+          dialogBoxType: 'Error',
+          headerText: 'Error',
+          messageText: response.data.message,
+        });
+        setshowAlertDialog(true);
+      }
+    } catch (e) {
+      console.log('signup catch response == >', JSON.stringify(e));
+
+
+  
+    } finally {
+    
+    }
+  };
   return (
     <KeyboardAvoidingView>
       <View style={{color:'lightgrey'}}>
@@ -122,31 +120,15 @@ const SignUpScreen = () => {
         </Image>
       </View>
     <View style={styles.wrapper}>
-<<<<<<< Updated upstream
     
-=======
-      <Image
-        style={{
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          marginTop: 10,
-          height: '9%',
-          width: '45%',
-        }}
-        source={require('../assets/toplogo.jpeg')}
-      />
->>>>>>> Stashed changes
       <Text
         style={{
           textAlign: 'center',
           fontWeight: 'bold',
         
           fontSize: 30,
-<<<<<<< Updated upstream
         
         
-=======
->>>>>>> Stashed changes
         }}>
         Sign Up
       </Text>
@@ -179,13 +161,9 @@ const SignUpScreen = () => {
                 height: Dimensions.get('screen').height * 0.44,
               }}
               contentContainerStyle={{
-<<<<<<< Updated upstream
                 
             
                 
-=======
-                paddingVertical: '15%',
->>>>>>> Stashed changes
               }}
               showsVerticalScrollIndicator={false}
               bounces={false}
@@ -226,16 +204,12 @@ const SignUpScreen = () => {
                 ]}>
                 <TextInput
                   style={styles.inputFieldText}
-<<<<<<< Updated upstream
                   placeholder={ <Text>
                     Select Subject
                     <Text style={{color: 'red', fontSize:15}}>
                       *
                     </Text>
                   </Text>}
-=======
-                  placeholder="Last Name"
->>>>>>> Stashed changes
                   label="Last Name"
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
@@ -288,11 +262,7 @@ const SignUpScreen = () => {
                     alignSelf: 'center',
                   }}
                  
-<<<<<<< Updated upstream
                   textContainerStyle={{color:'white'}}
-=======
-                  textContainerStyle={{}}
->>>>>>> Stashed changes
                 />
                 <TouchableOpacity
                   style={styles.button}
@@ -375,7 +345,7 @@ const SignUpScreen = () => {
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
                   autoCorrect={false}
-                  secureTextEntry={secureTextEntry}
+                 
                   textContentType="password"
                   onChangeText={handleChange('password')}
                   onBlur={handleBlur('password')}
@@ -410,7 +380,7 @@ const SignUpScreen = () => {
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
                   autoCorrect={false}
-                  secureTextEntry={confirmsecureTextEntry}
+          
                   textContentType="confirmpassword"
                   onChangeText={handleChange('confirmpassword')}
                   onBlur={handleBlur('confirmpassword')}
@@ -420,11 +390,7 @@ const SignUpScreen = () => {
                     <TextInput.Icon
                       name={secureTextEntry ? 'eye' : 'eye-off'}
                       onPress={() => {
-<<<<<<< Updated upstream
                         setConfirmSecureTextEntry(!confirmsecureTextEntry);
-=======
-                        confirmsetSecureTextEntry(!confirmsecureTextEntry);
->>>>>>> Stashed changes
                         return false;
                       }}
                     />
@@ -439,7 +405,7 @@ const SignUpScreen = () => {
                 style={styles.button(isValid)}
                
               
-                onPress={() => navigation.navigate('Login')}
+                onPress={() =>[ navigation.navigate('Login'),hitSignUpApi]}
                 >
                   
                 <Text style={{color: '#fff', fontSize: 17, fontWeight: '600'}}>
@@ -484,7 +450,6 @@ const styles = StyleSheet.create({
   },
   inputField: {
     borderRadius: 4,
-<<<<<<< Updated upstream
    alignSelf:'center',
  width:'95%',
     backgroundColor: 'white',
@@ -492,16 +457,6 @@ const styles = StyleSheet.create({
   
     
    
-=======
-    // padding: 12,
-    marginLeft: 10,
-    marginRight: 10,
-    backgroundColor: '#FAFAFA',
-    marginBottom: 10,
-    borderWidth: 1,
-    top: 80,
-    marginTop: 10,
->>>>>>> Stashed changes
   },
   emailInput: {
     width: 250,
