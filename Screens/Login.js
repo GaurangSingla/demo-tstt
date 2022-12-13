@@ -4,22 +4,14 @@ import {
   Text,
   Image,
   StyleSheet,
-  Button,
   TouchableOpacity,
   Pressable,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
+  SafeAreaView
 } from 'react-native';
-// import {TextInput} from 'react-native-paper';
 import PhoneInput from 'react-native-phone-number-input';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import SignUpScreen from './SignUpScreen';
-import {SocialIcon} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import {useIsFocused} from '@react-navigation/native';
 import Tab_navi from '../android/Tab_navi';
-import Verify from './Verify';
 import {Divider} from 'react-native-elements';
 import axios from 'axios';
 import Password from './Password';
@@ -37,7 +29,7 @@ const Login = ({navigation}) => {
   const [password, setPassword] = useState('');
   const phoneInput = useRef(null);
   const [email, setEmail] = useState('');
-  const [secureTextEntry, setSecureTextEntry] = useState(true);
+  // const [password, setPassword] = useState('');
   const [rememberme, setrememberme] = useState(false);
   const [data, setData] = useState([]);
   const [renderCards, setRenderCards] = useState(false);
@@ -160,8 +152,6 @@ const Login = ({navigation}) => {
           paddingLeft:10
         }}
         placeholder={'password*'}
-        onChangeText={password => setPassword(password)}
-        defaultValue={password}
         placeholderTextColor='#ccc'
         withShadow
         
@@ -448,22 +438,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 10,
     fontWeight: 'bold',
-  },
-  error: {
-    color: 'red',
-    alignSelf: 'center',
-  },
-  inputField: {
-    borderRadius: 4,
-    marginLeft: 10,
-    marginRight: 10,
-    backgroundColor: 'rgba(0,0,0,0)',
-    marginTop: -95,
-    borderWidth: 1,
-    height: 50,
-    borderColor: '#B5B5B5',
-    borderWidth: 2,
-    backgroundColor: 'white',
   },
 });
 export default Login;

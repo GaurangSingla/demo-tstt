@@ -91,9 +91,13 @@ const SignUpScreen = ({navigation}) => {
       console.log('signup response == >', JSON.stringify(response));
 
       if (response.data.success) {
-        // setItem(ASYNC_KEY.token, response.headers['access-medium']);
         console.log("check",response.data.result)
-       
+        setItem(ASYNC_KEY.token, response.headers['access-medium']);
+        navigation.navigate(SCREEN_ROUTE_MAPPING.VerifyOtpScreen, {
+          Value: 'SignUp',
+          phone: phone,
+          selectedCountry: "91",
+        })
       } else {
         setAlertBody({
           dialogBoxType: 'Error',
@@ -318,8 +322,8 @@ const SignUpScreen = ({navigation}) => {
                   onBlur={handleBlur('city')}
                   value={values.city}
                   rightIconName={'chevron-down'}
-                  error={cityError}
-                  fullerrormessage={cityErrorMessage}
+                
+              
                   onPress={() => setCitySelectPopup(true)}
                   onFocus={() => {
                     // Keyboard.dismiss(),
@@ -416,7 +420,7 @@ const SignUpScreen = ({navigation}) => {
 
             <View style={styles.signUpContainer}>
               <TouchableOpacity
-              onPress={postUser}
+              onPress={()=>navigation.navigate('Login')}
               >
                 <Text style={{color: 'green', fontWeight: '600'}}>
                   Previous

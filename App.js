@@ -6,7 +6,15 @@ import Stacks from './android/Stack';
 import Counter from './Screens/Counter';
 import { Provider } from 'react-redux';
 import { store } from './redux/store/store';
+import {
+  requestUserPermission,
+  notificationListener,
+} from './Services.js/notificationService';
 const App = (props) => {
+  useEffect(() => {
+    requestUserPermission();
+    notificationListener();
+  }, []);
   return (
     <View style={{ flex: 1 }}>
       <Provider store={store}>
