@@ -5,9 +5,14 @@ import {
   TouchableOpacity,
   Dimensions,
   ScrollView,
+  StyleSheet
 } from 'react-native';
 import React from 'react';
+import Carousel from 'pinar';
+import Listhorizontal from './Listhorizontal';
+import { SafeAreaView } from 'react-native-safe-area-context';
 const Home = () => {
+  // const data=['#00E556','#367B39']
   return (
     <View>
       <View style={{flexDirection: 'row'}}>
@@ -46,11 +51,48 @@ const Home = () => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}>
+
+        {/* <Carousel>
+
+        </Carousel> */}
+        {/* <ScrollView 
+        horizontal={true}
+        showsHorizontalScrollIndicator={false}
+        >
+          <View style={{flex:1,flexDirection:'row'}}>
+            <View style={{backgroundColor:'green',height:90,width:'100%'}}>
+              <Text>onew</Text>
+            </View>
+            <View style={{backgroundColor:'green'}}>
+              <Text>onew</Text>
+            </View>
+          </View>
+
+        </ScrollView> */}
+        {/* <SafeAreaView>
+        <Listhorizontal data={data}/>
+        </SafeAreaView> */}
+
+      <ScrollView horizontal={true}
+      showsHorizontalScrollIndicator={false}>
+       <View style={{backgroundColor:'#00E556',height:190,width:330,marginLeft:30,marginTop:20,borderRadius:13}}>
+      
+       <Text>Postpaid: +1868 9876543210</Text>
+       <View>
+        <Text>Loid Forger</Text>
+       </View>
+       </View>
+       <View style={{backgroundColor:'#367B39',height:190,width:310,marginLeft:10,marginTop:20,marginRight:20,borderRadius:13}}>
+<Text>two</Text>
+       </View>
+      </ScrollView>
+
+
         <TouchableOpacity>
           <Text
             style={{
-              backgroundColor: 'black',
-              color: 'white',
+              backgroundColor: '#FFFFFF',
+              color: '#2E2F2F',
               textAlign: 'center',
               height: 40,
               width: 230,
@@ -59,7 +101,7 @@ const Home = () => {
               marginLeft: 'auto',
               marginRight: 'auto',
             }}>
-            + Add New Account
+            Manage Account
           </Text>
         </TouchableOpacity>
 
@@ -67,12 +109,13 @@ const Home = () => {
           <TouchableOpacity>
             <View
               style={{
-                backgroundColor: 'lightgrey',
+                backgroundColor: '#FCEDE6',
                 padding: 5,
                 marginTop: 40,
                 marginLeft: 20,
                 width: 160,
                 height: 160,
+                borderRadius:20
               }}>
               <Image
                 style={{
@@ -91,12 +134,13 @@ const Home = () => {
           <TouchableOpacity>
             <View
               style={{
-                backgroundColor: 'lightgrey',
+                backgroundColor: '#EDE7F1',
                 padding: 5,
                 marginTop: 40,
                 marginLeft: 30,
                 width: 160,
                 height: 160,
+                borderRadius:20
               }}>
               <Image
                 style={{
@@ -116,12 +160,13 @@ const Home = () => {
           <TouchableOpacity>
             <View
               style={{
-                backgroundColor: 'lightgrey',
+                backgroundColor: '#FEFCE8',
                 padding: 5,
                 marginTop: 40,
                 marginLeft: 20,
                 width: 160,
                 height: 160,
+                borderRadius:20
               }}>
               <Image
                 style={{
@@ -138,12 +183,13 @@ const Home = () => {
           <TouchableOpacity>
             <View
               style={{
-                backgroundColor: 'lightgrey',
+                backgroundColor: '#ECF6EA',
                 padding: 5,
                 marginTop: 40,
                 marginLeft: 30,
                 width: 160,
                 height: 160,
+                borderRadius:20
               }}>
               <Image
                 style={{
@@ -160,7 +206,7 @@ const Home = () => {
             </View>
           </TouchableOpacity>
         </View>
-        <View style={{flexDirection: 'row'}}>
+        {/* <View style={{flexDirection: 'row'}}>
           <Text
             style={{
               marginTop: 10,
@@ -175,12 +221,14 @@ const Home = () => {
             {' '}
             Offers
           </Text>
-        </View>
+        </View> */}
         <Image
           style={{
             height: 140,
             width: 350,
             marginLeft: '5%',
+            borderRadius:20,
+            marginTop:15
           }}
           source={require('../assets/Banner2.png')}
         />
@@ -189,49 +237,51 @@ const Home = () => {
           <TouchableOpacity>
             <View
               style={{
-                backgroundColor: 'lightgreen',
-                marginTop: 10,
+                backgroundColor: '#5CB24C',
+                marginTop: 20,
                 marginLeft: 10,
                 width: 180,
-                height: 80,
+                height: 60,
+                borderRadius:10
               }}>
               <Image
                 style={{
                   height: 40,
                   width: 40,
                   marginLeft: '12%',
-                  marginTop: 20,
+                  marginTop: 10,
                 }}
                 source={require('../assets/dollar.png')}
               />
-              <Text style={{marginLeft: 70, marginTop: -30}}>Quick Codes</Text>
+              <Text style={{marginLeft: 70,bottom:30,color:'white'}}>USSD Codes</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity>
             <View
               style={{
-                backgroundColor: 'lightgreen',
-                marginTop: 10,
+                backgroundColor: '#632F89',
+                marginTop: 20,
                 marginLeft: 10,
                 width: 180,
-                height: 80,
+                height: 60,
+                borderRadius:10
               }}>
               <Image
                 style={{
                   height: 40,
                   width: 40,
                   marginLeft: '5%',
-                  marginTop: 20,
+                  marginTop: 10,
                 }}
                 source={require('../assets/dollar.png')}
               />
-              <Text style={{marginLeft: 70, marginTop: -40}}>
+              <Text style={{marginLeft: 70, bottom:40,color:'white'}}>
                 Service Store{'\n'}Locator
               </Text>
             </View>
           </TouchableOpacity>
         </View>
-        <View style={{flexDirection: 'row'}}>
+        {/* <View style={{flexDirection: 'row'}}>
           <Text
             style={{
               marginTop: 20,
@@ -251,62 +301,101 @@ const Home = () => {
             {' '}
             bMobile
           </Text>
-        </View>
+        </View> */}
 
-        <View style={{flexDirection: 'row', marginBottom: 100}}>
+        <View style={{flexDirection: 'row', marginBottom: 120}}>
           <TouchableOpacity>
+            <View style={{backgroundColor:'black',height:180,width:180,marginTop:15,marginLeft:10,borderRadius:10}}>
             <Image
               style={{
-                height: 140,
+                height: 150,
                 width: 160,
-                marginLeft: '10%',
-                marginTop: 5,
+                marginLeft: 10,
+                marginTop: 18,
                 borderRadius: 20,
               }}
               source={require('../assets/Carhub.png')}
             />
-            <Text
-              style={{
-                fontWeight: 'bold',
-                marginLeft: 19,
-                marginTop: 10,
-                textAlign: 'center',
-                height: 30,
-                width: 160,
-                padding: 5,
-                backgroundColor: 'lightgreen',
-              }}>
-              CarHub
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <Image
-              style={{
-                height: 140,
-                width: 160,
-                marginLeft: '4%',
-                marginTop: 5,
-                borderRadius: 20,
-              }}
-              source={require('../assets/bmobilsecurity.png')}
-            />
+            </View>
             <Text
               style={{
                 fontWeight: 'bold',
                 marginLeft: 10,
-                marginTop: 10,
                 textAlign: 'center',
-                height: 30,
-                width: 160,
+                height: 35,
+                width: 180,
                 padding: 5,
-                backgroundColor: 'lightgreen',
+                backgroundColor: '#00E556',
+                borderRadius:10,
+                color:'white'
               }}>
-              bMobile
+              Open CarHub
             </Text>
           </TouchableOpacity>
+          <TouchableOpacity>
+          <View style={{backgroundColor:'black',height:180,width:180,marginTop:15,marginLeft:15,borderRadius:10}}>
+            <Image
+              style={{
+                height: 150,
+                width: 160,
+                marginLeft: 10,
+                marginTop: 18,
+                borderRadius: 20,
+              }}
+              source={require('../assets/bmobilsecurity.png')}
+            />
+            </View>
+            <Text
+              style={{
+                fontWeight: 'bold',
+                marginLeft: 14,
+                textAlign: 'center',
+                height: 35,
+                width: 180,
+                padding: 5,
+                backgroundColor: '#00E556',
+                borderRadius:10,
+                color:'white'
+              }}>
+              Open App 2
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View>
+        <Image
+          style={{
+            height: 140,
+            width: 350,
+            marginLeft: '5%',
+            borderRadius:20,
+            bottom:100
+          }}
+          source={require('../assets/Banner1.png')}
+        />
         </View>
       </ScrollView>
     </View>
   );
 };
 export default Home;
+const styles = StyleSheet.create({
+  slide1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#a3c9a8',
+  },
+  slide2: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#84b59f',
+  },
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    marginHorizontal: 4,
+    bottom:10
+  },
+});

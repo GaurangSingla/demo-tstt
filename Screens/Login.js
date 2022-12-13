@@ -24,11 +24,11 @@ const Login = ({navigation}) => {
       method: 'POST',
       url: 'https://dev-cim-api.tstt.co.tt/api/consumer/login',
       data: {
-        loginId: '917906221470',
-        password: 'Staging123$',
+        loginId: 'phoneNumber',
+        password: 'password',
       },
       headers: {
-        accept: 'application/json',
+        'accept': 'application/json',
         'Content-Type': 'application/json',
         'notification-token':
           'qwertyuiop12347890-zxcvbnm./qwertyuiopasdfghjkzxcvbnm',
