@@ -119,25 +119,6 @@ const Login = ({navigation}) => {
         textContainerStyle={{}}
       />
 
-      {/* <TextInput
-        secureTextEntry={true}
-        style={{
-          backgroundColor: 'black',
-          borderWidth: 2,
-          borderColor: 'white',
-          borderRadius: 10,
-          bottom: 100,
-          width: '90%',
-          alignSelf: 'center',
-          paddingLeft:10
-        }}
-        placeholder={'password*'}
-        onChangeText={password => setPassword(password)}
-        defaultValue={password}
-        placeholderTextColor='#ccc'
-        withShadow
-        
-      /> */}
       <View>
         {/* <Password /> */}
         <Formik
@@ -247,7 +228,7 @@ const Login = ({navigation}) => {
       </View>
       <TouchableOpacity
         style={{marginTop: 65, alignContent: 'center', bottom: 79}}
-        onPress={() => {navigation.navigate('Verify'),console.log("hello",phoneNumber),console.log("two",password)}}
+        onPress={() => navigation.navigate('Verify')}
         //onPress={postUser}
       >
         <Text style={styles.btn}>Sign In</Text>
