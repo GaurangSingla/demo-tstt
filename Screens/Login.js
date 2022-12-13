@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useRef} from 'react';
 import {
   View,
   Text,
@@ -8,12 +8,13 @@ import {
   TouchableOpacity,
   Pressable,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  SafeAreaView
 } from 'react-native';
+import {TextInput} from 'react-native-paper';
 import PhoneInput from 'react-native-phone-number-input';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SignUpScreen from './SignUpScreen';
-import Home from './Home';
 import {SocialIcon} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useIsFocused} from '@react-navigation/native';
@@ -21,26 +22,17 @@ import Tab_navi from '../android/Tab_navi';
 import Verify from './Verify';
 import {Divider} from 'react-native-elements';
 import axios from 'axios';
-// import Password from './Password';
+import Password from './Password';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
-import {TextInput} from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Login = ({navigation}) => {
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [password,setPassword]=useState('');
   const phoneInput = useRef(null);
   const [email, setEmail] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [password, setPassword] = useState('');
   const [rememberme, setrememberme] = useState(false);
-  const isFocused = useIsFocused();
-  const [usrName, setUsrName] = useState('');
-  const [pass, setPass] = useState('');
-  const [usrNameValid, setUsrNameValid] = useState(true);
-  const [passValid, setPassValid] = useState(true);
-  const [data, setData] = useState([]);
-  const [savenumber, setSaveNumber] = useState('');
 
   const [renderCards, setRenderCards] = useState(false);
   const passwordValidationSchema = Yup.object().shape({
@@ -140,6 +132,25 @@ const Login = ({navigation}) => {
         textContainerStyle={{}}
       />
 
+      {/* <TextInput
+        secureTextEntry={true}
+        style={{
+          backgroundColor: 'black',
+          borderWidth: 2,
+          borderColor: 'white',
+          borderRadius: 10,
+          bottom: 100,
+          width: '90%',
+          alignSelf: 'center',
+          paddingLeft:10
+        }}
+        placeholder={'password*'}
+        onChangeText={password => setPassword(password)}
+        defaultValue={password}
+        placeholderTextColor='#ccc'
+        withShadow
+        
+      /> */}
       <View>
         {/* <Password /> */}
         <Formik
@@ -249,15 +260,10 @@ const Login = ({navigation}) => {
       </View>
       <TouchableOpacity
         style={{marginTop: 65, alignContent: 'center', bottom: 79}}
-        // onPress={() => navigation.navigate('Verify')}
-        // onPress={postUser}
-        onPress={() => {
-          hitApi(),
-            console.log('bool', data.success),
-            console.log('login', phoneNumber),
-            console.log('password', password),
-            navigation.navigate('Verify');
-        }}>
+        
+       onPress={()=>navigation.navigate('Verify')}
+        //onPress={postUser}
+      >
         <Text style={styles.btn}>Sign In</Text>
       </TouchableOpacity>
       {/* <Divider width={1} orientation="Horizontal"  /> */}

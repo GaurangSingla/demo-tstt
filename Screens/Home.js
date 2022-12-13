@@ -14,6 +14,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Home = () => {
   return (
+   
     <View>
       <ScrollView
         showsVerticalScrollIndicator={false}
