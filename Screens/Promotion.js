@@ -4,10 +4,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 const Promotion = () => {
   return (
     <View >
-      <View style={{flexDirection:'row'}}> 
-       <Image style={{left:150,fontSize:40,alignSelf:'center'}} source={require('../src/assets/bmobileNewWhite.png')}></Image>
-       <MaterialCommunityIcons style={{left:235,fontSize:40,alignSelf:'center'}} name="bell" size={25} />
-       </View>
          
       <Text style={{top:80,fontSize:40,alignSelf:'center'}}>Promotions</Text>
      <Image style={{top:80,fontSize:40,alignSelf:'center',marginTop:20,padding:10}} source={require('../src/assets/Banner2.png')}></Image>

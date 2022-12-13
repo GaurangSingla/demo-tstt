@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Formik} from 'formik';
+import axios from 'axios';
+import {SignService} from '../Services.js/SignUpService';
 import {
   //   TextInput,
   View,
@@ -10,13 +12,45 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
+  KeyboardAvoidingView,
 } from 'react-native';
 import * as Yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {TextInput} from 'react-native-paper';
-import axios from 'axios';
-//import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-const SignUpScreen = () => {
+import Tab_navi from '../android/Tab_navi';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import Login from './Login';
+const SignUpScreen = ({navigation}) => {
+  const [date, setDate] = useState(new Date(1598051730000));
+  const [mode, setMode] = useState('date');
+  const [show, setShow] = useState(false);
+  const [name, setName] = useState('');
+  const [last, setLast] = useState('');
+  const [dob, setDob] = useState('');
+  const [number, setNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [city, setCity] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmpassword, setConfirmPassword] = useState('');
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setDate(currentDate);
+  };
+
+  const showMode = currentMode => {
+    setShow(true);
+    setMode(currentMode);
+  };
+
+  const showDatepicker = () => {
+    showMode('date');
+  };
+
+  const showTimepicker = () => {
+    showMode('time');
+  };
+
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-])|(\\([0-9]{2,3}\\)[ \\-])|([0-9]{2,4})[ \\-])?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const emailValidationSchema = Yup.object().shape({
@@ -37,364 +71,365 @@ const SignUpScreen = () => {
   });
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [confirmsecureTextEntry, confirmsetSecureTextEntry] = useState(true);
-  const [cityError, setCityError] = useState(false);
-  const [cityErrorMessage, setCityErrorMessage] = useState('');
-  const [citySelectPopup, setCitySelectPopup] = useState(false);
-  const [valid, setValid] = useState(false);
+  const hitSignUpApi = async () => {
+    try {
+      const args = {
+        firstName: name,
+        lastName: last,
+        username: 'user',
+        dob: dob,
+        city: city,
+        phone: number,
+        email: email,
+        password: password,
+      };
 
-  //   const [values, setValues] = useState({
-  //   firstName: "John",
-  //   lastName: "Doe",
-  //   dob: "2001-10-31",
-  //   city: "Kingston",
-  //   phone: "917906221470",
-  //   email: "john.doe@tstt.com",
-  //   password: "Staging123$"
-  // });
-  // const [loading, setLoading] = useState(false);
-  // useEffect(() => {
-  //   postUser();
-  // }, []);
-  // const handleSubmit = e => {
-  //   e.preventDefault();
-  //   setValues({...values});
-  //   const { firstName, lastName,dob,city,phone, email, password } = values;
-  //   const user = {firstName, lastName,dob,city,phone, email, password};
+      console.log('signup request == >', JSON.stringify(args));
+      const response = await SignService.signUpDetails(args);
+      console.log('signup response == >', JSON.stringify(response));
 
-  //   async function postUser () {
-  //       const result = await axios.post('${API)/signup', user);
-  //   };
-
-  //     useEffect(() => {
-  //       postUser();
-  //     }, []);
-
-  // };
-  // const handleChange = name => e => {
-  //   setValues({ ...values, [name]: e.target.value });
-  // };
+      if (response.data.success) {
+        // setItem(ASYNC_KEY.token, response.headers['access-medium']);
+        console.log('check', response.data.result);
+      } else {
+        setAlertBody({
+          dialogBoxType: 'Error',
+          headerText: 'Error',
+          messageText: response.data.message,
+        });
+        setshowAlertDialog(true);
+      }
+    } catch (e) {
+      console.log('signup catch response == >', JSON.stringify(e));
+    } finally {
+    }
+  };
   return (
-    <View style={styles.wrapper}>
-      <Image
-        style={{
-          marginLeft: 'auto',
-          marginRight: 'auto',
-          marginTop: 10,
-          height: '9%',
-          width: '45%',
-        }}
-        source={require('../assets/toplogo.jpeg')}
-      />
-      <Text
-        style={{
-          textAlign: 'center',
-          fontWeight: 'bold',
-          marginTop: 30,
-          fontSize: 30,
-        }}>
-        Sign Up
-      </Text>
-      <Formik
-        initialValues={{
-          firstname: '',
-          lastname: '',
-          email: '',
-          phoneNumber: '',
-          password: '',
-          confirmpassword: '',
-          dateofbirth: '',
-          city: '',
-        }}
-        validationSchema={emailValidationSchema}
-        onSubmit={values => {
-          console.log(values);
-        }}>
-        {({
-          handleSubmit,
-          errors,
-          values,
-          handleChange,
-          handleBlur,
-          isValid,
-        }) => (
-          <>
-            <ScrollView
-              style={{
-                height: Dimensions.get('screen').height * 0.44,
-              }}
-              contentContainerStyle={{
-                paddingVertical: '15%',
-              }}
-              showsVerticalScrollIndicator={false}
-              bounces={false}
-              showsHorizontalScrollIndicator={false}>
-              <View
-                style={[
-                  styles.inputField,
-                  {
-                    borderColor:
-                      1 > values.firstname.length ||
-                      values.firstname.length >= 2
-                        ? '#FAFAFA'
-                        : 'red',
-                  },
-                ]}>
-                <TextInput
-                  style={styles.inputFieldText}
-                  placeholder="First Name"
-                  label="First Name"
-                  placeholderTextColor="#979797"
-                  autoCapitalize="none"
-                  textContentType="username"
-                  onChangeText={handleChange('firstname')}
-                  onBlur={handleBlur('firstname')}
-                  value={values.firstname}
-                />
-                <Text style={styles.error}>{errors.firstname}</Text>
-              </View>
-              <View
-                style={[
-                  styles.inputField,
-                  {
-                    borderColor:
-                      1 > values.lastname.length || values.lastname.length >= 2
-                        ? '#FAFAFA'
-                        : 'red',
-                  },
-                ]}>
-                <TextInput
-                  style={styles.inputFieldText}
-                  placeholder="Last Name"
-                  label="Last Name"
-                  placeholderTextColor="#979797"
-                  autoCapitalize="none"
-                  textContentType="username"
-                  onChangeText={handleChange('lastname')}
-                  onBlur={handleBlur('lastname')}
-                  value={values.lastname}
-                />
-                <Text style={styles.error}>{errors.lastname}</Text>
-              </View>
-              <View
-                style={[
-                  styles.inputField,
-                  {
-                    borderColor:
-                      1 > values.dateofbirth.length ||
-                      values.dateofbirth.length >= 2
-                        ? '#FAFAFA'
-                        : 'red',
-                  },
-                ]}>
-                <TextInput
-                  style={styles.inputFieldText}
-                  placeholder="Date Of Birth"
-                  label="Date Of Birth"
-                  placeholderTextColor="#979797"
-                  autoCapitalize="none"
-                  textContentType="username"
-                  onChangeText={handleChange('dateofbirth')}
-                  onBlur={handleBlur('dateofbirth')}
-                  value={values.dateofbirth}
-                />
-                <Text style={styles.error}>{errors.dateofbirth}</Text>
-              </View>
+    <KeyboardAvoidingView>
+      <View style={{color: 'lightgrey'}}>
+        <Image
+          style={{height: 110, width: '100%', Color: 'grey'}}
+          source={require('../src/assets/bmobilsecurity.png')}></Image>
+      </View>
+      <View style={styles.wrapper}>
+        <Text
+          style={{
+            textAlign: 'center',
+            fontWeight: 'bold',
+
+            fontSize: 30,
+          }}>
+          Sign Up
+        </Text>
+        <Formik
+          initialValues={{
+            firstname: '',
+            lastname: '',
+            email: '',
+            phoneNumber: '',
+            password: '',
+            confirmpassword: '',
+            dateofbirth: '',
+            city: '',
+          }}
+          validationSchema={emailValidationSchema}
+          onSubmit={values => {
+            console.log(values);
+          }}>
+          {({
+            handleSubmit,
+            errors,
+            values,
+            handleChange,
+            handleBlur,
+            isValid,
+          }) => (
+            <>
+              <ScrollView
+                style={{
+                  height: Dimensions.get('screen').height * 0.44,
+                }}
+                contentContainerStyle={{}}
+                showsVerticalScrollIndicator={false}
+                bounces={false}
+                showsHorizontalScrollIndicator={false}>
+                <View
+                  style={[
+                    styles.inputField,
+                    {
+                      borderColor:
+                        1 > values.firstname.length ||
+                        values.firstname.length >= 2
+                          ? '#FAFAFA'
+                          : 'red',
+                    },
+                  ]}>
+                  <TextInput
+                    style={styles.inputFieldText}
+                    placeholder="First Name"
+                    label="First Name"
+                    placeholderTextColor="#979797"
+                    autoCapitalize="none"
+                    textContentType="username"
+                    onChangeText={handleChange('firstname')}
+                    onBlur={handleBlur('firstname')}
+                    value={values.firstname}
+                  />
+                  <Text style={styles.error}>{errors.firstname}</Text>
+                </View>
+                <View
+                  style={[
+                    styles.inputField,
+                    {
+                      borderColor:
+                        1 > values.lastname.length ||
+                        values.lastname.length >= 2
+                          ? '#FAFAFA'
+                          : 'red',
+                    },
+                  ]}>
+                  <TextInput
+                    style={styles.inputFieldText}
+                    placeholder={
+                      <Text>
+                        Select Subject
+                        <Text style={{color: 'red', fontSize: 15}}>*</Text>
+                      </Text>
+                    }
+                    label="Last Name"
+                    placeholderTextColor="#979797"
+                    autoCapitalize="none"
+                    textContentType="username"
+                    onChangeText={handleChange('last')}
+                    onBlur={handleBlur('lastname')}
+                    value={values.lastname}
+                  />
+                  <Text style={styles.error}>{errors.lastname}</Text>
+                </View>
+                <View
+                  style={[
+                    styles.inputField,
+                    {
+                      borderColor:
+                        1 > values.dateofbirth.length ||
+                        values.dateofbirth.length >= 2
+                          ? '#FAFAFA'
+                          : 'red',
+                    },
+                  ]}>
+                  <TextInput
+                    style={styles.inputFieldText}
+                    placeholder="Date Of Birth"
+                    label="Date Of Birth"
+                    placeholderTextColor="#979797"
+                    autoCapitalize="none"
+                    textContentType="username"
+                    onChangeText={handleChange('dateofbirth')}
+                    onBlur={handleBlur('dateofbirth')}
+                    value={values.dateofbirth}
+                  />
+                  <Text style={styles.error}>{errors.dateofbirth}</Text>
+                </View>
+                <View>
+                  <PhoneInput
+                    placeholder={'Mobile Number'}
+                    value={values.phoneNumber}
+                    defaultCode="IN"
+                    layout="first"
+                    containerStyle={{
+                      borderRadius: 10,
+                      width: '95%',
+                      backgroundColor: 'white',
+                      borderWidth: 2,
+                      borderColor: '#B5B5B5',
+                      height: 80,
+
+                      alignSelf: 'center',
+                    }}
+                    textContainerStyle={{color: 'white'}}
+                  />
+                  <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => {
+                      const checkValid =
+                        PhoneInput.current?.isValidNumber(value);
+                      setShowMessage(true);
+                      setValid(checkValid ? checkValid : false);
+                    }}>
+                    <Text style={styles.error}>{errors.phoneNumber}</Text>
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={[
+                    styles.inputField,
+                    {
+                      borderColor:
+                        values.email.length < 1 || isValid ? '#FAFAFA' : 'red',
+                    },
+                  ]}>
+                  <TextInput
+                    style={styles.inputFieldText}
+                    label="Email"
+                    placeholder="Email"
+                    placeholderTextColor="#979797"
+                    autoCapitalize="none"
+                    keyboardType="email-address"
+                    textContentType="emailAddress"
+                    autoFocus={false}
+                    onChangeText={handleChange('email')}
+                    onBlur={handleBlur('email')}
+                    value={values.email}
+                  />
+                  <Text style={styles.error}>{errors.email}</Text>
+                </View>
+                <View
+                  style={[
+                    styles.inputField,
+                    {
+                      borderColor:
+                        1 > values.city.length || values.city.length >= 2
+                          ? '#FAFAFA'
+                          : 'red',
+                    },
+                  ]}>
+                  <TextInput
+                    style={styles.inputFieldText}
+                    label="City"
+                    placeholder="City"
+                    placeholderTextColor="#979797"
+                    autoCapitalize="none"
+                    textContentType="username"
+                    onChangeText={handleChange('city')}
+                    onBlur={handleBlur('city')}
+                    value={values.city}
+                    rightIconName={'chevron-down'}
+                    error={cityError}
+                    fullerrormessage={cityErrorMessage}
+                    onPress={() => setCitySelectPopup(true)}
+                    onFocus={() => {
+                      // Keyboard.dismiss(),
+                      setCitySelectPopup(true);
+                    }}
+                  />
+                  <Text style={styles.error}>{errors.city}</Text>
+                </View>
+                <View
+                  style={[
+                    styles.inputField,
+                    {
+                      borderColor:
+                        1 > values.password.length ||
+                        values.password.length >= 6
+                          ? '#FAFAFA'
+                          : 'red',
+                    },
+                  ]}>
+                  <TextInput
+                    style={styles.inputFieldText}
+                    label="Password"
+                    placeholder="Password"
+                    placeholderTextColor="#979797"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    textContentType="password"
+                    onChangeText={handleChange('password')}
+                    onBlur={handleBlur('password')}
+                    value={values.password}
+                    secureTextEntry={secureTextEntry ? false : true}
+                    right={
+                      <TextInput.Icon
+                        name={secureTextEntry ? 'eye' : 'eye-off'}
+                        onPress={() => {
+                          setSecureTextEntry(!secureTextEntry);
+                        }}
+                      />
+                    }
+                  />
+                  <Text style={styles.error}>{errors.password}</Text>
+                </View>
+                <View
+                  style={[
+                    styles.inputField,
+                    {
+                      borderColor:
+                        1 > values.confirmpassword.length ||
+                        values.confirmpassword.length >= 6
+                          ? '#FAFAFA'
+                          : 'red',
+                    },
+                  ]}>
+                  <TextInput
+                    style={styles.inputFieldText}
+                    placeholder="Confirm Password"
+                    label="Confirm Password"
+                    placeholderTextColor="#979797"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    textContentType="confirmpassword"
+                    onChangeText={handleChange('confirmpassword')}
+                    onBlur={handleBlur('confirmpassword')}
+                    value={values.confirmpassword}
+                    secureTextEntry={secureTextEntry ? false : true}
+                    right={
+                      <TextInput.Icon
+                        name={secureTextEntry ? 'eye' : 'eye-off'}
+                        onPress={() => {
+                          setConfirmSecureTextEntry(!confirmsecureTextEntry);
+                          return false;
+                        }}
+                      />
+                    }
+                  />
+                  <Text style={styles.error}>{errors.confirmpassword}</Text>
+                </View>
+              </ScrollView>
               <View>
-                <PhoneInput
-                  placeholder={'Mobile Number'}
-                  value={values.phoneNumber}
-                  defaultCode="IN"
-                  layout="first"
-                  containerStyle={{
-                    borderRadius: 10,
-                    width: '95%',
-                    backgroundColor: '#fff',
-                    borderWidth: 2,
-                    borderColor: '#ccc',
-                    bottom: -80,
-                    margin: 10,
-                    alignSelf: 'center',
-                  }}
-                  textContainerStyle={{}}
-                />
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => {
-                    const checkValid = PhoneInput.current?.isValidNumber(value);
-                    setShowMessage(true);
-                    setValid(checkValid ? checkValid : false);
-                  }}>
-                  <Text style={styles.error}>{errors.phoneNumber}</Text>
+                <Pressable
+                  titleSize={20}
+                  style={styles.button(isValid)}
+                  onPress={() => [navigation.navigate('Login'), hitSignUpApi]}>
+                  <Text
+                    style={{color: '#fff', fontSize: 17, fontWeight: '600'}}>
+                    Submit
+                  </Text>
+                </Pressable>
+              </View>
+
+              <View style={styles.signUpContainer}>
+                <TouchableOpacity onPress={postUser}>
+                  <Text style={{color: 'green', fontWeight: '600'}}>
+                    Previous
+                  </Text>
                 </TouchableOpacity>
               </View>
-              <View
-                style={[
-                  styles.inputField,
-                  {
-                    borderColor:
-                      values.email.length < 1 || isValid ? '#FAFAFA' : 'red',
-                  },
-                ]}>
-                <TextInput
-                  style={styles.inputFieldText}
-                  label="Email"
-                  placeholder="Email"
-                  placeholderTextColor="#979797"
-                  autoCapitalize="none"
-                  keyboardType="email-address"
-                  textContentType="emailAddress"
-                  autoFocus={false}
-                  onChangeText={handleChange('email')}
-                  onBlur={handleBlur('email')}
-                  value={values.email}
-                />
-                <Text style={styles.error}>{errors.email}</Text>
-              </View>
-              <View
-                style={[
-                  styles.inputField,
-                  {
-                    borderColor:
-                      1 > values.city.length || values.city.length >= 2
-                        ? '#FAFAFA'
-                        : 'red',
-                  },
-                ]}>
-                <TextInput
-                  style={styles.inputFieldText}
-                  label="City"
-                  placeholder="City"
-                  placeholderTextColor="#979797"
-                  autoCapitalize="none"
-                  textContentType="username"
-                  onChangeText={handleChange('city')}
-                  onBlur={handleBlur('city')}
-                  value={values.city}
-                  rightIconName={'chevron-down'}
-                  error={cityError}
-                  fullerrormessage={cityErrorMessage}
-                  onPress={() => setCitySelectPopup(true)}
-                  onFocus={() => {
-                    // Keyboard.dismiss(),
-                    setCitySelectPopup(true);
-                  }}
-                />
-                <Text style={styles.error}>{errors.city}</Text>
-              </View>
-              <View
-                style={[
-                  styles.inputField,
-                  {
-                    borderColor:
-                      1 > values.password.length || values.password.length >= 6
-                        ? '#FAFAFA'
-                        : 'red',
-                  },
-                ]}>
-                <TextInput
-                  style={styles.inputFieldText}
-                  label="Password"
-                  placeholder="Password"
-                  placeholderTextColor="#979797"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  secureTextEntry={secureTextEntry}
-                  textContentType="password"
-                  onChangeText={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                  value={values.password}
-                  secureTextEntry={secureTextEntry ? false : true}
-                  right={
-                    <TextInput.Icon
-                      name={secureTextEntry ? 'eye' : 'eye-off'}
-                      onPress={() => {
-                        setSecureTextEntry(!secureTextEntry);
-                      }}
-                    />
-                  }
-                />
-                <Text style={styles.error}>{errors.password}</Text>
-              </View>
-              <View
-                style={[
-                  styles.inputField,
-                  {
-                    borderColor:
-                      1 > values.confirmpassword.length ||
-                      values.confirmpassword.length >= 6
-                        ? '#FAFAFA'
-                        : 'red',
-                  },
-                ]}>
-                <TextInput
-                  style={styles.inputFieldText}
-                  placeholder="Confirm Password"
-                  label="Confirm Password"
-                  placeholderTextColor="#979797"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  secureTextEntry={confirmsecureTextEntry}
-                  textContentType="confirmpassword"
-                  onChangeText={handleChange('confirmpassword')}
-                  onBlur={handleBlur('confirmpassword')}
-                  value={values.confirmpassword}
-                  secureTextEntry={secureTextEntry ? false : true}
-                  right={
-                    <TextInput.Icon
-                      name={secureTextEntry ? 'eye' : 'eye-off'}
-                      onPress={() => {
-                        setSecureTextEntry(!secureTextEntry);
-                      }}
-                    />
-                  }
-                />
-                <Text style={styles.error}>{errors.confirmpassword}</Text>
-              </View>
-            </ScrollView>
-            <View>
-              <Pressable
-                titleSize={20}
-                style={styles.button(isValid)}
-                onPress={handleSubmit}>
-                <Text style={{color: '#fff', fontSize: 17, fontWeight: '600'}}>
-                  Submit
-                </Text>
-              </Pressable>
-            </View>
-
-            <View style={styles.signUpContainer}>
-              <TouchableOpacity
-              //onPress={() => navigation.navigate('LoginScreen')}
-              >
-                <Text style={{color: 'green', fontWeight: '600'}}>
-                  Previous
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </>
-        )}
-      </Formik>
-    </View>
+            </>
+          )}
+        </Formik>
+      </View>
+    </KeyboardAvoidingView>
   );
 };
 const styles = StyleSheet.create({
   wrapper: {
-    marginTop: 10,
+    borderRadius: 20,
+    backgroundColor: 'white',
   },
   inputFieldText: {
     fontSize: 15,
     padding: 5,
+    backgroundColor: 'white',
+    width: '100%',
+    borderRadius: 10,
+    height: 45,
+    borderWidth: 1,
+    borderColor: '#B5B5B5',
+    color: '#989898',
   },
   inputField: {
     borderRadius: 4,
-    // padding: 12,
-    marginLeft: 10,
-    marginRight: 10,
-    backgroundColor: '#FAFAFA',
-    marginBottom: 10,
-    borderWidth: 1,
-    top: 80,
-    marginTop: 10,
+    alignSelf: 'center',
+    width: '95%',
+    backgroundColor: 'white',
   },
   emailInput: {
     width: 250,
@@ -413,7 +448,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     padding: 15,
-    marginTop: 15,
+    marginTop: '4%',
   }),
   buttonText: {
     color: 'white',

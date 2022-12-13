@@ -10,25 +10,10 @@ const Password = () => {
       .min(6, 'Your password has to have at least 6 characters'),
   });
   const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [password,setPasspord]=useState('');
   return (
     <View>
-      {/* <TextInput
-        secureTextEntry={true}
-        style={{
-          backgroundColor: 'black',
-          borderWidth: 2,
-          borderColor: 'white',
-          borderRadius: 10,
-          bottom: 100,
-          width: '90%',
-          alignSelf: 'center',
-          paddingLeft:10
-        }}
-        placeholder={'password*'}
-        placeholderTextColor='#ccc'
-        withShadow
-        
-      /> */}
+   
       <Formik
         initialValues={{
           password: '',
@@ -67,9 +52,9 @@ const Password = () => {
                 placeholderTextColor="#979797"
                 autoCapitalize="none"
                 autoCorrect={false}
-                secureTextEntry={secureTextEntry}
                 textContentType="password"
-                onChangeText={handleChange('password')}
+                onChangeText={password => setPasspord(password)}
+                defaultValue={password}
                 onBlur={handleBlur('password')}
                 value={values.password}
                 secureTextEntry={secureTextEntry ? false : true}

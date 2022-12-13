@@ -15,7 +15,7 @@ const Home = () => {
   // const data=['#00E556','#367B39']
   return (
     <View>
-      <View style={{flexDirection: 'row'}}>
+      {/* <View style={{flexDirection: 'row'}}>
         <TouchableOpacity>
           <Image
             style={{
@@ -47,7 +47,7 @@ const Home = () => {
             source={require('../assets/Notification.png')}
           />
         </TouchableOpacity>
-      </View>
+      </View> */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}>
