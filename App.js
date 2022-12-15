@@ -1,24 +1,26 @@
-
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text } from 'react-native';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Tab_navi from './android/Tab_navi';
 import Stacks from './android/Stack';
-const App=()=>{
-  return(
-    <View>
+import Counter from './Screens/Counter';
+import { Provider } from 'react-redux';
+import { store } from './redux/store/store';
+const App = (props) => {
+  return (
+    <View style={{ flex: 1 }}>
+      <Provider store={store}>
+        {/* <Counter /> */}
+        <NavigationContainer>
 
+          <Stacks />
+
+        </NavigationContainer>
+      </Provider>
     </View>
-  )
-}
 
-export default  ()=>{
-  return(
-  <NavigationContainer>
- 
-  <Stacks/>
- 
-  </NavigationContainer>)
+  );
 };
+export default App;
 
 

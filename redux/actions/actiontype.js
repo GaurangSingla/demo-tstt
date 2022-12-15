@@ -1,2 +1,2 @@
-export const ADDITION = 'ADDITION';
-export const SUBTRACTION = 'SUBTRACTION';
+export const LOGIN = 'LOGIN';
+// export const LOGOUT = 'LOGOUT';

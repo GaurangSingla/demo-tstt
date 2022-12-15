@@ -11,7 +11,7 @@ import {
   Platform,
   SafeAreaView
 } from 'react-native';
-import {TextInput} from 'react-native-paper';
+// import {TextInput} from 'react-native-paper';
 import PhoneInput from 'react-native-phone-number-input';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SignUpScreen from './SignUpScreen';
@@ -25,6 +25,12 @@ import axios from 'axios';
 import Password from './Password';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
+import {TextInput} from 'react-native-paper';
+// import { SafeAreaView } from 'react-native-safe-area-context';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../redux/actions/action';
+import { ProfileService } from '../ProfileService';
+import { store } from '../redux/store/store';
 
 const Login = ({navigation}) => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -33,14 +39,19 @@ const Login = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [rememberme, setrememberme] = useState(false);
-
+  const [data,setData] = useState([]);
   const [renderCards, setRenderCards] = useState(false);
   const passwordValidationSchema = Yup.object().shape({
     password: Yup.string()
       .required()
       .min(6, 'Your password has to have at least 6 characters'),
   });
+
+  const storeData = useSelector(state => state);
+  const dispatch = useDispatch();
   async function hitApi() {
+    // console.log(phoneNumber);
+    // console.log(password);
     let args = {
       loginId: '1868' + phoneNumber,
       password: password,
@@ -49,24 +60,30 @@ const Login = ({navigation}) => {
       // const fcmToken = await getItem('fcmToken');
       const header = {
         headers: {
-          'notification-token':
-            'qwertyuiop12347890-zxcvbnm./qwertyuiopasdfghjkzxcvbnm',
+          'notification-token':'qwertyuiop12347890-zxcvbnm./qwertyuiopasdfghjkzxcvbnm',
           'client-type': 'IOS',
           'client-version': ' 1.0.0',
         },
       };
-      console.log('header ===== ', header);
+      // const header = {
+      //   headers: storeData.headers
+      // };
+      // const header =storeData.headers
+      // console.log('header ===== ', header);
       const response = await ProfileService.loginService(args, header);
-      console.log(JSON.stringify(response.data));
-      if (response.data.success == true) {
-        console.log(
-          '==========> billpay responseId',
-          response.data.result.requestId,
-        );
-        console.log('token at login resp==', response.data.result.token);
-        await setItem(ASYNC_KEY.auth, 'Bearer ' + response.data.result.token);
-        await setItem(ASYNC_KEY.loginMethod, 'phoneNumber');
+      console.log('hshsh',response.data);
+      if (response.data.success ) {
+        // console.log(
+        //   '==========> billpay responseId',
+        //   response.data.result.requestId,
+        // );
+        // console.log('token at login resp==', response.data.result.token);
+        console.log('storedata',storeData)
+        dispatch(login(response.data.result.token))
         setData(response.data.result);
+        
+        // setItem(ASYNC_KEY.auth, 'Bearer ' + response.data.result.token);
+        // setItem(ASYNC_KEY.loginMethod, 'phoneNumber');
       } else {
         setAlertBody({
           dialogBoxType: 'Error',
@@ -74,11 +91,13 @@ const Login = ({navigation}) => {
         });
       }
     } catch (e) {
-      console.log('Status----->', e.response);
+      console.log('Status----->', e);
     }
   }
+  // console.log(storeData)
+  // console.log('jjee',data);
   async function phone() {
-    await setItem(ASYNC_KEY.loginMethod, 'phoneNumber');
+    // await setItem(ASYNC_KEY.loginMethod, 'phoneNumber');
     var p = await getItem(ASYNC_KEY.loginMethod);
   }
   function next() {
@@ -260,10 +279,16 @@ const Login = ({navigation}) => {
       </View>
       <TouchableOpacity
         style={{marginTop: 65, alignContent: 'center', bottom: 79}}
-        
-       onPress={()=>navigation.navigate('Verify')}
-        //onPress={postUser}
-      >
+        // onPress={() => navigation.navigate('Verify')}
+        // onPress={postUser}
+        onPress={() => {
+          hitApi()
+            // console.log('bool', data),
+            // console.log('login', phoneNumber),
+            // console.log('password', password)
+            // console.log('token',data.token)
+            // navigation.navigate('Verify');
+        }}>
         <Text style={styles.btn}>Sign In</Text>
       </TouchableOpacity>
       {/* <Divider width={1} orientation="Horizontal"  /> */}
@@ -334,32 +359,29 @@ const Login = ({navigation}) => {
             width: 180,
             height: 53,
           }}>
-          <TouchableOpacity>
-            <View>
-              <Image
-                style={{
-                  height: 49,
-                  width: 40,
-                }}
-                source={require('../assets/facebook.webp')}
-              />
-            </View>
-            <View>
-              <Text
-                style={{
-                  marginTop: 14,
-                  marginLeft: 45,
-                  fontSize: 13,
-                  color: '#4D4848',
-                  bottom: 45,
-                }}>
-                Sign in with facebook
-              </Text>
-            </View>
-          </TouchableOpacity>
+          <View>
+            <Image
+              style={{
+                height: 49,
+                width: 40,
+              }}
+              source={require('../assets/facebook.webp')}
+            />
+          </View>
+          <View>
+            <Text
+              style={{
+                marginTop: 14,
+                marginLeft: 10,
+                fontSize: 13,
+                color: '#4D4848',
+              }}>
+              Sign in with facebook
+            </Text>
+          </View>
         </View>
       </View>
-      <View style={{flexDirection: 'row', bottom: 44, marginLeft: 80}}>
+      <View style={{flexDirection: 'row', bottom: 40, marginLeft: 80}}>
         <View>
           <Text style={{fontSize: 18, color: '#989898'}}>
             Don't have an account

@@ -1,16 +1,16 @@
-import { ADDITION, SUBTRACTION } from "../actions/actiontype";
+import { ADDITION, LOGIN, LOGOUT, SUBTRACTION } from "../actions/actiontype";
 
 const initialState = {
-    counter: 0,
+    token:''
 }
 
 export const mainReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADDITION:
-            return { ...state, counter: state.counter + 1 };
-        case SUBTRACTION:
-            return { ...state, counter: state.counter - 1 };
-
+        case LOGIN:
+            // console.log(,action.payload)
+            return { ...state, token: action.payload };
+        // case LOGOUT:
+        //     return { ...state, data: state.data };
         default:
             return state;
     }

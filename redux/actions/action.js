@@ -1,8 +1,9 @@
-import { ADDITION,SUBTRACTION } from "./actiontype";
+import { LOGIN } from "./actiontype";
 
-export const addition = () => ({
-    type:ADDITION
+export const login = (payload) => ({
+    type:LOGIN,
+    payload:payload
 });
-export const subtraction = () => ({
-    type:SUBTRACTION,
-});
+// export const logout = () => ({
+//     type:LOGOUT,
+// });
