@@ -7,10 +7,13 @@ import {
   Button,
   TouchableOpacity,
   Pressable,
+  KeyboardAvoidingView,
+  Platform
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import SignUpScreen from './SignUpScreen';
+import Home from './Home';
 import {SocialIcon} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {useIsFocused} from '@react-navigation/native';
@@ -22,6 +25,7 @@ import axios from 'axios';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {TextInput} from 'react-native-paper';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Login = ({navigation}) => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -45,38 +49,45 @@ const Login = ({navigation}) => {
       .min(6, 'Your password has to have at least 6 characters'),
   });
   async function hitApi() {
+    let args = {
+      loginId: '1868' + phoneNumber,
+      password: password,
+    };
     try {
+      // const fcmToken = await getItem('fcmToken');
       const header = {
         headers: {
-          Authorization:
-            'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiOWRkMjliZTkxMTk3ZmI2ZjEyZmM3YjlmNTZjNzEwOTkwZDhjMTM5MDQ3ODM5YzliNTc3OGFiYzYwYzQ4OGQzOTUzMjFjODc4MTkzNjdmMGUiLCJpYXQiOjE2NzA0MTc3OTIuNTY2OTU4LCJuYmYiOjE2NzA0MTc3OTIuNTY2OTYxLCJleHAiOjE3MDE5NTM3OTIuNTY0MDg0LCJzdWIiOiIzMiIsInNjb3BlcyI6WyJhZG1pbiJdfQ.cATWDGVyyc59YJpK8F8XooRXiPkLdwFq5pk8203a1zBBS8ZqHDRVIqGPVsdh6sJPzeZ02UYTe0AwUXWM3Y8YY5jYGozLFjzN7nAG50ZJ3tIz7Cbu6Cu97F2Oke8jOuepgHcqs6UmxMZ4Mhxs79XregY6aEla8x3NeaSpyR0SkWuWCp9on1G1T2lNqCwkMCZO23wrftxbxu8TJcLkRACxLTLGldrb2qj0viMu_RPoYcjgZkuKOXDAKzzMzmweQxR-U9QqtS5OnBdtPZWq0qKFBiMr3doEEpOktn4ve8YCu971XiQaclTPwM5a_sr1foiqRiOheytmkmAlAXHLLFp0s_QslKlCbvnWjW_FWKj43xCiCsRQu7yamciyWqa3vYnpRYFhTHoMUXZMc9aHRuLB26TVRUUrEsG5T-DLyMSj-67Az5wAn9WoANFLNsYZdd_qTnm2iDbmNm7-TEBA5donuimhFisXmIVuZybTV6oeWcNZbZj8LvqgvSc8Aj6bhsd105v7J51I35TV1B76mzPIvhEQk-QqAonn0-oe8UIqByPIFnkpBIukLPHYaS-OjueSW70njYG6IPHVL4stS_qoMMRAZO48rkqJF7EPksMtPfeZwsZUB0_DbZhMtCdLotK-Bth6qy6r0PseWaUMUIVQq0wbEF7D8sLBRj6rZIR-qeo',
-        },
-        params: {
-          loginId: phoneNumber,
-          password: password,
+          'notification-token':
+            'qwertyuiop12347890-zxcvbnm./qwertyuiopasdfghjkzxcvbnm',
+          'client-type': 'IOS',
+          'client-version': ' 1.0.0',
         },
       };
       console.log('header ===== ', header);
-      const response = await PaymentService.billPayGet(header);
-      console.log(
-        '==========> billpay response',
-        JSON.stringify(response.data),
-      );
+      const response = await ProfileService.loginService(args, header);
+      console.log(JSON.stringify(response.data));
       if (response.data.success == true) {
         console.log(
           '==========> billpay responseId',
           response.data.result.requestId,
         );
+        console.log('token at login resp==', response.data.result.token);
+        await setItem(ASYNC_KEY.auth, 'Bearer ' + response.data.result.token);
+        await setItem(ASYNC_KEY.loginMethod, 'phoneNumber');
         setData(response.data.result);
-        renderCards(true);
       } else {
-        renderCards(false);
         setAlertBody({
           dialogBoxType: 'Error',
           messageText: response.data.message,
         });
       }
-    } catch (error) {}
+    } catch (e) {
+      console.log('Status----->', e.response);
+    }
+  }
+  async function phone() {
+    await setItem(ASYNC_KEY.loginMethod, 'phoneNumber');
+    var p = await getItem(ASYNC_KEY.loginMethod);
   }
   function next() {
     if (data.success) {
@@ -86,16 +97,26 @@ const Login = ({navigation}) => {
     }
   }
   return (
-    <>
+  <>
+    {/* <SafeAreaView style={{flex:1}}>
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior={Platform.OS == 'android' ? null : null}> */}
       <Image
         style={styles.img}
         source={require('../src/assets/babyChild.jpg')}
       />
+       <SafeAreaView style={{flex:1}}>
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior={Platform.OS == 'android' ? null : null}>
       <View style={styles.container}>
         <Text style={styles.txt}>
           Welcome To <Text style={styles.clr}>bMobile</Text>
         </Text>
       </View>
+
+      
       <PhoneInput
         style={{top: '200'}}
         onChangeText={phoneNumber => setPhoneNumber(phoneNumber)}
@@ -228,9 +249,15 @@ const Login = ({navigation}) => {
       </View>
       <TouchableOpacity
         style={{marginTop: 65, alignContent: 'center', bottom: 79}}
-        onPress={() => navigation.navigate('Verify')}
-        //onPress={postUser}
-      >
+        // onPress={() => navigation.navigate('Verify')}
+        // onPress={postUser}
+        onPress={() => {
+          hitApi(),
+            console.log('bool', data.success),
+            console.log('login', phoneNumber),
+            console.log('password', password),
+            navigation.navigate('Verify');
+        }}>
         <Text style={styles.btn}>Sign In</Text>
       </TouchableOpacity>
       {/* <Divider width={1} orientation="Horizontal"  /> */}
@@ -254,7 +281,7 @@ const Login = ({navigation}) => {
           </Text>
         </View>
       </Text>
-      
+
       <View style={{flexDirection: 'row'}}>
         <View
           style={{
@@ -326,7 +353,7 @@ const Login = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-      <View style={{flexDirection: 'row', bottom: 40, marginLeft: 80}}>
+      <View style={{flexDirection: 'row', bottom: 44, marginLeft: 80}}>
         <View>
           <Text style={{fontSize: 18, color: '#989898'}}>
             Don't have an account
@@ -348,10 +375,12 @@ const Login = ({navigation}) => {
         </View>
       </View>
       <View>
-        <Text style={{bottom: 34, textAlign: 'center', color: '#989898'}}>
+        <Text style={{bottom: 40, textAlign: 'center', color: '#989898'}}>
           Version: DEV - 1.0.0{' '}
         </Text>
       </View>
+      </KeyboardAvoidingView>
+      </SafeAreaView>
     </>
   );
 };

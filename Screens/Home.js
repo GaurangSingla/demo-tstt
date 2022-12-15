@@ -13,62 +13,11 @@ import Listhorizontal from './Listhorizontal';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 const Home = () => {
-  // const data=['#00E556','#367B39']
   return (
     <View>
-      {/* <View style={{flexDirection: 'row'}}>
-        <TouchableOpacity>
-          <Image
-            style={{
-              height: 60,
-              width: 60,
-              marginTop: 10,
-              marginLeft: 10,
-            }}
-            source={require('../assets/Profile.png')}
-          />
-        </TouchableOpacity>
-        <Image
-          style={{
-            marginLeft: 50,
-            height: 60,
-            width: 160,
-            marginTop: 10,
-          }}
-          source={require('../assets/toplogo.jpeg')}
-        />
-        <TouchableOpacity>
-          <Image
-            style={{
-              height: 60,
-              width: 60,
-              marginLeft: '22%',
-              marginTop: 10,
-            }}
-            source={require('../assets/Notification.png')}
-          />
-        </TouchableOpacity>
-      </View> */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}>
-        {/* <Carousel>
-
-        </Carousel> */}
-        {/* <ScrollView 
-        horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        >
-          <View style={{flex:1,flexDirection:'row'}}>
-            <View style={{backgroundColor:'green',height:90,width:'100%'}}>
-              <Text>onew</Text>
-            </View>
-            <View style={{backgroundColor:'green'}}>
-              <Text>onew</Text>
-            </View>
-          </View>
-
-        </ScrollView> */}
         {/* <SafeAreaView>
         <Listhorizontal data={data}/>
         </SafeAreaView> */}
@@ -78,8 +27,8 @@ const Home = () => {
             style={{
               backgroundColor: '#00E556',
               height: 190,
-              width: 330,
-              marginLeft: 30,
+              width: 350,
+              marginLeft: 10,
               marginTop: 20,
               borderRadius: 13,
             }}>
@@ -97,7 +46,7 @@ const Home = () => {
                 style={{
                   color: 'white',
                   fontSize: 20,
-                  fontWeight: 'bold',
+                  fontWeight: '700',
                   marginLeft: 10,
                 }}>
                 Loid Forger
@@ -105,11 +54,12 @@ const Home = () => {
               <TouchableOpacity>
                 <View
                   style={{
-                    backgroundColor: 'lightgrey',
+                    backgroundColor: '#F4F4F4',
                     marginLeft: 100,
-                    width: 100,
+                    width: 120,
                     height: 40,
                     bottom: 10,
+                    borderRadius: 10,
                   }}>
                   <Text
                     style={{
@@ -118,6 +68,7 @@ const Home = () => {
                       padding: 5,
                       textAlign: 'center',
                       justifyContent: 'center',
+                      fontWeight:'700'
                     }}>
                     Pay Bill
                   </Text>
@@ -160,15 +111,16 @@ const Home = () => {
               <TouchableOpacity>
                 <View
                   style={{
-                    backgroundColor: 'lightgrey',
+                    backgroundColor: '#F4F4F4',
                     width: 150,
                     height: 40,
                     alignItems: 'center',
                     justifyContent: 'center',
                     marginLeft: 85,
                     marginTop: 20,
+                    borderRadius: 10,
                   }}>
-                  <Text style={{color: 'white', fontWeight: 'bold'}}>
+                  <Text style={{color: 'white', fontWeight:'700'}}>
                     Refresh Bill Details
                   </Text>
                 </View>
@@ -176,11 +128,11 @@ const Home = () => {
               <TouchableOpacity>
                 <View
                   style={{
-                    backgroundColor: 'lightgrey',
+                    backgroundColor: '#F4F4F4',
                     borderRadius: 20,
                     height: 40,
                     width: 40,
-                    marginLeft: 38,
+                    marginLeft: 55,
                     marginTop: 20,
                   }}>
                   <Image
@@ -195,10 +147,10 @@ const Home = () => {
             style={{
               backgroundColor: '#367B39',
               height: 190,
-              width: 310,
+              width: 350,
               marginLeft: 10,
               marginTop: 20,
-              marginRight: 20,
+              marginRight: 10,
               borderRadius: 13,
             }}>
             <Text
@@ -225,10 +177,11 @@ const Home = () => {
                 <View
                   style={{
                     backgroundColor: 'white',
-                    marginLeft: 60,
-                    width: 100,
+                    marginLeft: 90,
+                    width: 110,
                     height: 40,
                     bottom: 20,
+                    borderRadius:10
                   }}>
                   <Text
                     style={{
@@ -256,7 +209,7 @@ const Home = () => {
                 Balance
               </Text>
               <Text
-                style={{color: 'white', marginLeft: 170, fontWeight: 'bold'}}>
+                style={{color: 'white', marginLeft: 200, fontWeight: 'bold'}}>
                 Expiry Date
               </Text>
             </View>
@@ -274,7 +227,7 @@ const Home = () => {
               <Text
                 style={{
                   color: 'white',
-                  marginLeft: 53,
+                  marginLeft: 85,
                   fontWeight: 'bold',
                   fontSize: 25,
                 }}>
@@ -291,8 +244,9 @@ const Home = () => {
                     height: 40,
                     alignItems: 'center',
                     justifyContent: 'center',
-                    marginLeft: 85,
+                    marginLeft: 100,
                     marginTop: 20,
+                    borderRadius:10
                   }}>
                   <Text style={{color: '#4D4848', fontWeight: 'bold'}}>
                     Manage Account
@@ -315,7 +269,7 @@ const Home = () => {
               marginTop: 40,
               marginLeft: 'auto',
               marginRight: 'auto',
-              fontWeight:'bold'
+              fontWeight: 'bold',
             }}>
             Add Account
           </Text>
@@ -422,22 +376,6 @@ const Home = () => {
             </View>
           </TouchableOpacity>
         </View>
-        {/* <View style={{flexDirection: 'row'}}>
-          <Text
-            style={{
-              marginTop: 10,
-              marginLeft: 17,
-              fontWeight: 'bold',
-              fontSize: 20,
-              color: 'green',
-            }}>
-            bMobile
-          </Text>
-          <Text style={{marginTop: 10, fontWeight: 'bold', fontSize: 20}}>
-            {' '}
-            Offers
-          </Text>
-        </View> */}
         <Image
           style={{
             height: 140,
@@ -499,28 +437,7 @@ const Home = () => {
             </View>
           </TouchableOpacity>
         </View>
-        {/* <View style={{flexDirection: 'row'}}>
-          <Text
-            style={{
-              marginTop: 20,
-              marginLeft: 16,
-              fontWeight: 'bold',
-              fontSize: 20,
-            }}>
-            More from
-          </Text>
-          <Text
-            style={{
-              marginTop: 20,
-              color: 'green',
-              fontWeight: 'bold',
-              fontSize: 20,
-            }}>
-            {' '}
-            bMobile
-          </Text>
-        </View> */}
-
+       
         <View style={{flexDirection: 'row', marginBottom: 120}}>
           <TouchableOpacity>
             <View

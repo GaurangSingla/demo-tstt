@@ -17,6 +17,7 @@
     "@react-navigation/native": "^6.0.14",
     "@react-navigation/native-stack": "^6.9.2",
     "@react-navigation/stack": "^6.3.5",
+    "@reduxjs/toolkit": "^1.9.1",
     "axios": "^1.2.0",
     "firebase": "^9.14.0",
     "formik": "^2.2.9",
@@ -41,6 +42,8 @@
     "react-native-select-dropdown": "^3.0.3",
     "react-native-vector-icons": "^9.2.0",
     "react-phone-number-input": "^3.2.12",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
