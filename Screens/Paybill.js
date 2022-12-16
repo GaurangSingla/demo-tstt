@@ -50,8 +50,7 @@ const Paybill = ({navigation}) => {
 
   }}
   return (
-    console.log(renderCards),
-    (
+    
       <View
         style={{
           backgroundColor: '#F4F4F4',
@@ -246,7 +245,7 @@ const Paybill = ({navigation}) => {
         ) : null}
       </View>
     )
-  );
+  
 };
 
 export default Paybill;

@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import { View, Text } from 'react-native';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
@@ -17,6 +18,29 @@ const App = (props) => {
 
         </NavigationContainer>
       </Provider>
+=======
+
+import { View, Text } from 'react-native'
+import React, { useEffect } from 'react'
+import { NavigationContainer } from '@react-navigation/native';
+import Tab_navi from './android/Tab_navi';
+import Stacks from './android/Stack';
+import messaging from '@react-native-firebase/messaging';
+
+
+import {
+  requestUserPermission,
+  notificationListener,
+} from './Services.js/notificationService';
+const App=()=>{
+  useEffect(() => {
+    requestUserPermission();
+    notificationListener();
+  }, []);
+  return(
+    <View>
+   <App/>
+>>>>>>> Stashed changes
     </View>
 
   );

@@ -1,4 +1,4 @@
-{
+      {
   "project_info": {
     "project_number": "379090293335",
     "project_id": "signup-fe9e3",
@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:379090293335:android:e7ffef758e045672424912",
         "android_client_info": {
-          "package_name": "com.tstt"
+          "package_name": "com.tstt_app"
         }
       },
       "oauth_client": [

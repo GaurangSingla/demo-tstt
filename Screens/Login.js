@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 import React, {useState, useRef} from 'react';
 import {
   View,
@@ -12,13 +13,17 @@ import {
   SafeAreaView
 } from 'react-native';
 // import {TextInput} from 'react-native-paper';
+=======
+import React,{useState,useEffect,useRef} from 'react'
+import {View,Text,Image,StyleSheet,Button, TouchableOpacity,Pressable} from 'react-native';
+>>>>>>> Stashed changes
 import PhoneInput from 'react-native-phone-number-input';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import SignUpScreen from './SignUpScreen';
-import {SocialIcon} from 'react-native-elements';
-import Icon from 'react-native-vector-icons/FontAwesome';
 import {useIsFocused} from '@react-navigation/native';
+import {TextInput} from 'react-native-paper';
+import {Formik} from 'formik';
+import * as Yup from 'yup';
 import Tab_navi from '../android/Tab_navi';
+<<<<<<< Updated upstream
 import Verify from './Verify';
 import {Divider} from 'react-native-elements';
 import axios from 'axios';
@@ -32,13 +37,53 @@ import { login } from '../redux/actions/action';
 import { ProfileService } from '../ProfileService';
 import { store } from '../redux/store/store';
 
+=======
+import messaging from '@react-native-firebase/messaging';
+import { ProfileService } from '../Services.js/LoginService';
+import notificationService from '../Services.js/notificationService'
+import {
+  SCREEN_ROUTE_MAPPING,
+  LOGIN_SCREEN,
+  ASYNC_KEY,
+  INVALID_INPUT,
+  DRAWER_CONTENT,
+  TRANSACTION_HISTORY,
+  ADD_CARD_ALERT,
+  HOME_SCREEN,
+  BuildType,
+} from '../utils/string';
+import {
+  setItem,
+  getItem,
+  multiRemove,
+  getAllKeys,
+} from '../utils/StorageHandling';
+import {
+  requestUserPermission,
+  notificationListener,
+} from '../Services.js/notificationService';
+>>>>>>> Stashed changes
 const Login = ({navigation}) => {
+  useEffect(() => {
+    requestUserPermission();
+    notificationListener();
+    
+  }, []);
+  const passwordValidationSchema = Yup.object().shape({
+    password: Yup.string()
+      .required()
+      .min(6, 'Your password has to have at least 6 characters'),
+  });
+  
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+  const [password,setPassword]=useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password,setPassword]=useState('');
   const phoneInput = useRef(null);
   const [email, setEmail] = useState('');
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [rememberme, setrememberme] = useState(false);
+<<<<<<< Updated upstream
   const [data,setData] = useState([]);
   const [renderCards, setRenderCards] = useState(false);
   const passwordValidationSchema = Yup.object().shape({
@@ -84,12 +129,89 @@ const Login = ({navigation}) => {
         
         // setItem(ASYNC_KEY.auth, 'Bearer ' + response.data.result.token);
         // setItem(ASYNC_KEY.loginMethod, 'phoneNumber');
+=======
+  const isFocused = useIsFocused();
+  const [usrName, setUsrName] = useState('');
+  const [pass, setPass] = useState('');
+  const [usrNameValid, setUsrNameValid] = useState(true);
+  const [passValid, setPassValid] = useState(true);
+  const [data, setData] = useState([]);
+  const [savenumber, setSaveNumber] = useState('');
+  const asyncKeys = [
+    ADD_CARD_ALERT.CARDS,
+    ASYNC_KEY.LOGGEDIN,
+    ASYNC_KEY.auth,
+    ASYNC_KEY.token,
+    ASYNC_KEY.loginMethod,
+    TRANSACTION_HISTORY.txnHistory,
+    DRAWER_CONTENT.names,
+    DRAWER_CONTENT.mobileNumber,
+    ASYNC_KEY.MOBILE,
+    ASYNC_KEY.Promo_Api_Response,
+    ASYNC_KEY.MOBILE_VISIBLE,
+    ASYNC_KEY.ACCOUNTS,
+    ASYNC_KEY.USER_PROFILE_DATA,
+    ASYNC_KEY.LOGGEDIN_CREDS,
+  ];
+
+
+  async function printKeys() {
+    var keys = await getAllKeys();
+    console.log('Get all Keys Log:::: ' + keys);
+  }
+  useEffect(() => {
+    if (isFocused) {
+      multiRemove(asyncKeys);
+    }
+
+    // printKeys();
+  }, [isFocused]);
+  // useEffect(()=>{
+  //   messaging().getToken().then(token=>{
+  //    console.log('hello',token)
+  //   })
+  //  })
+
+  async function hitApi() {
+    let args = {
+      loginId:
+        "1868" + phoneNumber,
+      password: password,
+    };
+    try { 
+      const fcmToken = await getItem('fcmToken');
+      const header = {
+          
+          headers: {
+            'notification-token': fcmToken,
+            'client-type': 'IOS' ,
+            'client-version':' 1.0.0' ,
+            
+          },
+
+       
+      };
+      console.log('header ===== ', header);
+      const response = await ProfileService.loginService(args, header);
+      console.log(
+      
+        JSON.stringify(response.data),
+      );
+      if (response.data.success == true) {
+        console.log(  '==========> billpay responseId',response.data.result.requestId);
+          console.log('token at login resp==', response.data.result.token);
+          await setItem(ASYNC_KEY.auth, 'Bearer ' + response.data.result.token);
+          await setItem(ASYNC_KEY.loginMethod, 'phoneNumber');
+        setData(response.data.result);
+        
+>>>>>>> Stashed changes
       } else {
         setAlertBody({
           dialogBoxType: 'Error',
           messageText: response.data.message,
         });
       }
+<<<<<<< Updated upstream
     } catch (e) {
       console.log('Status----->', e);
     }
@@ -105,8 +227,16 @@ const Login = ({navigation}) => {
       navigation.navigate('Tab_navi');
     } else {
       console.warn('check credentials');
+=======
+
+    }catch(e){
+      console.log('Status----->', e.response);
+>>>>>>> Stashed changes
     }
   }
+    async function phone(){   await setItem(ASYNC_KEY.loginMethod, 'phoneNumber');
+     var p=  await getItem(ASYNC_KEY.loginMethod)}
+  
   return (
   <>
     {/* <SafeAreaView style={{flex:1}}>
@@ -134,7 +264,7 @@ const Login = ({navigation}) => {
         defaultValue={phoneNumber}
         defaultCode="IN"
         layout="first"
-        placeholder={' Mobile Number '}
+    
         containerStyle={{
           borderRadius: 10,
           width: '95%',
@@ -150,27 +280,8 @@ const Login = ({navigation}) => {
         textInputStyle={{height: 40}}
         textContainerStyle={{}}
       />
-
-      {/* <TextInput
-        secureTextEntry={true}
-        style={{
-          backgroundColor: 'black',
-          borderWidth: 2,
-          borderColor: 'white',
-          borderRadius: 10,
-          bottom: 100,
-          width: '90%',
-          alignSelf: 'center',
-          paddingLeft:10
-        }}
-        placeholder={'password*'}
-        onChangeText={password => setPassword(password)}
-        defaultValue={password}
-        placeholderTextColor='#ccc'
-        withShadow
-        
-      /> */}
       <View>
+<<<<<<< Updated upstream
         {/* <Password /> */}
         <Formik
           initialValues={{
@@ -236,6 +347,65 @@ const Login = ({navigation}) => {
             </>
           )}
         </Formik>
+=======
+      <Formik
+        initialValues={{
+          password: '',
+        }}
+        validationSchema={passwordValidationSchema}
+        onSubmit={values => {
+          console.log(values);
+        }}>
+        {({
+          handleSubmit,
+          errors,
+          values,
+          handleChange,
+          handleBlur,
+          isValid,
+        }) => (
+          <>
+            <View
+              style={[
+                styles.inputField,
+                {
+                  borderColor:
+                    1 > values.password.length || values.password.length >= 6
+                      ? '#FAFAFA'
+                      : 'red',
+                },
+              ]}>
+              <TextInput
+                style={{backgroundColor:'white', fontSize: 13,borderWidth:1,borderColor:'#B5B5B5',
+                padding: 8,
+                height: 35,
+                marginTop:2}}
+                placeholder="Password"
+                placeholderStyle={{top:5,backgroundColor:'white'}}
+                placeholderTextColor="#979797"
+                autoCapitalize="none"
+                autoCorrect={false}
+                textContentType="password"
+                onChangeText={password => setPassword(password)}
+                defaultValue={password}
+                onBlur={handleBlur('password')}
+                secureTextEntry={secureTextEntry ? false : true}
+                right={
+                 <TextInput.Icon
+                  style={{marginTop:19}}
+                    name={secureTextEntry ? 'eye' : 'eye-off'}
+                    onPress={() => {
+                      setSecureTextEntry(!secureTextEntry);
+                    }}
+                  />
+                }
+                    />
+              <Text style={styles.error}>{errors.password}</Text>
+            </View>
+          </>
+  )}
+      </Formik>
+>>>>>>> Stashed changes
       </View>
       <View style={{flexDirection: 'row'}}>
         <View style={{flexDirection: 'row'}}>
@@ -279,6 +449,7 @@ const Login = ({navigation}) => {
       </View>
       <TouchableOpacity
         style={{marginTop: 65, alignContent: 'center', bottom: 79}}
+<<<<<<< Updated upstream
         // onPress={() => navigation.navigate('Verify')}
         // onPress={postUser}
         onPress={() => {
@@ -289,9 +460,14 @@ const Login = ({navigation}) => {
             // console.log('token',data.token)
             // navigation.navigate('Verify');
         }}>
+=======
+        
+       onPress={()=>{data?(hitApi(),console.log('bool',data.token),console.log("login",phoneNumber),console.log("password",password),phone,printKeys,console.log("keys",printKeys.keys),navigation.navigate("Tab_navi")):(console.warn("invalid"))}}
+      >
+>>>>>>> Stashed changes
         <Text style={styles.btn}>Sign In</Text>
       </TouchableOpacity>
-      {/* <Divider width={1} orientation="Horizontal"  /> */}
+   
       <Text
         style={{
           color: 'white',
@@ -303,7 +479,6 @@ const Login = ({navigation}) => {
           <Text
             style={{
               color: 'black',
-              // left: -265,
 
               fontWeight: 'bold',
               textAlign: 'center',
@@ -312,7 +487,10 @@ const Login = ({navigation}) => {
           </Text>
         </View>
       </Text>
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
       <View style={{flexDirection: 'row'}}>
         <View
           style={{
@@ -324,6 +502,7 @@ const Login = ({navigation}) => {
             width: 180,
             height: 53,
           }}>
+<<<<<<< Updated upstream
           <TouchableOpacity>
             <View>
               <Image
@@ -348,6 +527,29 @@ const Login = ({navigation}) => {
               </Text>
             </View>
           </TouchableOpacity>
+=======
+            <TouchableOpacity style={{flexDirection:'row'}}>
+          <View>
+            <Image
+              style={{
+                height: 49,
+                width: 40,
+              }}
+              source={require('../assets/google.png')}
+            />
+          </View>
+          <View>
+            <Text
+              style={{
+                marginTop: 14,
+                marginLeft: 10,
+                fontSize: 13,
+                color: '#4D4848',
+              }}>
+              Sign in with google
+            </Text>
+          </View></TouchableOpacity>
+>>>>>>> Stashed changes
         </View>
         <View
           style={{
@@ -359,6 +561,7 @@ const Login = ({navigation}) => {
             width: 180,
             height: 53,
           }}>
+            <TouchableOpacity  style={{flexDirection:'row'}}>
           <View>
             <Image
               style={{
@@ -378,7 +581,7 @@ const Login = ({navigation}) => {
               }}>
               Sign in with facebook
             </Text>
-          </View>
+          </View></TouchableOpacity>
         </View>
       </View>
       <View style={{flexDirection: 'row', bottom: 40, marginLeft: 80}}>
@@ -388,6 +591,7 @@ const Login = ({navigation}) => {
           </Text>
         </View>
         <View>
+<<<<<<< Updated upstream
           <TouchableOpacity onPress={() => navigation.navigate('SignUpScreen')}>
             <Text
               style={{
@@ -400,6 +604,19 @@ const Login = ({navigation}) => {
               Sign up
             </Text>
           </TouchableOpacity>
+=======
+          <TouchableOpacity onPress={()=>navigation.navigate("SignUpScreen")}>
+          <Text
+            style={{
+              marginLeft: 7,
+              color: 'green',
+              textDecorationLine: 'underline',
+              fontSize: 18,
+              color: '#00E556',
+            }}>
+            Sign up
+          </Text></TouchableOpacity>
+>>>>>>> Stashed changes
         </View>
       </View>
       <View>
@@ -450,6 +667,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 10,
     fontWeight: 'bold',
+  }, 
+   error: {
+    color: 'red',
+    alignSelf: 'center',
+  },
+  inputField: {
+    borderRadius: 4,
+    marginLeft: 10,
+    marginRight: 10,
+    backgroundColor: 'rgba(0,0,0,0)',
+    marginTop: -95,
+    borderWidth: 1,
+    height: 50,
+    borderColor:'#B5B5B5',
+    borderWidth:2,
+    backgroundColor:'white'
   },
   error: {
     color: 'red',
