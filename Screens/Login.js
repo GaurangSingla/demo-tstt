@@ -134,6 +134,7 @@ const Login = ({navigation}) => {
         await setItem(ASYNC_KEY.auth, 'Bearer ' + response.data.result.token);
         await setItem(ASYNC_KEY.loginMethod, 'phoneNumber');
         setData(response.data.result);
+        navigation.navigate('Tab_navi')
       } else {
         setAlertBody({
           dialogBoxType: 'Error',
@@ -295,8 +296,8 @@ const Login = ({navigation}) => {
               // console.log('password', password),
               phone,
               printKeys,
-              console.log('keys', printKeys.keys),
-              navigation.navigate('Tab_navi'))
+              console.log('keys', printKeys.keys)
+            )
             : console.warn('invalid');
         }}>
         <Text style={styles.btn}>Sign In</Text>
