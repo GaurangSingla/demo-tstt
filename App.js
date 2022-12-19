@@ -16,7 +16,7 @@ const App = (props) => {
     notificationListener();
   }, []);
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 ,backgroundColor:'#FFF'}}>
       <Provider store={store}>
         {/* <Counter /> */}
         <NavigationContainer>
