@@ -6,39 +6,55 @@ import axios from 'axios';
 import {data} from './data';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import PaymentService from '../Services.js/PaybillService';
+import {
+  setItem,
+  getItem,
+  multiRemove,
+  getAllKeys,
+} from '../utils/StorageHandling';
+import {
+  
+  ASYNC_KEY
+} from '../utils/string';
 const Paybill = ({navigation}) => {
   const [data, setData] = useState([]);
   const [savenumber, setSaveNumber] = useState('');
  
-  const [renderCards, setRenderCards] = useState(false);
+  const [renderCards, setRenderCards] = useState(false); 
+  const [message,setMessage]=useState('');
+ 
  async function hitApi() {
-    try {
+    try { 
+      const authToken = await getItem(ASYNC_KEY.auth);
       const header = {
+       
         headers: {
-          Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI1IiwianRpIjoiOWRkMjliZTkxMTk3ZmI2ZjEyZmM3YjlmNTZjNzEwOTkwZDhjMTM5MDQ3ODM5YzliNTc3OGFiYzYwYzQ4OGQzOTUzMjFjODc4MTkzNjdmMGUiLCJpYXQiOjE2NzA0MTc3OTIuNTY2OTU4LCJuYmYiOjE2NzA0MTc3OTIuNTY2OTYxLCJleHAiOjE3MDE5NTM3OTIuNTY0MDg0LCJzdWIiOiIzMiIsInNjb3BlcyI6WyJhZG1pbiJdfQ.cATWDGVyyc59YJpK8F8XooRXiPkLdwFq5pk8203a1zBBS8ZqHDRVIqGPVsdh6sJPzeZ02UYTe0AwUXWM3Y8YY5jYGozLFjzN7nAG50ZJ3tIz7Cbu6Cu97F2Oke8jOuepgHcqs6UmxMZ4Mhxs79XregY6aEla8x3NeaSpyR0SkWuWCp9on1G1T2lNqCwkMCZO23wrftxbxu8TJcLkRACxLTLGldrb2qj0viMu_RPoYcjgZkuKOXDAKzzMzmweQxR-U9QqtS5OnBdtPZWq0qKFBiMr3doEEpOktn4ve8YCu971XiQaclTPwM5a_sr1foiqRiOheytmkmAlAXHLLFp0s_QslKlCbvnWjW_FWKj43xCiCsRQu7yamciyWqa3vYnpRYFhTHoMUXZMc9aHRuLB26TVRUUrEsG5T-DLyMSj-67Az5wAn9WoANFLNsYZdd_qTnm2iDbmNm7-TEBA5donuimhFisXmIVuZybTV6oeWcNZbZj8LvqgvSc8Aj6bhsd105v7J51I35TV1B76mzPIvhEQk-QqAonn0-oe8UIqByPIFnkpBIukLPHYaS-OjueSW70njYG6IPHVL4stS_qoMMRAZO48rkqJF7EPksMtPfeZwsZUB0_DbZhMtCdLotK-Bth6qy6r0PseWaUMUIVQq0wbEF7D8sLBRj6rZIR-qeo",
+          Authorization: authToken,
         },
         params: {
-          mobileNumber:savenumber,
+          mobileNumber:"1868"+savenumber,
            
         },
       };
       console.log('header ===== ', header);
-      const response = await PaymentService.billPayGet(header);
+      const response = await PaymentService. billPayGet(header);
       console.log(
         '==========> billpay response',
         JSON.stringify(response.data),
       );
-      if (response.data.success == true) {
+      if (response.data.success) {
         console.log(
           '==========> billpay responseId',
           response.data.result.requestId,
         );
         setData(response.data.result);
-
-        // console.log('result ', result);
-        renderCards(true);
+     
+      
+        setRenderCards(true);
       } else {
-        renderCards(false);
+        setRenderCards(false); 
+        
+        setMessage(response.data.message);
         setAlertBody({
           dialogBoxType: 'Error',
           messageText: response.data.message,
@@ -47,7 +63,7 @@ const Paybill = ({navigation}) => {
    
       
   }}catch( error){
-
+    Alert.alert(message)
   }}
   return (
     
@@ -91,7 +107,7 @@ const Paybill = ({navigation}) => {
 
           <View
             style={{marginLeft: 0, alignSelf: 'flex-end', top: -20, right: 30}}>
-            <TouchableOpacity onPress={hitApi}>
+            <TouchableOpacity onPress={()=>{hitApi(),console.log("jj")}}>
               <MaterialCommunityIcons name="arrow-right" size={25} />
             </TouchableOpacity>
           </View>
@@ -128,7 +144,7 @@ const Paybill = ({navigation}) => {
                 </Text>
               </View>
 
-              {savenumber == '18686893378' ? (
+              {data? (
                 <View style={{flexDirection: 'row'}}>
                   <Text
                     style={{marginLeft: 25, fontSize: 19, color: '#4D4848'}}>
@@ -139,7 +155,7 @@ const Paybill = ({navigation}) => {
                     {data.mobileNumber}
                   </Text>
                 </View>
-              ) : null}
+              ) : Alert.alert(message)}
 
               <View style={{flexDirection: 'row'}}>
                 <Text style={{marginTop: 15, marginLeft: 12, color: '#9B9B9B'}}>
@@ -151,7 +167,7 @@ const Paybill = ({navigation}) => {
                 </Text>
               </View>
 
-              {savenumber == '18686893378' ? (
+              {data? (
                 <View style={{flexDirection: 'row'}}>
                   <Text
                     style={{marginLeft: 15, fontSize: 19, color: '#4D4848'}}>
@@ -163,7 +179,7 @@ const Paybill = ({navigation}) => {
                     {data.dueAmount}{' '}
                   </Text>
                 </View>
-              ) : null}
+              ) : Alert.alert(message)}
               <TouchableOpacity>
                 <View
                   style={{
@@ -176,12 +192,12 @@ const Paybill = ({navigation}) => {
                     marginLeft: 35,
                     borderRadius: 7,
                   }}>
-                  {savenumber == '18686893378'  ? (
+                  {data  ? (
                     <Text style={{color: '#2E2F2F', fontWeight: 'bold'}}>
                       {'Pay'} {'$'}
                       {data.dueAmount}
                     </Text>
-                  ) : null}
+                  ) :  Alert.alert(message)}
                 </View>
               </TouchableOpacity>
             </View>
