@@ -13,8 +13,18 @@ import {
   Image,
   Dimensions,
   KeyboardAvoidingView,
+  Alert,
   
 } from 'react-native';
+import {
+  SCREEN_ROUTE_MAPPING,
+  ASYNC_KEY,
+} from '../utils/string';
+import {
+  setItem,
+  getItem,
+
+} from '../utils/StorageHandling';
 import * as Yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -27,6 +37,7 @@ const SignUpScreen = ({navigation}) => {
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [name,setName]=useState('')
+  const [valid,setValid]=useState();
   const [last,setLast]=useState('')
   const [dob,setDob]=useState('')
   const [number,setNumber]=useState('')
@@ -56,19 +67,19 @@ const SignUpScreen = ({navigation}) => {
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-])|(\\([0-9]{2,3}\\)[ \\-])|([0-9]{2,4})[ \\-])?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const emailValidationSchema = Yup.object().shape({
-    firstname: Yup.string().required().min(2, 'A firstname is required'),
-    lastname: Yup.string().required().min(2, 'A firstname is required'),
-    dateofbirth: Yup.string().required().min(2, 'dateofbirth is required'),
-    city: Yup.string().required().min(2, 'A city is required'),
-    phoneNumber: Yup.string().matches(phoneRegExp, 'Phone number is not valid'),
+    firstname: Yup.string().required('First Name is required').min(2),
+    lastname: Yup.string().required("Last Name is required").min(2, 'A firstname is required'),
+    dateofbirth: Yup.string().required('Date Of Birth is required').min(2, 'dateofbirth is required'),
+    city: Yup.string().required(' City is required').min(2, 'A city is required'),
+    phoneNumber: Yup.string().required('Phone Number is required').min(2, 'Phone number is not valid'),
     email: Yup.string()
       .email('Please enter a valid email')
       .required('Email Address is Required'),
     password: Yup.string()
-      .required()
+      .required(' Password is required')
       .min(6, 'Your password has to have at least 6 characters'),
     confirmpassword: Yup.string()
-      .required()
+      .required(' Confirm Password is required')
       .min(6, 'Your password has to have at least 6 characters'),
   });
   const [secureTextEntry, setSecureTextEntry] = useState(true);
@@ -93,32 +104,26 @@ const SignUpScreen = ({navigation}) => {
       if (response.data.success) {
         console.log("check",response.data.result)
         setItem(ASYNC_KEY.token, response.headers['access-medium']);
-        navigation.navigate(SCREEN_ROUTE_MAPPING.VerifyOtpScreen, {
+        navigation.navigate(SCREEN_ROUTE_MAPPING.Verify, {
           Value: 'SignUp',
-          phone: phone,
+          phone: number,
           selectedCountry: "91",
         })
+        navigation.navigate('Login')
       } else {
-        setAlertBody({
-          dialogBoxType: 'Error',
-          headerText: 'Error',
-          messageText: response.data.message,
-        });
-        setshowAlertDialog(true);
+       Alert.alert(response.data.message)
       }
     } catch (e) {
       console.log('signup catch response == >', JSON.stringify(e));
 
 
   
-    } finally {
-    
     }
   };
   return (
-    <KeyboardAvoidingView>
-      <View style={{color:'lightgrey'}}>
-        <Image style={{height:110,width:"100%",Color:'grey'}}
+    <KeyboardAvoidingView style={{backgroundColor:'#F4F4F4'}}>
+      <View style={{alignSelf:'center'}}>
+        <Image style={{width:260,height:90,resizeMode:'cover'}}
         source={require('../src/assets/bmobilsecurity.png')}>
 
         </Image>
@@ -131,6 +136,7 @@ const SignUpScreen = ({navigation}) => {
           fontWeight: 'bold',
         
           fontSize: 30,
+          marginBottom:10
         
         
         }}>
@@ -162,7 +168,7 @@ const SignUpScreen = ({navigation}) => {
           <>
             <ScrollView
               style={{
-                height: Dimensions.get('screen').height * 0.44,
+                height: Dimensions.get('screen').height * 0.47,
               }}
               contentContainerStyle={{
                 
@@ -190,9 +196,11 @@ const SignUpScreen = ({navigation}) => {
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
                   textContentType="username"
-                  onChangeText={handleChange('firstname')}
+                  onChangeText={name => setName(name)}
+                  defaultValue={name}
                   onBlur={handleBlur('firstname')}
-                  value={values.firstname}
+                  
+                 
                 />
                 <Text style={styles.error}>{errors.firstname}</Text>
               </View>
@@ -208,19 +216,15 @@ const SignUpScreen = ({navigation}) => {
                 ]}>
                 <TextInput
                   style={styles.inputFieldText}
-                  placeholder={ <Text>
-                    Select Subject
-                    <Text style={{color: 'red', fontSize:15}}>
-                      *
-                    </Text>
-                  </Text>}
+                  placeholder="last name*"
                   label="Last Name"
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
                   textContentType="username"
-                  onChangeText={handleChange('last')}
+                  onChangeText={last => setLast(last)}
+                  defaultValue={last}
                   onBlur={handleBlur('lastname')}
-                  value={values.lastname}
+                
                 />
                 <Text style={styles.error}>{errors.lastname}</Text>
               </View>
@@ -242,9 +246,10 @@ const SignUpScreen = ({navigation}) => {
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
                   textContentType="username"
-                  onChangeText={handleChange('dateofbirth')}
+                  onChangeText={dob => setDob(dob)}
+                  defaultValue={dob}
                   onBlur={handleBlur('dateofbirth')}
-                  value={values.dateofbirth}
+                
 
                 />            
                 <Text style={styles.error}>{errors.dateofbirth}</Text>
@@ -252,31 +257,25 @@ const SignUpScreen = ({navigation}) => {
               <View>
                 <PhoneInput
                   placeholder={'Mobile Number'}
-                  value={values.phoneNumber}
+                  onChangeText={number => setNumber(number)}
+                  defaultValue={number}
                   defaultCode="IN"
                   layout="first"
                   containerStyle={{
-                    borderRadius: 10,
+                    borderRadius: 5,
                     width: '95%',
                     backgroundColor: 'white',
-                    borderWidth: 2,
+                    borderWidth: 1,
                     borderColor: '#B5B5B5',
-                   height:80,
+                   height:58,
                
                     alignSelf: 'center',
                   }}
-                 
+                  textInputStyle={{height: 40}}
                   textContainerStyle={{color:'white'}}
                 />
-                <TouchableOpacity
-                  style={styles.button}
-                  onPress={() => {
-                    const checkValid = PhoneInput.current?.isValidNumber(value);
-                    setShowMessage(true);
-                    setValid(checkValid ? checkValid : false);
-                  }}>
-                  <Text style={styles.error}>{errors.phoneNumber}</Text>
-                </TouchableOpacity>
+                  <Text style={styles.error1}>{errors.phoneNumber}</Text>
+               
               </View>
               <View
                 style={[
@@ -295,9 +294,10 @@ const SignUpScreen = ({navigation}) => {
                   keyboardType="email-address"
                   textContentType="emailAddress"
                   autoFocus={false}
-                  onChangeText={handleChange('email')}
+                  onChangeText={email => setEmail(email)}
+                  defaultValue={email}
                   onBlur={handleBlur('email')}
-                  value={values.email}
+                
                 />
                 <Text style={styles.error}>{errors.email}</Text>
               </View>
@@ -318,17 +318,13 @@ const SignUpScreen = ({navigation}) => {
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
                   textContentType="username"
-                  onChangeText={handleChange('city')}
+                  onChangeText={city => setCity(city)}
+                  defaultValue={city}
                   onBlur={handleBlur('city')}
-                  value={values.city}
                   rightIconName={'chevron-down'}
                 
               
-                  onPress={() => setCitySelectPopup(true)}
-                  onFocus={() => {
-                    // Keyboard.dismiss(),
-                    setCitySelectPopup(true);
-                  }}
+                
                 />
                 <Text style={styles.error}>{errors.city}</Text>
               </View>
@@ -349,11 +345,11 @@ const SignUpScreen = ({navigation}) => {
                   placeholderTextColor="#979797"
                   autoCapitalize="none"
                   autoCorrect={false}
-                 
                   textContentType="password"
-                  onChangeText={handleChange('password')}
+                  onChangeText={password => setPassword(password)}
+                  defaultValue={password}
                   onBlur={handleBlur('password')}
-                  value={values.password}
+                
                   secureTextEntry={secureTextEntry ? false : true}
                   right={
                     <TextInput.Icon
@@ -386,9 +382,10 @@ const SignUpScreen = ({navigation}) => {
                   autoCorrect={false}
           
                   textContentType="confirmpassword"
-                  onChangeText={handleChange('confirmpassword')}
+                  onChangeText={confirmpassword => setConfirmPassword(confirmpassword)}
+                  defaultValue={confirmpassword}
                   onBlur={handleBlur('confirmpassword')}
-                  value={values.confirmpassword}
+                 
                   secureTextEntry={secureTextEntry ? false : true}
                   right={
                     <TextInput.Icon
@@ -403,13 +400,13 @@ const SignUpScreen = ({navigation}) => {
                 <Text style={styles.error}>{errors.confirmpassword}</Text>
               </View>
             </ScrollView>
-            <View>
+            <View style={{bottom:70}}>
               <Pressable
                 titleSize={20}
                 style={styles.button(isValid)}
                
               
-                onPress={() =>[ navigation.navigate('Login'),hitSignUpApi]}
+                onPress={() =>{ hitSignUpApi()}}
                 >
                   
                 <Text style={{color: '#fff', fontSize: 17, fontWeight: '600'}}>
@@ -437,7 +434,7 @@ const SignUpScreen = ({navigation}) => {
 };
 const styles = StyleSheet.create({
   wrapper: {
-  
+   height:725,
     borderRadius:20,
     backgroundColor:'white',
   },
@@ -448,7 +445,9 @@ const styles = StyleSheet.create({
     width:'100%',
     borderRadius:10,
     height:45,
-    borderWidth: 1,
+     borderRightWidth:1,
+     borderLeftWidth:1,
+     borderTopWidth:1,
     borderColor:'#B5B5B5',
     color:'#989898',
   },
@@ -465,9 +464,9 @@ const styles = StyleSheet.create({
   emailInput: {
     width: 250,
     height: 50,
-    borderWidth: 1,
+  
     borderRadius: 15,
-    borderColor: 'black',
+   
     padding: 2,
   },
   button: isValid => ({
@@ -486,13 +485,21 @@ const styles = StyleSheet.create({
   },
   error: {
     color: 'red',
-    alignSelf: 'center',
+    alignSelf: "flex-start",
+    marginVertical:5
+  },
+  error1: {
+    color: 'red',
+    alignSelf: "flex-start",
+    marginVertical:5,
+    left:15
   },
   signUpContainer: {
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'center',
-    marginTop: '20%',
+    marginTop: '22%',
+    bottom:75,
 
    
   },

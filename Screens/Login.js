@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import {useIsFocused} from '@react-navigation/native';
-import {TextInput} from 'react-native-paper';
+import {Modal, TextInput} from 'react-native-paper';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import Tab_navi from '../android/Tab_navi';
@@ -18,6 +18,7 @@ import messaging from '@react-native-firebase/messaging';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/actions/action';
 import { ProfileService } from '../ProfileService';
+import CommonModal from '../Modal/Modal';
 import { store } from '../redux/store/store';
 
 import notificationService from '../Services.js/notificationService';
@@ -49,7 +50,7 @@ const Login = ({navigation}) => {
   }, []);
   const passwordValidationSchema = Yup.object().shape({
     password: Yup.string()
-      .required()
+      .required("Password is required")
       .min(6, 'Your password has to have at least 6 characters'),
   });
 
@@ -83,6 +84,14 @@ const Login = ({navigation}) => {
     ASYNC_KEY.LOGGEDIN_CREDS,
   ];
 
+  const [modalVisible, setModalVisible] = useState(true);
+  const [press,setPress]=useState(false)
+  const [alertBody, setAlertBody] = useState({
+    dialogBoxType: '',
+    headerText: '',
+    messageText: '',
+    navigateFunction: () => {},
+  });
   async function printKeys() {
     var keys = await getAllKeys();
     console.log('Get all Keys Log:::: ' + keys);
@@ -123,7 +132,7 @@ const Login = ({navigation}) => {
       // console.log('fcm token is .....', fcmToken);
       const response = await ProfileService.loginService(args, header);
       console.log(JSON.stringify(response.data));
-      if (response.data.success == true) {
+      if (response.data.success) {
         console.log(
           '==========> billpay responseId',
           response.data.result.requestId,
@@ -136,13 +145,22 @@ const Login = ({navigation}) => {
         setData(response.data.result);
         navigation.navigate('Tab_navi')
       } else {
+        console.log('wrong crentials')
         setAlertBody({
           dialogBoxType: 'Error',
+          headerText: 'Error',
           messageText: response.data.message,
+          navigateFunction: () => {
+           
+       setModalVisible(false);
+          },
         });
+  {press?
+        setModalVisible(true):  setModalVisible(false)}
       }
     } catch (e) {
       console.log('Status----->', e.response);
+    
     }
   }
   async function phone() {
@@ -151,7 +169,18 @@ const Login = ({navigation}) => {
   }
 
   return (
+
     <>
+
+    <CommonModal    
+    name="amrit"
+    modalVisible={modalVisible}
+    setModalVisible={setModalVisible}
+    alertBody={alertBody}
+
+    
+    />
+
       <Image
         style={styles.img}
         source={require('../src/assets/babyChild.jpg')}
@@ -265,7 +294,7 @@ const Login = ({navigation}) => {
           <Text
             style={{
               color: 'black',
-              bottom: 31,
+              bottom: 29,
               marginLeft: '6%',
             }}>
             Remember Me
@@ -276,8 +305,7 @@ const Login = ({navigation}) => {
             style={{
               color: 'black',
               textDecorationLine: 'underline',
-              textDecorationColor: 'white',
-              textDecorationStyle: 'solid',
+             
               bottom: 31,
 
               marginLeft: '46%',
@@ -290,13 +318,8 @@ const Login = ({navigation}) => {
         style={{marginTop: 65, alignContent: 'center', bottom: 79}}
         onPress={() => {
           data
-            ? (hitApi(),
-              console.log('bool', data.token),
-              // console.log('login', phoneNumber),
-              // console.log('password', password),
-              phone,
-              printKeys,
-              console.log('keys', printKeys.keys)
+            ? (hitApi(),setPress(true),
+              console.log('bool', data.token)
             )
             : console.warn('invalid');
         }}>
@@ -331,13 +354,15 @@ const Login = ({navigation}) => {
             marginLeft: 12,
             bottom: 54,
             width: 180,
+            borderRadius:5
           }}>
           <TouchableOpacity style={{flexDirection: 'row'}}>
             <View>
               <Image
                 style={{
-                  height: 49,
-                  width: 40,
+                  height: 40,
+                  width: 40,top:5,left:5
+
                 }}
                 source={require('../assets/google.png')}
               />
@@ -363,13 +388,15 @@ const Login = ({navigation}) => {
             marginLeft: 12,
             bottom: 54,
             width: 180,
+            borderRadius:5,height:50
           }}>
           <TouchableOpacity style={{flexDirection: 'row'}}>
             <View>
               <Image
                 style={{
-                  height: 49,
-                  width: 40,
+                  height: 35,
+                  width: 35,
+                 top:7,left:5
                 }}
                 source={require('../assets/facebook.webp')}
               />
@@ -391,7 +418,7 @@ const Login = ({navigation}) => {
       <View style={{flexDirection: 'row', bottom: 40, marginLeft: 80}}>
         <View>
           <Text style={{fontSize: 18, color: '#989898'}}>
-            Don't have an account
+            Don't have an account?
           </Text>
         </View>
         <View>
