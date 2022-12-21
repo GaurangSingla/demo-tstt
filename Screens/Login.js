@@ -54,8 +54,8 @@ const Login = ({navigation}) => {
   });
 
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [password, setPassword] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('Heropanti300@');
+  const [phoneNumber, setPhoneNumber] = useState('1111112');
   const phoneInput = useRef(null);
   const [email, setEmail] = useState('');
   const [rememberme, setrememberme] = useState(false);
@@ -411,7 +411,7 @@ const Login = ({navigation}) => {
       </View>
       <View>
         <Text style={{bottom: 34, textAlign: 'center', color: '#989898'}}>
-          Version: DEV - 1.0.0{' '}
+          Version: DEV - 1.0.0
         </Text>
       </View>
     </>

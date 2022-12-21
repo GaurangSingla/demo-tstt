@@ -13,6 +13,7 @@ import Verify from '../Screens/Verify';
 import Topup from '../Screens/Topup';
 import Mycards from '../Screens/Mycards';
 import Transaction from '../Screens/Transaction';
+import Addaccount from '../Screens/Addaccount';
 const Stack = createNativeStackNavigator();
 function ActionBarIcon({Navigation}) {
   return (
@@ -57,6 +58,7 @@ const Stacks = () => {
          />
            <Stack.Screen   name="Topup" component={Topup} options={{headerShown:false}} />
            <Stack.Screen   name="Paybill" component={Paybill} options={{headerShown:false}} />
+           <Stack.Screen   name="Addaccount" component={Addaccount} options={{headerShown:true}} />
            <Stack.Screen   name="Mycards" component={Mycards} options={{     headerRight:props => <ActionBarIcon1 {...props} />, headerTitle:props => <ActionBarIcon2 {...props} />}} />
         
            <Stack.Screen   name="Transaction" component={Transaction} options={{     headerRight:props => <ActionBarIcon1 {...props} />, headerTitle:props => <ActionBarIcon2 {...props} />}} />
