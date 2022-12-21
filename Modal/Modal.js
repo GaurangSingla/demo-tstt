@@ -3,8 +3,8 @@ import { Alert, Modal, StyleSheet, Text, Pressable, View,Image } from "react-nat
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const CommonModal = ({name,modalVisible,setModalVisible,alertBody}) => {
-  console.log(name)
-  console.log(alertBody)
+  // console.log(name)
+  // console.log(alertBody)
   function showModal(){
     setModalVisible(true)
   }
@@ -36,12 +36,6 @@ const CommonModal = ({name,modalVisible,setModalVisible,alertBody}) => {
           </View>
         </View>
       </Modal>
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}
-      >
-        <Text style={styles.textStyle}>Show Modal</Text>
-      </Pressable>
     </View>
   );
 };

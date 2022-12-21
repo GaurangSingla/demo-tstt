@@ -55,8 +55,8 @@ const Login = ({navigation}) => {
   });
 
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-  const [password, setPassword] = useState('Heropanti300@');
-  const [phoneNumber, setPhoneNumber] = useState('1111112');
+  const [password, setPassword] = useState();
+  const [phoneNumber, setPhoneNumber] = useState();
   const phoneInput = useRef(null);
   const [email, setEmail] = useState('');
   const [rememberme, setrememberme] = useState(false);
@@ -84,7 +84,7 @@ const Login = ({navigation}) => {
     ASYNC_KEY.LOGGEDIN_CREDS,
   ];
 
-  const [modalVisible, setModalVisible] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
   const [press,setPress]=useState(false)
   const [alertBody, setAlertBody] = useState({
     dialogBoxType: '',
@@ -154,10 +154,8 @@ const Login = ({navigation}) => {
            
        setModalVisible(false);
           },
-        });
-  {press?
-        setModalVisible(true):  setModalVisible(false)}
-      }
+        }) ;setModalVisible(true)
+        }
     } catch (e) {
       console.log('Status----->', e.response);
     
@@ -172,14 +170,14 @@ const Login = ({navigation}) => {
 
     <>
 
-    <CommonModal    
-    name="amrit"
+    { press?<CommonModal    
+    // name="amrit"
     modalVisible={modalVisible}
     setModalVisible={setModalVisible}
     alertBody={alertBody}
 
     
-    />
+    />:null}
 
       <Image
         style={styles.img}
@@ -374,6 +372,7 @@ const Login = ({navigation}) => {
                   marginLeft: 10,
                   fontSize: 13,
                   color: '#4D4848',
+                  fontWeight:'bold'
                 }}>
                 Sign in with google
               </Text>
@@ -408,6 +407,7 @@ const Login = ({navigation}) => {
                   marginLeft: 10,
                   fontSize: 13,
                   color: '#4D4848',
+                  fontWeight:'bold'
                 }}>
                 Sign in with facebook
               </Text>

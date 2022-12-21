@@ -13,6 +13,8 @@ import PhoneInput from 'react-native-phone-number-input';
 import Carousel from 'pinar';
 import {TextInput} from 'react-native-paper';
 import {ProfileService} from '../Services.js/LoginService';
+import CommonModal from '../Modal/Modal';
+
 import {
   setItem,
   getItem,
@@ -38,6 +40,14 @@ const Addaccount = ({navigation}) => {
   const [type, setType] = useState('');
   const [popup, setPopup] = useState(false);
   const [pop, setPop] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [press, setPress] = useState(false);
+  const [alertBody, setAlertBody] = useState({
+    dialogBoxType: '',
+    headerText: '',
+    messageText: '',
+    navigateFunction: () => {},
+  });
   const [otp, setOtp] = useState('112233');
   const [cards, setCaards] = useState([
     {
@@ -59,6 +69,7 @@ const Addaccount = ({navigation}) => {
   ]);
   async function sendOtpToAddAcc() {
     try {
+      console.log('hello');
       const gettoken = await getItem(ASYNC_KEY.auth);
       const header = {
         headers: {
@@ -73,14 +84,23 @@ const Addaccount = ({navigation}) => {
         argument,
         header,
       );
-      console.log('anything',JSON.stringify(response))
+      console.log('anything', JSON.stringify(response));
       if (response.data.success) {
-        console.log(response.data)
+        console.log(response.data);
         await setItem(ASYNC_KEY.token, response.headers['access-medium']);
         setPopup(true);
       } else {
-        console.log(response)
-        Alert.alert(response.data.message);
+        console.log('jjjjjjjjjjjjj');
+
+        setAlertBody({
+          dialogBoxType: 'Error',
+          headerText: 'Error',
+          messageText: response.data.message,
+          navigateFunction: () => {
+            setModalVisible(false);
+          },
+        });
+        setModalVisible(true);
       }
     } catch (e) {
       console.log(e);
@@ -108,7 +128,17 @@ const Addaccount = ({navigation}) => {
         console.log('success', response.data);
         setPopup(false);
         setPop(true);
-        navigation.navigate('Home')
+
+        console.log('wrong crentials');
+        setAlertBody({
+          dialogBoxType: 'Error',
+          headerText: 'Error',
+          messageText: response.data.message,
+          navigateFunction: () => {
+            setModalVisible(false);
+          },
+        });
+        setModalVisible(true);
       } else {
         console.log('error message', response.data);
         Alert.alert('something went wrong');
@@ -128,7 +158,7 @@ const Addaccount = ({navigation}) => {
           marginLeft: 20,
           marginTop: 20,
           borderRadius: 13,
-          marginRight:10
+          marginRight: 10,
         }}>
         <Text
           style={{
@@ -250,8 +280,13 @@ const Addaccount = ({navigation}) => {
   };
   return (
     <SafeAreaView>
+      <CommonModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+        alertBody={alertBody}
+      />
       <FlatList
-      style={{paddingHorizontal:'3%'}}
+        style={{paddingHorizontal: '3%'}}
         data={cards}
         renderItem={renderItem}
         horizontal={true}
@@ -373,7 +408,10 @@ const Addaccount = ({navigation}) => {
           </View>
         </View>
         <TouchableOpacity
-          onPress={sendOtpToAddAcc}
+          onPress={() => {
+            sendOtpToAddAcc();
+            setPress(true);
+          }}
           style={{
             backgroundColor: '#00E556',
             width: '79%',
@@ -468,7 +506,9 @@ const Addaccount = ({navigation}) => {
                 </Text>
               </TouchableOpacity>
               <TouchableOpacity
-                onPress={VerifyOtpToVerifyAcc}
+                onPress={() => {
+                  VerifyOtpToVerifyAcc, setPress(true);
+                }}
                 style={{
                   backgroundColor: 'lightgreen',
                   width: '44%',
@@ -519,7 +559,7 @@ const Addaccount = ({navigation}) => {
                 fontWeight: 'bold',
                 marginTop: 15,
                 marginLeft: 'auto',
-                marginRight:'auto'
+                marginRight: 'auto',
               }}>
               Account Added Successfully
             </Text>
@@ -534,7 +574,7 @@ const Addaccount = ({navigation}) => {
                 marginLeft: 'auto',
                 marginRight: 'auto',
                 borderRadius: 10,
-                marginTop:90
+                marginTop: 90,
               }}>
               <Text
                 style={{
