@@ -29,7 +29,8 @@ import {
   BuildType,
 } from '../utils/string';
 import {ProfileService} from '../Services.js/LoginService';
-const Home = () => {
+import CardDetails from './CardDetails';
+const Home = ({navigation}) => {
   const [moredata, setmoredata] = useState();
   const [promo, setpromo] = useState();
   useEffect(() => {
@@ -243,7 +244,7 @@ const Home = () => {
                 }}>
                 +1868 9876543210
               </Text>
-              <TouchableOpacity>
+              <TouchableOpacity >
                 <View
                   style={{
                     backgroundColor: 'white',
@@ -346,7 +347,7 @@ const Home = () => {
         </TouchableOpacity>
 
         <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate('')}>
             <View
               style={{
                 backgroundColor: '#FCEDE6',
@@ -379,7 +380,7 @@ const Home = () => {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate('Paybill')}> 
             <View
               style={{
                 backgroundColor: '#ECF6EA',
@@ -416,7 +417,7 @@ const Home = () => {
         </View>
 
         <View style={{flexDirection: 'row'}}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate('CardDetails')}>
             <View
               style={{
                 backgroundColor: '#FEFCE8',
@@ -449,7 +450,7 @@ const Home = () => {
               </Text>
             </View>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate('Transaction')}>
             <View
               style={{
                 backgroundColor: '#EDE7F1',

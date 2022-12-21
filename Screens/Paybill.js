@@ -55,10 +55,7 @@ const Paybill = ({navigation}) => {
         setRenderCards(false); 
         
         setMessage(response.data.message);
-        setAlertBody({
-          dialogBoxType: 'Error',
-          messageText: response.data.message,
-        });
+      
      
    
       
