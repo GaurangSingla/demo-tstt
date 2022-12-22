@@ -34,22 +34,9 @@ import { ProfileService } from '../Services.js/LoginService';
 const Home = ({ navigation }) => {
   const [moredata, setmoredata] = useState();
   const [promo, setpromo] = useState();
-  const [cards, setCards] = useState([{
-    "id": 1,
-    "firstName": "Fanger",
-    "lastName": "Rock",
-    "accountNumber": 1234567,
-    "mobile": "18760000025",
-    "type": "PREPAID"
-  },
-  {
-    "id": 2,
-    "firstName": "Kevin",
-    "lastName": "Durant",
-    "accountNumber": 147852,
-    "mobile": "18760041025",
-    "type": "POSTPAID"
-  }]);
+  const [cards, setCards] = useState([]);
+  const [amount,setAmount] = useState([]);
+  const [press,setPress] = useState(false);
   useEffect(() => {
     console.log('useEffect');
     getpromotions();
@@ -89,21 +76,52 @@ const Home = ({ navigation }) => {
         },
       };
       const response = await ProfileService.accountDetails(header);
-      console.log('hell', response.data);
-      setmoredata(response.data.result.moreApps);
-      console.log('data set krne k liye', response.data.result.moreApps);
-      setpromo(response.data.result.promotions);
-      console.log(
-        'morepromo ka data save rakhne k liye',
-        response.data.result.promotions,
-      );
+      console.log('gaurang res', response.data);
+      setCards(response.data.result.accounts)
     } catch (e) {
       console.log(e);
     }
   }
+
+  async function accountBillDetail(id) {
+    console.log('id console',id)
+    try {
+      const gettoken = await getItem(ASYNC_KEY.auth);
+      const header = {
+        headers: {
+          Authorization: gettoken,
+        },
+      };
+      const response = await ProfileService.accountBillDetails(id,header);
+      console.log('account Bill Details',response.data);
+      setAmount(response.data.result)
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  
+
+//   useEffect(() => {
+//     // console.log('useEffect');
+//     getbilldetails();
+//   }, []);
+// async function getbilldetails() {
+//   try{
+//     const gettoken = await getItem(ASYNC_KEY.auth);
+//     const header = {
+//       headers: {
+//         Authorization: gettoken,
+//       },
+//     };
+//     const response = await ProfileService.accountDetails(header);
+//     console.log(response.data);
+//   }
+// }
   const renderitem = ({item}) => {
     console.log('msg',item)
-     return (  <View
+     return ( 
+       <View
       style={{
         backgroundColor: '#00E556',
         height: 190,
@@ -112,6 +130,8 @@ const Home = ({ navigation }) => {
         marginTop: 20,
         borderRadius: 13,
       }}>
+        <Carousel>
+          <>
       <Text
         style={{
           color: 'white',
@@ -122,13 +142,14 @@ const Home = ({ navigation }) => {
         {/* Postpaid: +1868 9876543210 */}
         {item.type+ ' ' + item.mobile}
       </Text>
-      <View style={{ flexDirection: 'row' }}>
+      <View style={{ flexDirection: 'row',justifyContent:'space-between' }}>
         <Text
           style={{
             color: 'white',
-            fontSize: 20,
+            fontSize: 15,
             fontWeight: '700',
             marginLeft: 10,
+            
           }}>
           {item.firstName+ ' ' + item.lastName}
         </Text>
@@ -136,7 +157,7 @@ const Home = ({ navigation }) => {
           <View
             style={{
               backgroundColor: '#5EC674',
-              marginLeft: 100,
+              marginRight:10,
               width: 120,
               height: 40,
               bottom: 10,
@@ -160,36 +181,56 @@ const Home = ({ navigation }) => {
       <View style={{ flexDirection: 'row' }}>
         <Text
           style={{ color: 'white', marginLeft: 15, fontWeight: 'bold' }}>
-          Your Bill
+         Total Due Amount
         </Text>
         <Text
-          style={{ color: 'white', marginLeft: 200, fontWeight: 'bold' }}>
-          Due In
+          style={{ color: 'white', marginLeft: 130, fontWeight: 'bold' }}>
+          Due Date
         </Text>
       </View>
 
       <View style={{ flexDirection: 'row' }}>
-        <Text
+        { press?<Text
           style={{
             color: 'white',
-            marginLeft: 33,
+            marginLeft: 22,
             fontWeight: 'bold',
-            fontSize: 25,
+            fontSize: 15,
           }}>
-          ---
-        </Text>
-        <Text
+          {amount.totalDueAmount}
+        </Text> : <Text
           style={{
             color: 'white',
-            marginLeft: 210,
+            marginLeft: 22,
             fontWeight: 'bold',
-            fontSize: 25,
+            fontSize: 15,
           }}>
-          ---
-        </Text>
+          {'***'}
+        </Text> }
+        {press?<Text
+          style={{
+            color: 'white',
+            marginLeft: 164,
+            fontWeight: 'bold',
+            fontSize: 15,
+          }}>
+        {amount.dueDate}
+        </Text> :<Text
+          style={{
+            color: 'white',
+            marginLeft: 164,
+            fontWeight: 'bold',
+            fontSize: 15,
+          }}>
+       {'                  '} {'***'}
+        </Text> }
       </View>
       <View style={{ flexDirection: 'row' }}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => {accountBillDetail(item.id)
+        setPress(true)
+        }
+      
+      }>
           <View
             style={{
               backgroundColor: '#5EC674',
@@ -223,8 +264,13 @@ const Home = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </View>
-    </View>)
+      </>
+      </Carousel>
+    </View>
+    )
   }
+
+
   return (
     <SafeAreaView>
       <ScrollView

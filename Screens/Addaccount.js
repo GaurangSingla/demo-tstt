@@ -286,7 +286,6 @@ const Addaccount = ({navigation}) => {
         alertBody={alertBody}
       />
       <FlatList
-        style={{paddingHorizontal: '3%'}}
         data={cards}
         renderItem={renderItem}
         horizontal={true}

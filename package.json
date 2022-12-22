@@ -39,6 +39,7 @@
     "react-native-element-dropdown": "^2.4.0",
     "react-native-elements": "^3.4.2",
     "react-native-gesture-handler": "^2.8.0",
+    "react-native-linear-gradient": "^2.6.2",
     "react-native-local-storage": "^1.5.2",
     "react-native-modern-datepicker": "^1.0.0-beta.91",
     "react-native-paper": "^4.12.5",

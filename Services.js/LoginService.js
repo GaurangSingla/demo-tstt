@@ -13,6 +13,10 @@ export const ProfileService = {
     const data = await API.get(`/api/consumer/user/account/`,header);
     return data;
   },
+  accountBillDetails: async (args,header) => {
+    const data = await API.get(`/api/consumer/user/account/`+args,header);
+    return data;
+  },
   sendOtpToAddAccount: async (args, header) => {
     const data = await API.post('api/consumer/user/account', args, header);
     return data;
