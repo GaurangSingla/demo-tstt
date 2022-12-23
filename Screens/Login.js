@@ -7,7 +7,7 @@ import {
   Button,
   TouchableOpacity,
   Pressable,
-  SafeAreaView,
+  SafeAreaView,Dimensions
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import {useIsFocused} from '@react-navigation/native';
@@ -165,40 +165,58 @@ const Login = ({navigation}) => {
       hitApi();
     }
   }
+
   async function phone() {
     await setItem(ASYNC_KEY.loginMethod, 'phoneNumber');
     var p = await getItem(ASYNC_KEY.loginMethod);
   }
 
-  function handleErrorPass() {
-    if (password == '' || password == undefined || password == null) {
-      setEmptyPassword(true);
-    } else {
-      setEmptyPassword(false);
+  function handleErrorField() {
+    const phonevalid = validatePhone();
+    const passwordvalid = validatePassword();
+    if (phonevalid && passwordvalid) {
+      hitApi();
     }
   }
-  function handleErrorPhone() {
-    if (phoneNumber == '' || phoneNumber == undefined || phoneNumber == null) {
-      setEmptyPhone(true);
-    } else {
-      setEmptyPhone(false);
+  function validatePhone() {
+    if (!phoneNumber || phoneNumber == '') {
+      setUsrNameValid(false);
+      return false;
     }
+    return true;
+  }
+  function validatePassword() {
+    if (!password || password == '') {
+      setPassValid(false);
+      return false;
+    }
+    return true;
   }
 
+  let dimensions = Dimensions.get('window');
+  let imageHeight = dimensions.height;
+  let imageWidth = dimensions.width;
   return (
     <View>
       <SafeAreaView>
-        <Loader animating={loadervisible} />
-        {press && !emptyPassword && !emptyPhone ? (
+        {modalVisible ? (
           <CommonModal
             modalVisible={modalVisible}
-            setModalVisible={setModalVisible}
+            onRequestClose={() => {
+              setModalVisible(false);
+            }}
             alertBody={alertBody}
           />
         ) : null}
 
         <Image
-          style={styles.img}
+          style={{
+            height: imageHeight,
+            width: imageWidth,
+            resizeMode: 'contain',
+            position: 'absolute',
+            bottom: '10%',
+          }}
           source={require('../src/assets/babyChild.jpg')}
         />
         <View style={styles.container}>
@@ -210,7 +228,7 @@ const Login = ({navigation}) => {
           style={{bottom: '80%'}}
           onChangeText={phoneNumber => {
             setPhoneNumber(phoneNumber);
-            setEmptyPhone(false);
+            setUsrNameValid(true);
           }}
           defaultValue={phoneNumber}
           defaultCode="IN"
@@ -230,20 +248,16 @@ const Login = ({navigation}) => {
           textInputStyle={{height: 40}}
           textContainerStyle={{}}
         />
-        <View
+        <Text
           style={{
+            color: 'red',
             alignSelf: 'center',
-            bottom: '42%',
             position: 'absolute',
+            bottom: '41%',
             flex: 1,
           }}>
-          {emptyPhone && press ? (
-            <Text style={{color: 'red'}}>{'Phone Number is required'}</Text>
-          ) : (
-            <Text> </Text>
-          )}
-        </View>
-
+          {!usrNameValid ? 'Phone Number is required' : ' '}
+        </Text>
         <View>
           <TextInput
             style={{
@@ -267,7 +281,7 @@ const Login = ({navigation}) => {
             textContentType="password"
             onChangeText={password => {
               setPassword(password);
-              setEmptyPassword(false);
+              setPassValid(true);
             }}
             defaultValue={password}
             secureTextEntry={!secureTextEntry ? false : true}
@@ -281,14 +295,17 @@ const Login = ({navigation}) => {
               />
             }
           />
-          <View
-            style={{left: '3%', bottom: '115%', flex: 1, position: 'absolute'}}>
-            {emptyPassword && press ? (
-              <Text style={{color: 'red'}}>{'Password is required'}</Text>
-            ) : (
-              <Text> </Text>
-            )}
-          </View>
+
+          <Text
+            style={{
+              color: 'red',
+              left: '3%',
+              bottom: '115%',
+              flex: 1,
+              position: 'absolute',
+            }}>
+            {!passValid ? 'Password is required' : ' '}
+          </Text>
         </View>
 
         <View style={{flexDirection: 'row'}}>
@@ -334,13 +351,7 @@ const Login = ({navigation}) => {
         <TouchableOpacity
           style={{alignContent: 'center', bottom: '15%'}}
           onPress={() => {
-            data
-              ? (api(),
-                setPress(true),
-                console.log('bool', data.token),
-                handleErrorPass(),
-                handleErrorPhone())
-              : console.warn('invalid');
+            handleErrorField();
           }}>
           <Text style={styles.btn}>Sign In</Text>
         </TouchableOpacity>
@@ -364,13 +375,17 @@ const Login = ({navigation}) => {
             </Text>
           </View>
         </Text>
-        <View style={{flexDirection: 'row'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignSelf: 'center',
+            justifyContent: 'space-around',
+          }}>
           <View
             style={{
               flexDirection: 'row',
               borderWidth: 1,
               borderColor: '#EA4335',
-              marginLeft: 12,
               bottom: '30%',
               width: 180,
               borderRadius: 5,
@@ -405,13 +420,11 @@ const Login = ({navigation}) => {
               flexDirection: 'row',
               borderWidth: 1,
               borderColor: '#3B5998',
-
+              marginHorizontal: '2%',
               bottom: '30%',
               width: 180,
               borderRadius: 5,
               height: 50,
-              alignContent: 'center',
-              marginHorizontal: '3%',
             }}>
             <TouchableOpacity style={{flexDirection: 'row'}}>
               <View>
@@ -471,24 +484,17 @@ const Login = ({navigation}) => {
   );
 };
 const styles = StyleSheet.create({
-  img: {
-    height: '100%',
-    width: '100%',
-    position: 'absolute',
-    resizeMode: 'contain',
-    bottom: '17%',
-  },
   container: {
     backgroundColor: 'white',
     borderRadius: 20,
-    height: '62%',
+    height: '63%',
     top: '39%',
   },
   txt: {
     color: '#4D4848',
     alignSelf: 'center',
     justifyContent: 'center',
-    padding: 10,
+    padding: '2%',
     fontSize: RFValue(27),
     marginTop: '2%',
     fontWeight: 'bold',
@@ -510,7 +516,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 10,
     fontWeight: 'bold',
-    top: '170%',
+    top: '140%',
   },
   error: {
     color: 'red',
