@@ -50,38 +50,8 @@ const SignUpScreen = ({navigation}) => {
     setDate(currentDate);
   };
 
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
-  const showTimepicker = () => {
-    showMode('time');
-  };
- 
      
-  const phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-])|(\\([0-9]{2,3}\\)[ \\-])|([0-9]{2,4})[ \\-])?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-  const emailValidationSchema = Yup.object().shape({
-    firstname: Yup.string().required('First Name is required').min(2),
-    lastname: Yup.string().required("Last Name is required").min(2, 'A firstname is required'),
-    dateofbirth: Yup.string().required('Date Of Birth is required').min(2, 'dateofbirth is required'),
-    city: Yup.string().required(' City is required').min(2, 'A city is required'),
-    phoneNumber: Yup.string().required('Phone Number is required').min(2, 'Phone number is not valid'),
-    email: Yup.string()
-      .email('Please enter a valid email')
-      .required('Email Address is Required'),
-    password: Yup.string()
-      .required(' Password is required')
-      .min(6, 'Your password has to have at least 6 characters'),
-    confirmpassword: Yup.string()
-      .required(' Confirm Password is required')
-      .min(6, 'Your password has to have at least 6 characters'),
-  });
+
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [confirmsecureTextEntry, confirmsetSecureTextEntry] = useState(true);
   const hitSignUpApi = async () => {
@@ -120,6 +90,82 @@ const SignUpScreen = ({navigation}) => {
   
     }
   };
+  const [emptyName,setEmptyName]=useState(false);
+  const [EmptyLast,setEmptyLast]=useState(false);
+  const [emptyDob,setEmptyDob]=useState(false);
+  const [emptyNumber,setEmptyNumber]=useState(false);
+  const [emptyCity,setEmptyCity]=useState(false);
+  const [emptyPassword,setEmptyPassword]=useState(false);
+  const [EmptyConfirmPassword,setEmptyConfirmPassword]=useState(false);
+  const [press,setPress]=useState(false);
+  function handleErrorName() {
+    if (name == '' || name == undefined || name == null) {
+      setEmptyName(true);
+     
+    } else {
+      setEmptyName(false);
+    }
+
+  }
+  function handleErrorLast() {
+    if (last == '' || last == undefined || last == null) {
+      setEmptyLast(true);
+    
+    } else {
+      setEmptyLast(false);
+    }
+  }
+  function handleErrorDob() {
+    if (dob == '' || dob == undefined || dob == null) {
+      setEmptyDob(true);
+     
+    } else {
+      setEmptyDob(false);
+    }
+
+  }
+  function handleErrorPhone() {
+    if (number == '' || number == undefined || number == null) {
+      setEmptyPhone(true);
+    
+    } else {
+      setEmptyPhone(false);
+    }
+  }
+  function handleErrorEmail() {
+    if (email == '' || email == undefined || email == null) {
+      setEmptyEmail(true);
+     
+    } else {
+      setEmptyEmail(false);
+    }
+
+  }
+  function handleErrorCity() {
+    if (city == '' || city == undefined || city == null) {
+      setEmptyCity(true);
+    
+    } else {
+      setEmptyCity(false);
+    }
+  }
+  function handleErrorPass() {
+    if (password == '' || password == undefined || password == null) {
+      setEmptyPassword(true);
+     
+    } else {
+      setEmptyPassword(false);
+    }
+
+  }
+  function handleErrorConfirmPhone() {
+    if (confirmpassword == '' || confirmpassword == undefined || confirmpassword == null) {
+      setEmptyConfirmPassword(true);
+    
+    } else {
+      setEmptyConfirmPassword(false);
+    }
+  }
   return (
     <KeyboardAvoidingView style={{backgroundColor:'#F4F4F4'}}>
       <View style={{alignSelf:'center'}}>
@@ -153,7 +199,7 @@ const SignUpScreen = ({navigation}) => {
           dateofbirth: '',
           city: '',
         }}
-        validationSchema={emailValidationSchema}
+      
         onSubmit={values => {
           console.log(values);
         }}>
@@ -198,11 +244,16 @@ const SignUpScreen = ({navigation}) => {
                   textContentType="username"
                   onChangeText={name => setName(name)}
                   defaultValue={name}
-                  onBlur={handleBlur('firstname')}
+                 
                   
                  
                 />
-                <Text style={styles.error}>{errors.firstname}</Text>
+                
+
+ <Text style={{color: 'red',marginVertical:3 }}>
+    {' First Name is required'}
+  </Text>
+
               </View>
               <View
                 style={[
@@ -223,10 +274,12 @@ const SignUpScreen = ({navigation}) => {
                   textContentType="username"
                   onChangeText={last => setLast(last)}
                   defaultValue={last}
-                  onBlur={handleBlur('lastname')}
+             
                 
                 />
-                <Text style={styles.error}>{errors.lastname}</Text>
+                <Text style={{color: 'red',marginVertical:3 }}>
+    {' Last Name is required'}
+  </Text>
               </View>
               <View
                 style={[
@@ -248,7 +301,7 @@ const SignUpScreen = ({navigation}) => {
                   textContentType="username"
                   onChangeText={dob => setDob(dob)}
                   defaultValue={dob}
-                  onBlur={handleBlur('dateofbirth')}
+               
                 
 
                 />            
@@ -296,7 +349,7 @@ const SignUpScreen = ({navigation}) => {
                   autoFocus={false}
                   onChangeText={email => setEmail(email)}
                   defaultValue={email}
-                  onBlur={handleBlur('email')}
+                
                 
                 />
                 <Text style={styles.error}>{errors.email}</Text>
@@ -320,7 +373,7 @@ const SignUpScreen = ({navigation}) => {
                   textContentType="username"
                   onChangeText={city => setCity(city)}
                   defaultValue={city}
-                  onBlur={handleBlur('city')}
+        
                   rightIconName={'chevron-down'}
                 
               
@@ -348,7 +401,7 @@ const SignUpScreen = ({navigation}) => {
                   textContentType="password"
                   onChangeText={password => setPassword(password)}
                   defaultValue={password}
-                  onBlur={handleBlur('password')}
+                 
                 
                   secureTextEntry={secureTextEntry ? false : true}
                   right={
@@ -384,7 +437,7 @@ const SignUpScreen = ({navigation}) => {
                   textContentType="confirmpassword"
                   onChangeText={confirmpassword => setConfirmPassword(confirmpassword)}
                   defaultValue={confirmpassword}
-                  onBlur={handleBlur('confirmpassword')}
+              
                  
                   secureTextEntry={secureTextEntry ? false : true}
                   right={

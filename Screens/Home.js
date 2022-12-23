@@ -139,7 +139,7 @@ const Home = ({ navigation }) => {
           marginLeft: 10,
           fontWeight: 'bold',
         }}>
-        {/* Postpaid: +1868 9876543210 */}
+       
         {item.type+ ' ' + item.mobile}
       </Text>
       <View style={{ flexDirection: 'row',justifyContent:'space-between' }}>

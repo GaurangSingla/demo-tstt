@@ -1,18 +1,6 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Button,
-  TouchableOpacity,
-  Pressable,
-} from 'react-native';
+import React,{useState,useRef} from 'react'
+import {View,Text,Image,StyleSheet,TextInput,Button, TouchableOpacity} from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
-import {useIsFocused} from '@react-navigation/native';
-import {Modal, TextInput} from 'react-native-paper';
-import {Formik} from 'formik';
-import * as Yup from 'yup';
 import Tab_navi from '../android/Tab_navi';
 import messaging from '@react-native-firebase/messaging';
 import { useDispatch, useSelector } from 'react-redux';
@@ -184,9 +172,8 @@ const Login = ({navigation}) => {
         source={require('../src/assets/babyChild.jpg')}
       />
       <View style={styles.container}>
-        <Text style={styles.txt}>
-          Welcome To <Text style={styles.clr}>bMobile</Text>
-        </Text>
+        
+    <Text style={styles.txt}>Welcome To <Text style={styles.clr}>bMobile</Text></Text>
       </View>
       <PhoneInput
         style={{top: '200'}}
