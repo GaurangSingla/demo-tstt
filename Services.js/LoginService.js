@@ -29,4 +29,8 @@ export const ProfileService = {
     );
     return data;
   },
+  logout: async (header) => {
+    const data = await API.post('api/consumer/logout',{},header);
+    return data;
+  },
 };

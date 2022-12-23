@@ -6,19 +6,65 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-
+import {ProfileService} from '../Services.js/LoginService';
+import Loader from '../ActivityIndicator/Activityindicator';
+import {
+  setItem,
+  getItem,
+  multiRemove,
+  getAllKeys,
+} from '../utils/StorageHandling';
+import {
+  SCREEN_ROUTE_MAPPING,
+  LOGIN_SCREEN,
+  ASYNC_KEY,
+  INVALID_INPUT,
+  DRAWER_CONTENT,
+  TRANSACTION_HISTORY,
+  ADD_CARD_ALERT,
+  HOME_SCREEN,
+  BuildType,
+} from '../utils/string';
 // import { TouchEventType } from 'react-native-gesture-handler/lib/typescript/TouchEventType';
 // import { ScrollView } from 'react-native-gesture-handler'
 // import { SafeAreaView } from 'react-native-safe-area-context'
 
 const Profile = ({navigation}) => {
+  const [loadervisible,setLoaderVisible] = useState(false);
+  async function logouttime() {
+    try {
+      setLoaderVisible(true)
+      const gettoken = await getItem(ASYNC_KEY.auth);
+      const header = {
+        headers: {
+          Authorization: gettoken,
+        },
+      };
+      console.log(header);
+      const response = await ProfileService.logout(header);
+      console.log('singla', response);
+      if(response.data.success) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Login' }],
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    finally{
+      setLoaderVisible(false);
+    }
+  }
+
   return (
     <SafeAreaView>
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}>
+          <Loader animating={loadervisible} />
         <View>
           <View
             style={{
@@ -204,7 +250,12 @@ const Profile = ({navigation}) => {
                 FAQ's
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <TouchableOpacity
+              onPress={() => {
+                logouttime();
+              }}
+              //  onPress={() => navigation.navigate('Login')}
+            >
               <Text
                 style={{
                   marginLeft: 'auto',
