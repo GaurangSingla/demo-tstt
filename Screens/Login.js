@@ -199,6 +199,7 @@ const Login = ({navigation}) => {
   return (
     <View>
       <SafeAreaView>
+      <Loader animating={loadervisible} />
         {modalVisible ? (
           <CommonModal
             modalVisible={modalVisible}

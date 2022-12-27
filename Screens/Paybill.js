@@ -12,32 +12,30 @@ import {
   multiRemove,
   getAllKeys,
 } from '../utils/StorageHandling';
-import {
-  
-  ASYNC_KEY
-} from '../utils/string';
+import {ASYNC_KEY} from '../utils/string';
+import Loader from '../ActivityIndicator/Activityindicator';
 const Paybill = ({navigation}) => {
+  const [loadervisible, setLoaderVisible] = useState(false);
   const [data, setData] = useState([]);
   const [savenumber, setSaveNumber] = useState('');
- 
-  const [renderCards, setRenderCards] = useState(false); 
-  const [message,setMessage]=useState('');
- 
- async function hitApi() {
-    try { 
+
+  const [renderCards, setRenderCards] = useState(false);
+  const [message, setMessage] = useState('');
+
+  async function hitApi() {
+    try {
+      setLoaderVisible(true);
       const authToken = await getItem(ASYNC_KEY.auth);
       const header = {
-       
         headers: {
           Authorization: authToken,
         },
         params: {
-          mobileNumber:"1868"+savenumber,
-           
+          mobileNumber: '1868' + savenumber,
         },
       };
       console.log('header ===== ', header);
-      const response = await PaymentService. billPayGet(header);
+      const response = await PaymentService.billPayGet(header);
       console.log(
         '==========> billpay response',
         JSON.stringify(response.data),
@@ -48,217 +46,219 @@ const Paybill = ({navigation}) => {
           response.data.result.requestId,
         );
         setData(response.data.result);
-     
-      
+
         setRenderCards(true);
       } else {
-        setRenderCards(false); 
-        
+        setRenderCards(false);
+
         setMessage(response.data.message);
-      
-     
-   
-      
-  }}catch( error){
-    Alert.alert("invalid number")
-  }}
+      }
+    } catch (error) {
+      Alert.alert('invalid number');
+    } finally {
+      setLoaderVisible(false);
+    }
+  }
   return (
-    
-      <View
+    <View
+      style={{
+        backgroundColor: '#F4F4F4',
+
+        borderColor: 'grey',
+      }}>
+      <Loader animating={loadervisible} />
+      <Text
         style={{
-          backgroundColor: '#F4F4F4',
-      
-          borderColor: 'grey',
+          color: '#4D4848',
+          marginLeft: 'auto',
+          marginRight: 'auto',
+          marginTop: 8,
+          fontSize: 25,
+          fontWeight: 'bold',
         }}>
-        <Text
+        Bill Pay
+      </Text>
+
+      <View>
+        <TextInput
           style={{
-            color: '#4D4848',
-            marginLeft: 'auto',
-            marginRight: 'auto',
-            marginTop: 8,
-            fontSize: 25,
-            fontWeight: 'bold',
-          }}>
-          Bill Pay
-        </Text>
+            width: '90%',
+            marginTop: 20,
+            marginLeft: 15,
+            backgroundColor: '#F4F4F4',
+            borderWidth: 2,
+            borderColor: '#F4F4F4',
+            height: 45,
 
-        <View>
-          <TextInput
-            style={{
-              width: '90%',
-              marginTop: 20,
-              marginLeft: 15,
-              backgroundColor: '#F4F4F4',
-              borderWidth: 2,
-              borderColor: '#F4F4F4',
-              height: 45,
+            top: 10,
+          }}
+          placeholder="Enter Name or Number"
+          onChangeText={savenumber => setSaveNumber(savenumber)}
+          defaultValue={savenumber}
+          placeholderTextColor="#989898"
+          maxLength={11}
+        />
 
-              top: 10,
-            }}
-            placeholder="Enter Name or Number"
-            onChangeText={savenumber => setSaveNumber(savenumber)}
-            defaultValue={savenumber}
-            placeholderTextColor="#989898"
-            maxLength={11}
-          />
-
-          <View
-            style={{marginLeft: 0, alignSelf: 'flex-end', top: -20, right: 30}}>
-            <TouchableOpacity onPress={()=>{hitApi(),console.log("jj")}}>
-              <MaterialCommunityIcons name="arrow-right" size={25} />
-            </TouchableOpacity>
-          </View>
+        <View
+          style={{marginLeft: 0, alignSelf: 'flex-end', top: -20, right: 30}}>
+          <TouchableOpacity
+            onPress={() => {
+              hitApi(), console.log('jj');
+            }}>
+            <MaterialCommunityIcons name="arrow-right" size={25} />
+          </TouchableOpacity>
         </View>
-        {renderCards ? (
-          <>
-            <View
+      </View>
+      {renderCards ? (
+        <>
+          <View
+            style={{
+              backgroundColor: '#FFFFFF',
+              position: 'relative',
+              width: '92%',
+              height: 240,
+              marginLeft: 12,
+              marginTop: 18,
+              borderRadius: 15,
+            }}>
+            <Text
               style={{
-                backgroundColor: '#FFFFFF',
-                position: 'relative',
-                width: '92%',
-                height: 240,
-                marginLeft: 12,
-                marginTop: 18,
-                borderRadius: 15,
-              }}>
-              <Text
-                style={{
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                  marginTop: 15,
-                  color: '#4D4848',
-                  fontSize: 20,
-                  marginBottom: 15,
-                }}>
-                Bill Payment
-              </Text>
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{marginLeft: 11, color: '#9B9B9B'}}>
-                  Account Holder Name
-                </Text>
-                <Text style={{marginLeft: 90, color: '#9B9B9B'}}>
-                  Account Number
-                </Text>
-              </View>
-
-              {data? (
-                <View style={{flexDirection: 'row'}}>
-                  <Text
-                    style={{marginLeft: 25, fontSize: 19, color: '#4D4848'}}>
-                    {data.accountName}
-                  </Text>
-                  <Text
-                    style={{marginLeft: 130, fontSize: 19, color: '#4D4848'}}>
-                    {data.mobileNumber}
-                  </Text>
-                </View>
-              ) : Alert.alert(message)}
-
-              <View style={{flexDirection: 'row'}}>
-                <Text style={{marginTop: 15, marginLeft: 12, color: '#9B9B9B'}}>
-                  Account Type
-                </Text>
-                <Text
-                  style={{marginTop: 15, marginLeft: 195, color: '#9B9B9B'}}>
-                  Your Bill
-                </Text>
-              </View>
-
-              {data? (
-                <View style={{flexDirection: 'row'}}>
-                  <Text
-                    style={{marginLeft: 15, fontSize: 19, color: '#4D4848'}}>
-                    Post Paid
-                  </Text>
-                  <Text
-                    style={{marginLeft: 170, fontSize: 19, color: '#4D4848'}}>
-                    {'$'}
-                    {data.dueAmount}{' '}
-                  </Text>
-                </View>
-              ) : Alert.alert(message)}
-              <TouchableOpacity>
-                <View
-                  style={{
-                    marginTop: 25,
-                    backgroundColor: '#00E556',
-                    height: 40,
-                    width: '80%',
-                    padding: 10,
-                    alignItems: 'center',
-                    marginLeft: 35,
-                    borderRadius: 7,
-                  }}>
-                  {data  ? (
-                    <Text style={{color: '#2E2F2F', fontWeight: 'bold'}}>
-                      {'Pay'} {'$'}
-                      {data.dueAmount}
-                    </Text>
-                  ) :  Alert.alert(message)}
-                </View>
-              </TouchableOpacity>
-            </View>
-
-            <View
-              style={{
-                marginTop: 16,
-                position: 'relative',
                 marginLeft: 'auto',
                 marginRight: 'auto',
-                backgroundColor: 'white',
-                height: 190,
-                width: '92%',
+                marginTop: 15,
+                color: '#4D4848',
+                fontSize: 20,
+                marginBottom: 15,
               }}>
-              <Text
-                style={{
-                  marginLeft: 'auto',
-                  marginRight: 'auto',
-                  marginTop: 10,
-                  color: '#4D4848',
-                }}>
-                Pay Partial Ammount
+              Bill Payment
+            </Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{marginLeft: 11, color: '#9B9B9B'}}>
+                Account Holder Name
               </Text>
-              <TextInput
-                style={{
-                  width: '90%',
-                  marginTop: 20,
-                  marginLeft: 15,
-                  borderRadius: 10,
-                  backgroundColor: 'white',
-                  borderWidth: 2,
-                  borderColor: '#F4F4F4',
-                  height: 45,
-                }}
-                placeholder="Enter Amount"
-                placeholderTextColor="#989898"
-              />
-              <TouchableOpacity
-                onPress={() => navigation.navigate('CardDetails')}>
-                <View
-                  style={{
-                    marginTop: 25,
-                    backgroundColor: '#00E556',
-                    height: 40,
-                    width: '80%',
-                    padding: 10,
-                    fontSize: 15,
-                    color: '#2E2F2F',
-                    fontWeight: 'bold',
-                    alignItems: 'center',
-                    marginLeft: 35,
-                    borderRadius: 7,
-                  }}>
-                  <Text style={{color: '#2E2F2F', fontWeight: 'bold'}}>
-                    Proceed
-                  </Text>
-                </View>
-              </TouchableOpacity>
+              <Text style={{marginLeft: 90, color: '#9B9B9B'}}>
+                Account Number
+              </Text>
             </View>
-          </>
-        ) : null}
-      </View>
-    )
-  
+
+            {data ? (
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{marginLeft: 25, fontSize: 19, color: '#4D4848'}}>
+                  {data.accountName}
+                </Text>
+                <Text style={{marginLeft: 130, fontSize: 19, color: '#4D4848'}}>
+                  {data.mobileNumber}
+                </Text>
+              </View>
+            ) : (
+              Alert.alert(message)
+            )}
+
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{marginTop: 15, marginLeft: 12, color: '#9B9B9B'}}>
+                Account Type
+              </Text>
+              <Text style={{marginTop: 15, marginLeft: 195, color: '#9B9B9B'}}>
+                Your Bill
+              </Text>
+            </View>
+
+            {data ? (
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{marginLeft: 15, fontSize: 19, color: '#4D4848'}}>
+                  Post Paid
+                </Text>
+                <Text style={{marginLeft: 170, fontSize: 19, color: '#4D4848'}}>
+                  {'$'}
+                  {data.dueAmount}{' '}
+                </Text>
+              </View>
+            ) : (
+              Alert.alert(message)
+            )}
+            <TouchableOpacity>
+              <View
+                style={{
+                  marginTop: 25,
+                  backgroundColor: '#00E556',
+                  height: 40,
+                  width: '80%',
+                  padding: 10,
+                  alignItems: 'center',
+                  marginLeft: 35,
+                  borderRadius: 7,
+                }}>
+                {data ? (
+                  <Text style={{color: '#2E2F2F', fontWeight: 'bold'}}>
+                    {'Pay'} {'$'}
+                    {data.dueAmount}
+                  </Text>
+                ) : (
+                  Alert.alert(message)
+                )}
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View
+            style={{
+              marginTop: 16,
+              position: 'relative',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              backgroundColor: 'white',
+              height: 190,
+              width: '92%',
+            }}>
+            <Text
+              style={{
+                marginLeft: 'auto',
+                marginRight: 'auto',
+                marginTop: 10,
+                color: '#4D4848',
+              }}>
+              Pay Partial Ammount
+            </Text>
+            <TextInput
+              style={{
+                width: '90%',
+                marginTop: 20,
+                marginLeft: 15,
+                borderRadius: 10,
+                backgroundColor: 'white',
+                borderWidth: 2,
+                borderColor: '#F4F4F4',
+                height: 45,
+              }}
+              placeholder="Enter Amount"
+              placeholderTextColor="#989898"
+            />
+            <TouchableOpacity
+              onPress={() => navigation.navigate('CardDetails')}>
+              <View
+                style={{
+                  marginTop: 25,
+                  backgroundColor: '#00E556',
+                  height: 40,
+                  width: '80%',
+                  padding: 10,
+                  fontSize: 15,
+                  color: '#2E2F2F',
+                  fontWeight: 'bold',
+                  alignItems: 'center',
+                  marginLeft: 35,
+                  borderRadius: 7,
+                }}>
+                <Text style={{color: '#2E2F2F', fontWeight: 'bold'}}>
+                  Proceed
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        </>
+      ) : null}
+    </View>
+  );
 };
 
 export default Paybill;

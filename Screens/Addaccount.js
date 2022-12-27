@@ -32,6 +32,7 @@ import {
   HOME_SCREEN,
   BuildType,
 } from '../utils/string';
+import Loader from '../ActivityIndicator/Activityindicator';
 // import { SafeAreaView } from 'react-native-safe-area-context';
 const Addaccount = ({navigation}) => {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -42,6 +43,7 @@ const Addaccount = ({navigation}) => {
   const [pop, setPop] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [press, setPress] = useState(false);
+  const [loadervisible, setLoaderVisible] = useState(false);
   const [alertBody, setAlertBody] = useState({
     dialogBoxType: '',
     headerText: '',
@@ -69,6 +71,7 @@ const Addaccount = ({navigation}) => {
   ]);
   async function sendOtpToAddAcc() {
     try {
+      setLoaderVisible(true);
       console.log('hello');
       const gettoken = await getItem(ASYNC_KEY.auth);
       const header = {
@@ -90,7 +93,7 @@ const Addaccount = ({navigation}) => {
         await setItem(ASYNC_KEY.token, response.headers['access-medium']);
         setPopup(true);
       } else {
-        console.log('jjjjjjjjjjjjj');
+        console.log('send otp hit');
 
         setAlertBody({
           dialogBoxType: 'Error',
@@ -100,15 +103,18 @@ const Addaccount = ({navigation}) => {
             setModalVisible(false);
           },
         });
-        setModalVisible(true);
+        // setModalVisible(true);
       }
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoaderVisible(false);
     }
   }
 
   async function VerifyOtpToVerifyAcc() {
     try {
+      setLoaderVisible(true);
       const gettoken = await getItem(ASYNC_KEY.auth);
       const gettokens = await getItem(ASYNC_KEY.token);
       const header = {
@@ -145,6 +151,8 @@ const Addaccount = ({navigation}) => {
       }
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoaderVisible(false);
     }
   }
 
@@ -280,6 +288,7 @@ const Addaccount = ({navigation}) => {
   };
   return (
     <SafeAreaView>
+      <Loader animating={loadervisible} />
       <CommonModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}

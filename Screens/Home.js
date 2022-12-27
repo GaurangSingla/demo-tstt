@@ -363,20 +363,24 @@ const Home = ({navigation}) => {
           </Text>
         </Pressable>
 
+
+
+<View style={{flex:1,justifyContent:'center'}}>
         <View
           style={{
             flexDirection: 'row',
             marginLeft: 'auto',
             marginRight: 'auto',
           }}>
+{/* #FCEDE6 */}
           <TouchableOpacity>
             <View
               style={{
                 backgroundColor: '#FCEDE6',
                 padding: 5,
                 marginTop: 40,
-                marginLeft: 13,
-                width: 180,
+                marginLeft: 10,
+                width: 185,
                 height: 130,
                 borderRadius: 20,
                 flexDirection: 'row',
@@ -409,7 +413,7 @@ const Home = ({navigation}) => {
                 backgroundColor: '#ECF6EA',
                 padding: 5,
                 marginTop: 40,
-                marginLeft: 10,
+                marginLeft: 5,
                 marginRight: 10,
                 width: 180,
                 height: 130,
@@ -451,7 +455,7 @@ const Home = ({navigation}) => {
                 backgroundColor: '#FEFCE8',
                 padding: 5,
                 marginTop: 20,
-                marginLeft: 13,
+                marginLeft:13,
                 width: 180,
                 height: 130,
                 borderRadius: 20,
@@ -484,7 +488,7 @@ const Home = ({navigation}) => {
                 backgroundColor: '#EDE7F1',
                 padding: 5,
                 marginTop: 20,
-                marginLeft: 10,
+                marginLeft: 5,
                 marginRight: 10,
                 width: 180,
                 height: 130,
@@ -513,7 +517,7 @@ const Home = ({navigation}) => {
             </View>
           </TouchableOpacity>
         </View>
-
+</View>
         <View
           style={{
             backgroundColor: 'white',
@@ -581,15 +585,16 @@ const Home = ({navigation}) => {
         <View
           style={{
             flexDirection: 'row',
-            marginLeft: 'auto',
-            marginRight: 'auto',
+            flex:1,
+            justifyContent:'center'
+           
           }}>
           <TouchableOpacity>
             <View
               style={{
                 backgroundColor: '#5CB24C',
                 marginTop: 20,
-                marginLeft: 10,
+                
                 width: 180,
                 height: 60,
                 borderRadius: 10,
@@ -635,7 +640,7 @@ const Home = ({navigation}) => {
               />
               <Text
                 style={{
-                  marginLeft: 70,
+                  marginLeft: 68,
                   bottom: 40,
                   color: 'white',
                   fontWeight: 'bold',
@@ -653,6 +658,7 @@ const Home = ({navigation}) => {
             width: '96%',
             marginLeft: 'auto',
             marginRight: 'auto',
+            flex:1
           }}>
           <View style={{flexDirection: 'row'}}>
             <Text
@@ -676,7 +682,7 @@ const Home = ({navigation}) => {
               bMobile
             </Text>
           </View>
-          <View style={{flexDirection: 'row', marginBottom: 120}}>
+          <View style={{flexDirection: 'row', marginBottom: 120,marginLeft:'auto',marginRight:'auto'}}>
             <TouchableOpacity>
               <View
                 style={{
