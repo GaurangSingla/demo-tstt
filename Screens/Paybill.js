@@ -19,7 +19,7 @@ import {
 const Paybill = ({navigation}) => {
   const [data, setData] = useState([]);
   const [savenumber, setSaveNumber] = useState('');
- 
+  const [amount,setAmount]=useState('');
   const [renderCards, setRenderCards] = useState(false); 
   const [message,setMessage]=useState('');
  
@@ -37,7 +37,7 @@ const Paybill = ({navigation}) => {
         },
       };
       console.log('header ===== ', header);
-      const response = await PaymentService. billPayGet(header);
+      const response = await PaymentService.billPayGet(header);
       console.log(
         '==========> billpay response',
         JSON.stringify(response.data),
@@ -104,7 +104,7 @@ const Paybill = ({navigation}) => {
 
           <View
             style={{marginLeft: 0, alignSelf: 'flex-end', top: -20, right: 30}}>
-            <TouchableOpacity onPress={()=>{hitApi(),console.log("jj")}}>
+            <TouchableOpacity onPress={()=>{hitApi()}}>
               <MaterialCommunityIcons name="arrow-right" size={25} />
             </TouchableOpacity>
           </View>
@@ -231,9 +231,15 @@ const Paybill = ({navigation}) => {
                 }}
                 placeholder="Enter Amount"
                 placeholderTextColor="#989898"
+                onChangeText={amount=>setAmount(amount)}
               />
               <TouchableOpacity
-                onPress={() => navigation.navigate('CardDetails')}>
+                onPress={() => navigation.navigate('CardDetails', {
+                  label: 'BillPay',
+                  requestId: data.requestId,
+                  amount: amount,
+                  number:'1868'+savenumber
+                })}>
                 <View
                   style={{
                     marginTop: 25,

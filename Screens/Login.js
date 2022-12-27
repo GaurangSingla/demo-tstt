@@ -160,16 +160,7 @@ const Login = ({navigation}) => {
       setLoaderVisible(false);
     }
   }
-  function api() {
-    if (!emptyPassword && !emptyPhone) {
-      hitApi();
-    }
-  }
 
-  async function phone() {
-    await setItem(ASYNC_KEY.loginMethod, 'phoneNumber');
-    var p = await getItem(ASYNC_KEY.loginMethod);
-  }
 
   function handleErrorField() {
     const phonevalid = validatePhone();
