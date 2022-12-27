@@ -14,17 +14,17 @@ import {
 } from '../utils/StorageHandling';
 import {ASYNC_KEY} from '../utils/string';
 import Loader from '../ActivityIndicator/Activityindicator';
+
 const Paybill = ({navigation}) => {
   const [loadervisible, setLoaderVisible] = useState(false);
   const [data, setData] = useState([]);
   const [savenumber, setSaveNumber] = useState('');
-
-  const [renderCards, setRenderCards] = useState(false);
-  const [message, setMessage] = useState('');
-
-  async function hitApi() {
-    try {
-      setLoaderVisible(true);
+  const [amount,setAmount]=useState('');
+  const [renderCards, setRenderCards] = useState(false); 
+  const [message,setMessage]=useState('');
+ 
+ async function hitApi() {
+    try { 
       const authToken = await getItem(ASYNC_KEY.auth);
       const header = {
         headers: {
@@ -139,6 +139,47 @@ const Paybill = ({navigation}) => {
               <Text style={{marginLeft: 90, color: '#9B9B9B'}}>
                 Account Number
               </Text>
+              <TextInput
+                style={{
+                  width: '90%',
+                  marginTop: 20,
+                  marginLeft: 15,
+                  borderRadius: 10,
+                  backgroundColor: 'white',
+                  borderWidth: 2,
+                  borderColor: '#F4F4F4',
+                  height: 45,
+                }}
+                placeholder="Enter Amount"
+                placeholderTextColor="#989898"
+                onChangeText={amount=>setAmount(amount)}
+              />
+              <TouchableOpacity
+                onPress={() => navigation.navigate('CardDetails', {
+                  label: 'BillPay',
+                  requestId: data.requestId,
+                  amount: amount,
+                  number:'1868'+savenumber
+                })}>
+                <View
+                  style={{
+                    marginTop: 25,
+                    backgroundColor: '#00E556',
+                    height: 40,
+                    width: '80%',
+                    padding: 10,
+                    fontSize: 15,
+                    color: '#2E2F2F',
+                    fontWeight: 'bold',
+                    alignItems: 'center',
+                    marginLeft: 35,
+                    borderRadius: 7,
+                  }}>
+                  <Text style={{color: '#2E2F2F', fontWeight: 'bold'}}>
+                    Proceed
+                  </Text>
+                </View>
+              </TouchableOpacity>
             </View>
 
             {data ? (
@@ -169,7 +210,7 @@ const Paybill = ({navigation}) => {
                   Post Paid
                 </Text>
                 <Text style={{marginLeft: 170, fontSize: 19, color: '#4D4848'}}>
-                  {'$'}
+                  
                   {data.dueAmount}{' '}
                 </Text>
               </View>
@@ -190,7 +231,7 @@ const Paybill = ({navigation}) => {
                 }}>
                 {data ? (
                   <Text style={{color: '#2E2F2F', fontWeight: 'bold'}}>
-                    {'Pay'} {'$'}
+                    {'Pay'}
                     {data.dueAmount}
                   </Text>
                 ) : (
