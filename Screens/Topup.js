@@ -1,4 +1,4 @@
-import {View, Text, ScrollView, SafeAreaView} from 'react-native';
+import {View, Text, ScrollView, SafeAreaView,Image} from 'react-native';
 import React, {useState, useRef} from 'react';
 import {TouchableOpacity} from 'react-native';
 import {TextInput} from 'react-native-paper';
@@ -15,6 +15,7 @@ const Topup = ({navigation}) => {
   const [usrNameValid, setUsrNameValid] = useState(true);
   const [loadervisible, setLoaderVisible] = useState(false);
   const [AmountValid, setAmountValid] = useState(true);
+  const [press,setPress] = useState(true);
   function amount(num) {
     setAmt(num);
     setAmountValid(true);
@@ -95,17 +96,17 @@ const Topup = ({navigation}) => {
               placeholder={' Mobile Number '}
               // placeholderTextColor={}
 
-              withShadow
+              // withShadow
               containerStyle={{
                 borderRadius: 10,
                 width: '90%',
                 backgroundColor: 'white',
-                borderWidth: 2,
-                borderColor: 'white',
-                bottom: 2,
+                borderWidth: 1,
+                borderColor: 'lightgrey',
+                // bottom: 2.2,
                 margin: 10,
                 alignSelf: 'center',
-                bottom: 10,
+                bottom: 10.5,
                 position: 'relative',
               }}
               textInputStyle={{height: 38}}
@@ -131,31 +132,57 @@ const Topup = ({navigation}) => {
                 backgroundColor: 'white',
                 marginLeft: 28,
                 borderRadius: 10,
+                borderWidth:2.4,
+                borderColor:'lightblue',
+                flexDirection:'row',
               }}>
+                <Image
+                style={{
+                  height: 20,
+                  width: 27,
+                  marginLeft: '19%',
+                  marginTop: 16,
+                }}
+                source={require('../assets/TopUpActive.png')}
+              />
               <Text
                 style={{
                   justifyContent: 'center',
                   textAlign: 'center',
-                  padding: 15,
+                  padding: 10,
                   color: '#4D4848',
                   fontWeight: 'bold',
+                  fontSize:15,
+                  marginTop:5
                 }}>
                 Top Up
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            <TouchableOpacity onPress={() => navigation.navigate('Paymentsuccess')}
               style={{
                 width: '40%',
                 height: 50,
                 backgroundColor: 'white',
                 marginLeft: 10,
                 borderRadius: 10,
+                flexDirection:'row'
               }}>
+                <Image
+                style={{
+                  height: 20,
+                  width: 30,
+                  marginLeft: '19%',
+                  marginTop: 16,
+                }}
+                source={require('../assets/Voucher.png')}
+              />
               <Text
                 style={{
                   justifyContent: 'center',
                   textAlign: 'center',
-                  padding: 15,
+                  padding: 10,
+                  fontSize:15,
+                  marginTop:5,
                   color: '#4D4848',
                   fontWeight: 'bold',
                 }}>
@@ -186,14 +213,18 @@ const Topup = ({navigation}) => {
               style={{
                 backgroundColor: 'white',
                 width: 302,
-                borderWidth: 1,
+                borderWidth: 0.6,
                 borderColor: 'lightgrey',
                 alignSelf: 'center',
                 height: 50,
               }}
               placeholder={'Amount ($) *'}
               value={amt ? amt.toString() : amt}
-              placeholderTextColor={'black'}></TextInput>
+              placeholderTextColor={'black'}
+              numeric
+              keyboardType={'numeric'}
+              >
+             </TextInput>
             <Text
               style={{
                 color: 'red',
@@ -421,13 +452,7 @@ const Topup = ({navigation}) => {
             <TouchableOpacity
               onPress={() => {
                 handleErrorField();
-                // navigation.navigate('CardDetails', {
-                //   mobile: mbl,
-                //   amount: amt,
-                //   label: 'TopUp',
-                //   // accountNumber:accountNumber ? accountNumber : name,
-                // });
-              }}
+                 }}
               style={{
                 borderWidth: 2,
                 borderColor: 'white',
@@ -437,6 +462,7 @@ const Topup = ({navigation}) => {
                 borderRadius: 15,
                 backgroundColor: '#00E556',
                 padding: 10,
+                marginLeft:13
               }}>
               <Text
                 style={{

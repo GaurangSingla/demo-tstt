@@ -15,6 +15,7 @@ import Mycards from '../Screens/Mycards';
 import Transaction from '../Screens/Transaction';
 import Addaccount from '../Screens/Addaccount';
 import Profile from '../Screens/Profile';
+import Paymentsuccess from '../Screens/Paymentsuccess';
 const Stack = createNativeStackNavigator();
 function ActionBarIcon() {
   return (
@@ -87,6 +88,11 @@ const Stacks = () => {
       <Stack.Screen
         name="Topup"
         component={Topup}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Paymentsuccess"
+        component={Paymentsuccess}
         options={{ headerShown: false }}
       />
       <Stack.Screen
