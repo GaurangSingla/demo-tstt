@@ -33,7 +33,7 @@ function ActionBarIcon1() {
 function ActionBarIcon2() {
   return (
     <Image
-      style={{ width: 150, height: 50, backgroundColor: 'white', marginLeft: 30 }}
+      style={{ width: 150, height: 50, backgroundColor: 'white', marginLeft: 55 }}
       source={require('../assets/toplogo.jpeg')}></Image>
   );
 }

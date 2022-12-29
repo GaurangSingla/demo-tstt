@@ -23,6 +23,7 @@ const Paybill = ({navigation}) => {
   const [savenumber, setSaveNumber] = useState('');
   const [amount,setAmount]=useState('');
   const [renderCards, setRenderCards] = useState(false); 
+  const [press,setPress]=useState(false)
   const [message,setMessage]=useState('');
   const [loadervisible, setLoaderVisible] = useState(false);
  
@@ -71,6 +72,7 @@ const Paybill = ({navigation}) => {
   }
 }
   return (
+    
     <SafeAreaView>
        <Loader animating={loadervisible} />
       <View
@@ -186,7 +188,15 @@ const Paybill = ({navigation}) => {
                   </Text>
                 </View>
               ) : Alert.alert(message)}
-              <TouchableOpacity>
+              <TouchableOpacity onPress={()=>{navigation.navigate('CardDetails', {
+                  label: 'BillPay',
+                  requestId: data.requestId,
+                  amount:data.dueAmount,
+                  number:'1868'+savenumber
+                })
+               setPress(true)
+            
+            }}>
                 <View
                   style={{
                     marginTop: 25,
@@ -246,7 +256,7 @@ const Paybill = ({navigation}) => {
                 onPress={() => navigation.navigate('CardDetails', {
                   label: 'BillPay',
                   requestId: data.requestId,
-                  amount: amount,
+                  amount:amount,
                   number:'1868'+savenumber
                 })}>
                 <View
