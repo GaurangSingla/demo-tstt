@@ -12,6 +12,7 @@ import {
 import PhoneInput from 'react-native-phone-number-input';
 import {useIsFocused} from '@react-navigation/native';
 import {Modal, TextInput} from 'react-native-paper';
+import { LoadingAnimation  } from 'react-native-loading-animation-image';
 import {RFValue} from 'react-native-responsive-fontsize';
 import Tab_navi from '../android/Tab_navi';
 import messaging from '@react-native-firebase/messaging';
@@ -108,7 +109,7 @@ const Login = ({navigation}) => {
     console.log(state);
     return state;
   });
-  console.log('store ka dta', storeData);
+
   const dispatch = useDispatch();
   async function hitApi() {
     let args = {
@@ -160,7 +161,16 @@ const Login = ({navigation}) => {
       setLoaderVisible(false);
     }
   }
+  function api() {
+    if (!emptyPassword && !emptyPhone) {
+      hitApi();
+    }
+  }
 
+  async function phone() {
+    await setItem(ASYNC_KEY.loginMethod, 'phoneNumber');
+    var p = await getItem(ASYNC_KEY.loginMethod);
+  }
 
   function handleErrorField() {
     const phonevalid = validatePhone();

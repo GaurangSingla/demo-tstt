@@ -103,7 +103,7 @@ const CommonModal = ({modalVisible, alertBody, onRequestClose}) => {
                     padding: 12,
                   }}>
                   {'        TTD '}
-                  {alertBody.amount}
+                  {alertBody.amount}{".00"}
                 </Text>
               </View>
               <View
@@ -147,9 +147,9 @@ const CommonModal = ({modalVisible, alertBody, onRequestClose}) => {
                   }}>
                   Total Amount
                 </Text>
-                <Text style={{padding: 12}}>
+                <Text style={{padding: 12,color:'#00E556'}}>
                   {'        TTD '}
-                  {alertBody.amount}
+                  {alertBody.amount}{".00"}
                 </Text>
               </View>
             </View>
@@ -172,7 +172,7 @@ const CommonModal = ({modalVisible, alertBody, onRequestClose}) => {
                 onPress={onRequestClose}>
                 <Text style={{fontSize: 20, color: 'black'}}>Cancel</Text>
               </Pressable>
-              <Pressable
+              <Pressable onPress={alertBody.handlerFunction}
                 style={{
                   backgroundColor: '#00E556',
                   height: 45,

@@ -8,7 +8,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 // import {ScrollView} from 'react-native-gesture-handler';
 const Topup = ({navigation}) => {
   const [phoneNumber, setPhoneNumber] = useState('');
-  const [mbl, setMbl] = React.useState(''); //18684860504
+  const [mbl, setMbl] =useState(''); //18684860504
   // const [amount, setAmount] = useState();//for validation
   const phoneInput = useRef(null);
   const [amt, setAmt] = useState(); //for values printing
@@ -28,10 +28,9 @@ const Topup = ({navigation}) => {
       setLoaderVisible(true);
       if (phonevalid && amountvalid) {
         navigation.navigate('CardDetails', {
-          mobile: mbl,
+          mobile: phoneNumber,
           amount: amt,
           label: 'TopUp',
-          // accountNumber:accountNumber ? accountNumber : name,
         });
       }
     } finally {

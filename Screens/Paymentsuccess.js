@@ -1,7 +1,12 @@
 import {View, Text, SafeAreaView, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
-
+import {useDispatch, useSelector} from 'react-redux';
 const Paymentsuccess = ({navigation}) => {
+  const storeData = useSelector(state => {
+    console.log(state);
+    return state;
+  });
+
   return (
     <SafeAreaView>
       <View
@@ -12,10 +17,11 @@ const Paymentsuccess = ({navigation}) => {
               uri: 'https://img.icons8.com/fluency-systems-regular/48/null/share.png',
             }}
             style={{
-              height: 50,
-              width: 50,
+              height: 40,
+              width: 40,
               alignSelf: 'flex-end',
               marginRight: 20,
+              marginBottom:5
             }}
           />
         </TouchableOpacity>
@@ -27,7 +33,7 @@ const Paymentsuccess = ({navigation}) => {
             marginLeft: 'auto',
             marginRight: 'auto',
             borderRadius: 20,
-            flex:1
+            flex: 1,
           }}>
           <Image
             style={{
@@ -46,7 +52,7 @@ const Paymentsuccess = ({navigation}) => {
               fontSize: 23,
               fontWeight: '490',
             }}>
-            Payment Successful
+            Payment {storeData.data.status}
           </Text>
           <Text
             style={{
@@ -55,7 +61,8 @@ const Paymentsuccess = ({navigation}) => {
               fontSize: 22,
               fontWeight: '490',
             }}>
-            TTD 50.00
+            TTD {storeData.data.amount}
+            {'.00'}
           </Text>
           <Text
             style={{
@@ -81,7 +88,7 @@ const Paymentsuccess = ({navigation}) => {
               Transaction ID
             </Text>
             <Text style={{marginLeft: '10%', fontWeight: 'bold'}}>
-              TSTT2022122708175589347
+              {storeData.data.transactionNumber}
             </Text>
           </View>
 
@@ -91,7 +98,7 @@ const Paymentsuccess = ({navigation}) => {
               Mobile Number
             </Text>
             <Text style={{marginLeft: '35%', fontWeight: 'bold'}}>
-              18686893378
+              {storeData.data.mobileNumber}
             </Text>
           </View>
 
@@ -101,7 +108,7 @@ const Paymentsuccess = ({navigation}) => {
               Postpaid Account Number
             </Text>
             <Text style={{marginLeft: '23%', fontWeight: 'bold'}}>
-              07008454
+              {storeData.data.accountNumber}
             </Text>
           </View>
 
@@ -110,7 +117,9 @@ const Paymentsuccess = ({navigation}) => {
               style={{marginLeft: '8%', fontWeight: 'bold', color: '#AAAAAA'}}>
               Account Holder Name
             </Text>
-            <Text style={{marginLeft: '32%', fontWeight: 'bold'}}>A AMMO</Text>
+            <Text style={{marginLeft: '32%', fontWeight: 'bold'}}>
+              {storeData.data.accountName}
+            </Text>
           </View>
 
           <View style={{flexDirection: 'row', marginTop: 7}}>
@@ -118,8 +127,8 @@ const Paymentsuccess = ({navigation}) => {
               style={{marginLeft: '8%', fontWeight: 'bold', color: '#AAAAAA'}}>
               Card Number
             </Text>
-            <Text style={{marginLeft: '25%', fontWeight: 'bold'}}>
-              XXXXXXXXXXXX1111
+            <Text style={{marginLeft: '24%', fontWeight: 'bold'}}>
+              {storeData.data.cardNumber}
             </Text>
           </View>
 
@@ -128,7 +137,7 @@ const Paymentsuccess = ({navigation}) => {
               style={{marginLeft: '8%', fontWeight: 'bold', color: '#AAAAAA'}}>
               Payment Amount
             </Text>
-            <Text style={{marginLeft: '38%', fontWeight: 'bold'}}>
+            <Text style={{marginLeft: '36%', fontWeight: 'bold'}}>
               TTD 50.00
             </Text>
           </View>
@@ -138,7 +147,7 @@ const Paymentsuccess = ({navigation}) => {
               style={{marginLeft: '8%', fontWeight: 'bold', color: '#AAAAAA'}}>
               Convenience Fees
             </Text>
-            <Text style={{marginLeft: '39%', fontWeight: 'bold'}}>
+            <Text style={{marginLeft: '37%', fontWeight: 'bold'}}>
               TTD 0.00
             </Text>
           </View>
@@ -148,8 +157,9 @@ const Paymentsuccess = ({navigation}) => {
               style={{marginLeft: '8%', fontWeight: 'bold', color: '#AAAAAA'}}>
               Total Amount Paid**
             </Text>
-            <Text style={{marginLeft: '34%', fontWeight: 'bold'}}>
-              TTD 50.00
+            <Text style={{marginLeft: '29%', fontWeight: 'bold'}}>
+              TTD {storeData.data.totalAmount}
+              {'.00'}
             </Text>
           </View>
 
@@ -158,8 +168,8 @@ const Paymentsuccess = ({navigation}) => {
               style={{marginLeft: '8%', fontWeight: 'bold', color: '#AAAAAA'}}>
               Transaction Date & Time
             </Text>
-            <Text style={{marginLeft: '12%', fontWeight: 'bold'}}>
-              2022-12-17 8:57:56
+            <Text style={{marginLeft: '6%', fontWeight: 'bold'}}>
+              {storeData.data.transactionDateTime}
             </Text>
           </View>
 
@@ -168,8 +178,8 @@ const Paymentsuccess = ({navigation}) => {
               style={{marginLeft: '8%', fontWeight: 'bold', color: '#AAAAAA'}}>
               Status
             </Text>
-            <Text style={{marginLeft: '56%', fontWeight: 'bold'}}>
-              Completed
+            <Text style={{marginLeft: '51%', fontWeight: 'bold'}}>
+              {storeData.data.status}
             </Text>
           </View>
 
@@ -184,7 +194,6 @@ const Paymentsuccess = ({navigation}) => {
               marginLeft: 'auto',
               marginRight: 'auto',
               marginTop: 20,
-              
             }}
             source={require('../assets/toplogo.jpeg')}
           />
@@ -194,7 +203,7 @@ const Paymentsuccess = ({navigation}) => {
             flexDirection: 'row',
             marginLeft: 'auto',
             marginRight: 'auto',
-            marginVertical:10,
+            marginVertical: 10,
           }}>
           <TouchableOpacity
             onPress={() => navigation.navigate('CardDetails')}

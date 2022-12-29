@@ -18,7 +18,7 @@ const App = (props) => {
   return (
     <View style={{ flex: 1 ,backgroundColor:'#FFF'}}>
       <Provider store={store}>
-        {/* <Counter /> */}
+      
         <NavigationContainer>
 
           <Stacks />
