@@ -44,6 +44,7 @@ import {
   notificationListener,
 } from '../Services.js/notificationService';
 import Loader from '../ActivityIndicator/Activityindicator';
+// import Googlesignin from '../utils/Googlesignin';
 const Login = ({navigation}) => {
   useEffect(() => {
     requestUserPermission();
@@ -108,7 +109,7 @@ const Login = ({navigation}) => {
     console.log(state);
     return state;
   });
-  console.log('store ka dta', storeData);
+
   const dispatch = useDispatch();
   async function hitApi() {
     let args = {
@@ -160,7 +161,16 @@ const Login = ({navigation}) => {
       setLoaderVisible(false);
     }
   }
+  function api() {
+    if (!emptyPassword && !emptyPhone) {
+      hitApi();
+    }
+  }
 
+  async function phone() {
+    await setItem(ASYNC_KEY.loginMethod, 'phoneNumber');
+    var p = await getItem(ASYNC_KEY.loginMethod);
+  }
 
   function handleErrorField() {
     const phonevalid = validatePhone();
@@ -188,8 +198,9 @@ const Login = ({navigation}) => {
   let imageHeight = dimensions.height;
   let imageWidth = dimensions.width;
   return (
-    <View>
-      <SafeAreaView>
+    <View style={{flex:1}}>
+      {/* <Googlesignin/> */}
+      <SafeAreaView style={{flex:1}}>
       <Loader animating={loadervisible} />
         {modalVisible ? (
           <CommonModal
@@ -481,6 +492,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     height: '63%',
     top: '39%',
+    flex:1,
   },
   txt: {
     color: '#4D4848',
