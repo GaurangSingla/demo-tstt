@@ -1,21 +1,6 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {
-  View,
-  Text,
-  Image,
-  StyleSheet,
-  Button,
-  TouchableOpacity,
-  Pressable,
-  SafeAreaView,
-  Dimensions,
-} from 'react-native';
+import React,{useState,useRef} from 'react'
+import {View,Text,Image,StyleSheet,TextInput,Button, TouchableOpacity} from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
-import {useIsFocused} from '@react-navigation/native';
-import {LoginButton, AccessToken} from 'react-native-fbsdk-next';
-import {Modal, TextInput} from 'react-native-paper';
-import {LoadingAnimation} from 'react-native-loading-animation-image';
-import {RFValue} from 'react-native-responsive-fontsize';
 import Tab_navi from '../android/Tab_navi';
 import messaging from '@react-native-firebase/messaging';
 import {ProfileService} from '../ProfileService';

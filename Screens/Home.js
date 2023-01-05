@@ -13,6 +13,12 @@ import {
 import React, {useEffect, useState} from 'react';
 import Carousel from 'pinar';
 import Listhorizontal from './Listhorizontal';
+import {
+  responsiveHeight,
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
 import Addaccount from '../Screens/Addaccount';
 import Loader from '../ActivityIndicator/Activityindicator';
 import {
@@ -33,6 +39,7 @@ import {
   BuildType,
 } from '../utils/string';
 import {ProfileService} from '../Services.js/LoginService';
+import {RFValue} from 'react-native-responsive-fontsize';
 const Home = ({navigation}) => {
   const [moredata, setmoredata] = useState();
   const [promo, setpromo] = useState();
@@ -129,36 +136,39 @@ const Home = ({navigation}) => {
   //   }
   // }
   const renderitem = ({item}) => {
-    console.log('msg', item);
     return (
       <View
         style={{
           backgroundColor: '#00E556',
-          height: 190,
           width: Dimensions.get('window').width * 0.96,
-          marginLeft: Dimensions.get('window').height * 0.01,
-          borderRadius: 13,
+          height: Dimensions.get('window').height * 0.33,
+          padding: RFValue(10),
+          borderRadius: RFValue(15),
+          marginHorizontal: RFValue(10),
         }}>
         <Carousel>
           <>
             <Text
               style={{
                 color: 'white',
-                marginTop: 10,
-                marginLeft: 10,
+                marginTop: RFValue(8),
+
                 fontWeight: 'bold',
               }}>
               {/* Postpaid: +1868 9876543210 */}
               {item.type + ' ' + item.mobile}
             </Text>
             <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginHorizontal: RFValue(5),
+              }}>
               <Text
                 style={{
                   color: 'white',
-                  fontSize: 15,
+                  fontSize: RFValue(17),
                   fontWeight: '700',
-                  marginLeft: 10,
                 }}>
                 {item.firstName + ' ' + item.lastName}
               </Text>
@@ -166,17 +176,18 @@ const Home = ({navigation}) => {
                 <View
                   style={{
                     backgroundColor: '#5EC674',
-                    marginRight: 10,
-                    width: 120,
-                    height: 40,
-                    bottom: 10,
-                    borderRadius: 10,
+                    width: '110%',
+                    height: responsiveHeight(8),
+                    justifyContent: 'center',
+                    borderRadius: RFValue(12),
+                    marginRight: RFValue(15),
+                    right: RFValue(8),
                   }}>
                   <Text
                     style={{
                       color: 'white',
-                      fontSize: 20,
-                      padding: 5,
+                      fontSize: RFValue(17),
+                      paddingHorizontal: RFValue(25),
                       textAlign: 'center',
                       justifyContent: 'center',
                       fontWeight: '700',
@@ -187,13 +198,18 @@ const Home = ({navigation}) => {
               </TouchableOpacity>
             </View>
 
-            <View style={{flexDirection: 'row'}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginHorizontal: RFValue(5),
+              }}>
               {item.type == 'POSTPAID' ? (
                 <>
                   <Text
                     style={{
                       color: 'white',
-                      marginLeft: 15,
+
                       fontWeight: 'bold',
                     }}>
                     Total Due Amount
@@ -201,7 +217,7 @@ const Home = ({navigation}) => {
                   <Text
                     style={{
                       color: 'white',
-                      marginLeft: 130,
+                      right: RFValue(15),
                       fontWeight: 'bold',
                     }}>
                     Due Date
@@ -212,7 +228,7 @@ const Home = ({navigation}) => {
                   <Text
                     style={{
                       color: 'white',
-                      marginLeft: 15,
+
                       fontWeight: 'bold',
                     }}>
                     Balance
@@ -220,23 +236,28 @@ const Home = ({navigation}) => {
                   <Text
                     style={{
                       color: 'white',
-                      marginLeft: 130,
+
                       fontWeight: 'bold',
                     }}>
-                    {'            '} Expiry Date
+                    Expiry Date
                   </Text>
                 </>
               )}
             </View>
 
-            <View style={{flexDirection: 'row'}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                marginHorizontal: RFValue(25),
+              }}>
               {press ? (
                 <Text
                   style={{
                     color: 'white',
-                    marginLeft: 22,
+                    left: RFValue(17),
                     fontWeight: 'bold',
-                    fontSize: 15,
+                    fontSize: RFValue(18),
                   }}>
                   {item.type == 'POSTPAID'
                     ? amount.totalDueAmount
@@ -246,9 +267,9 @@ const Home = ({navigation}) => {
                 <Text
                   style={{
                     color: 'white',
-                    marginLeft: 22,
+                    left: RFValue(10),
                     fontWeight: 'bold',
-                    fontSize: 15,
+                    fontSize: RFValue(18),
                   }}>
                   {'***'}
                 </Text>
@@ -257,9 +278,9 @@ const Home = ({navigation}) => {
                 <Text
                   style={{
                     color: 'white',
-                    marginLeft: 164,
+                    left: RFValue(10),
                     fontWeight: 'bold',
-                    fontSize: 15,
+                    fontSize: RFValue(18),
                   }}>
                   {amount.dueDate}
                 </Text>
@@ -267,15 +288,20 @@ const Home = ({navigation}) => {
                 <Text
                   style={{
                     color: 'white',
-                    marginLeft: 164,
+                    right: RFValue(10),
                     fontWeight: 'bold',
-                    fontSize: 15,
+                    fontSize: RFValue(17),
                   }}>
-                  {'                  '} {'***'}
+                  {'***'}
                 </Text>
               )}
             </View>
-            <View style={{flexDirection: 'row'}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-around',
+                top: RFValue(20),
+              }}>
               <TouchableOpacity
                 onPress={() => {
                   accountBillDetail(item.id);
@@ -284,15 +310,18 @@ const Home = ({navigation}) => {
                 <View
                   style={{
                     backgroundColor: '#5EC674',
-                    width: 150,
-                    height: 40,
-                    alignItems: 'center',
+                    width: responsiveWidth(45),
+                    height: responsiveHeight(7),
+                    borderRadius: RFValue(10),
                     justifyContent: 'center',
-                    marginLeft: 85,
-                    marginTop: 20,
-                    borderRadius: 10,
+                    left: RFValue(55),
                   }}>
-                  <Text style={{color: 'white', fontWeight: '700'}}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontWeight: '700',
+                      textAlign: 'center',
+                    }}>
                     Refresh
                   </Text>
                 </View>
@@ -301,14 +330,18 @@ const Home = ({navigation}) => {
                 <View
                   style={{
                     backgroundColor: '#F4F4F4',
-                    borderRadius: 20,
-                    height: 40,
-                    width: 40,
-                    marginLeft: 55,
-                    marginTop: 20,
+                    borderRadius: RFValue(25),
+                    height: responsiveHeight(7),
+                    width: responsiveWidth(13),
+                    left: RFValue(15),
                   }}>
                   <Image
-                    style={{width: 30, height: 30, marginLeft: 5, marginTop: 6}}
+                    style={{
+                      width: 30,
+                      height: 30,
+                      margin: RFValue(6),
+                      left: RFValue(3),
+                    }}
                     source={require('../assets/settings.png')}
                   />
                 </View>
@@ -341,12 +374,11 @@ const Home = ({navigation}) => {
             flex: 1,
             backgroundColor: '#48BC5F',
             color: '#FFFFFF',
-            height: 40,
-            width: 230,
-            padding: 10,
-            marginTop: 40,
-            marginLeft: 'auto',
-            marginRight: 'auto',
+            height: responsiveHeight(7),
+            width: responsiveWidth(60),
+            justifyContent: 'center',
+            marginTop: RFValue(35),
+            alignSelf: 'center',
             fontWeight: 'bold',
           }}>
           <Text
@@ -388,7 +420,7 @@ const Home = ({navigation}) => {
                 }}
                 source={require('../assets/PrepaidTopup.png')}
               />
-              <Text style={{fontSize: 16, fontWeight: 'bold'}}>
+              <Text style={{fontSize: RFValue(18), fontWeight: 'bold'}}>
                 Prepaid{'\n'}Top Up
               </Text>
             </TouchableOpacity>
@@ -412,7 +444,9 @@ const Home = ({navigation}) => {
                 }}
                 source={require('../assets/Pay_Bills_Light.png')}
               />
-              <Text style={{fontSize: 18, fontWeight: 'bold'}}>Pay Bills</Text>
+              <Text style={{fontSize: RFValue(18), fontWeight: 'bold'}}>
+                Pay Bills
+              </Text>
             </TouchableOpacity>
           </View>
           <View
@@ -436,7 +470,9 @@ const Home = ({navigation}) => {
                 }}
                 source={require('../assets/Mycards.png')}
               />
-              <Text style={{fontSize: 16, fontWeight: 'bold'}}>My Cards</Text>
+              <Text style={{fontSize: RFValue(18), fontWeight: 'bold'}}>
+                My Cards
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={{
@@ -458,7 +494,11 @@ const Home = ({navigation}) => {
                 source={require('../assets/TransactionHistory.png')}
               />
               <Text
-                style={{fontSize: 16, fontWeight: 'bold', marginLeft: '4%'}}>
+                style={{
+                  fontSize: RFValue(18),
+                  fontWeight: 'bold',
+                  marginLeft: '4%',
+                }}>
                 Transaction{'\n'}History
               </Text>
             </TouchableOpacity>
@@ -466,35 +506,25 @@ const Home = ({navigation}) => {
         </View>
         <View
           style={{
-            // backgroundColor: 'white',
-            // width: '95%',
-            // marginLeft: 10,
-            // marginTop: 15,
-            // height: 220,
-            // borderRadius: 20,
-            // flex:1
-            // width: '95%',
-            // height: Dimensions.get('screen').height * 0.3,
             backgroundColor: 'white',
-            // padding: '1%',
             margin: '2%',
-            flex: 1,
-            borderRadius:20
+            borderRadius: RFValue(20),
+            width: Dimensions.get('window').width * 0.96,
+            height: Dimensions.get('window').height * 0.35,
           }}>
           <View
             style={{flexDirection: 'row', marginLeft: '6%', marginTop: '3%'}}>
             <Text
               style={{
                 color: '#00E556',
-                fontSize: 23,
+                fontSize: RFValue(30),
                 fontWeight: 'bold',
-                // marginLeft: 10,
               }}>
               bMobile
             </Text>
             <Text
               style={{
-                fontSize: 23,
+                fontSize: RFValue(30),
                 fontWeight: 'bold',
                 marginLeft: '2%',
                 color: '#2E2F2F',
@@ -506,9 +536,9 @@ const Home = ({navigation}) => {
             <View style={styles.slide1}>
               <Image
                 style={{
-                  height: '80%',
-                  width: '90%',
-                  borderRadius: 15,
+                  height: responsiveHeight(20),
+                  width: responsiveWidth(90),
+                  borderRadius: RFValue(15),
                 }}
                 source={{
                   uri: 'https://dev-cim-api.tstt.co.tt/storage/promoImages/mrpBVxju0nvj88rKszm2pd7V87dg8C3CFi4TZO1h.png',
@@ -517,81 +547,11 @@ const Home = ({navigation}) => {
             </View>
           </Carousel>
         </View>
-        {/* <View
-          style={{
-            flexDirection: 'row',
-            flex: 1,
-            justifyContent: 'center',
-            backgroundColor:'red'
-          }}>
-          <TouchableOpacity>
-            <View
-              style={{
-                backgroundColor: '#5CB24C',
-                marginTop: 20,
-
-                width: 180,
-                height: 60,
-                borderRadius: 10,
-              }}>
-              <Image
-                style={{
-                  height: 40,
-                  width: 40,
-                  marginLeft: '12%',
-                  marginTop: 10,
-                }}
-                source={require('../assets/UssdCodes.png')}
-              />
-              <Text
-                style={{
-                  marginLeft: 70,
-                  bottom: 30,
-                  color: 'white',
-                  fontWeight: 'bold',
-                }}>
-                Quick Codes
-              </Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <View
-              style={{
-                backgroundColor: '#632F89',
-                marginTop: 20,
-                marginLeft: 10,
-                width: 180,
-                height: 60,
-                borderRadius: 10,
-              }}>
-              <Image
-                style={{
-                  height: 40,
-                  width: 40,
-                  marginLeft: '5%',
-                  marginTop: 10,
-                }}
-                source={require('../assets/Servicelocator.png')}
-              />
-              <Text
-                style={{
-                  marginLeft: 68,
-                  bottom: 40,
-                  color: 'white',
-                  fontWeight: 'bold',
-                }}>
-                Service Store{'\n'}Locator
-              </Text>
-            </View>
-          </TouchableOpacity>
-        </View> */}
         <View
           style={{
             width: '100%',
             height: Dimensions.get('screen').height * 0.07,
             backgroundColor: '#F4F4F4',
-            // padding: '1%',
-            // paddingHorizontal:'5%',
             flex: 1,
             flexDirection: 'row',
             justifyContent: 'space-evenly',
@@ -604,7 +564,7 @@ const Home = ({navigation}) => {
               justifyContent: 'center',
               flexDirection: 'row',
               width: '47%',
-              borderRadius: 15,
+              borderRadius: RFValue(15),
             }}>
             <Image
               style={{
@@ -614,7 +574,12 @@ const Home = ({navigation}) => {
               }}
               source={require('../assets/UssdCodes.png')}
             />
-            <Text style={{fontSize: 16, fontWeight: 'bold', color: 'white'}}>
+            <Text
+              style={{
+                fontSize: RFValue(18),
+                fontWeight: 'bold',
+                color: 'white',
+              }}>
               USSD Codes
             </Text>
           </TouchableOpacity>
@@ -625,7 +590,7 @@ const Home = ({navigation}) => {
               justifyContent: 'center',
               flexDirection: 'row',
               width: '47%',
-              borderRadius: 15,
+              borderRadius: RFValue(15),
             }}>
             <Image
               style={{
@@ -635,32 +600,27 @@ const Home = ({navigation}) => {
               }}
               source={require('../assets/Servicelocator.png')}
             />
-            <Text style={{fontSize: 16, fontWeight: 'bold', color: 'white'}}>
+            <Text
+              style={{
+                fontSize: RFValue(18),
+                fontWeight: 'bold',
+                color: 'white',
+              }}>
               Service Store{'\n'}Locator
             </Text>
           </TouchableOpacity>
         </View>
         <View
           style={{
-            // backgroundColor: '#FFFFFF',
-            // marginTop: 20,
-            // width: '96%',
-            // marginLeft: 'auto',
-            // marginRight: 'auto',
-            // flex: 1,
-            // width:  Dimensions.get('screen').width * 0.96,
-            // height: Dimensions.get('screen').height * 0.36,
             flex: 1,
             backgroundColor: 'white',
             paddingBottom: '5%',
-            // padding: '1%',
             margin: '2%',
-            // marginTop:'5%'
           }}>
           <View style={{flexDirection: 'row'}}>
             <Text
               style={{
-                fontSize: 20,
+                fontSize: RFValue(25),
                 marginLeft: '3%',
                 marginTop: '3%',
                 fontWeight: 'bold',
@@ -670,7 +630,7 @@ const Home = ({navigation}) => {
             </Text>
             <Text
               style={{
-                fontSize: 20,
+                fontSize: RFValue(25),
                 marginLeft: '1%',
                 color: '#00E556',
                 marginTop: '3%',
@@ -682,10 +642,6 @@ const Home = ({navigation}) => {
           <View
             style={{
               flexDirection: 'row',
-              // marginBottom: 120,
-              // marginLeft: 'auto',
-              // marginRight: 'auto',
-              // flex:1
               justifyContent: 'space-evenly',
               marginTop: '2%',
               marginHorizontal: '1%',
@@ -693,10 +649,8 @@ const Home = ({navigation}) => {
             <TouchableOpacity
               style={{
                 backgroundColor: 'black',
-                // width:  Dimensions.get('screen').width * 0.52,
-                //   height: Dimensions.get('screen').height * 0.3,
                 width: '48%',
-                borderRadius: 20,
+                borderRadius: RFValue(20),
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
@@ -705,8 +659,8 @@ const Home = ({navigation}) => {
                   width: Dimensions.get('screen').width * 0.42,
                   height: Dimensions.get('screen').height * 0.2,
                   margin: '4%',
-                  marginBottom: 0,
-                  borderRadius: 20,
+
+                  borderRadius: RFValue(20),
                 }}
                 source={require('../assets/Carhub.png')}
               />
@@ -715,14 +669,14 @@ const Home = ({navigation}) => {
                 style={{
                   fontWeight: 'bold',
                   textAlign: 'center',
-                  // height: '30%',
+
                   width: '100%',
                   paddingVertical: '4%',
                   backgroundColor: '#00E556',
-                  borderRadius: 10,
+                  borderRadius: RFValue(15),
                   color: 'white',
-                  fontSize: 20,
-                  marginTop: 1,
+                  fontSize: RFValue(27),
+                  marginTop: RFValue(1),
                 }}>
                 CarHub
               </Text>
@@ -730,9 +684,9 @@ const Home = ({navigation}) => {
             <TouchableOpacity
               style={{
                 backgroundColor: 'black',
-
                 width: '48%',
-                borderRadius: 20,
+
+                borderRadius: RFValue(20),
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
@@ -741,8 +695,7 @@ const Home = ({navigation}) => {
                   width: Dimensions.get('screen').width * 0.42,
                   height: Dimensions.get('screen').height * 0.2,
                   margin: '4%',
-                  marginBottom: 0,
-                  borderRadius: 20,
+                  borderRadius: RFValue(20),
                 }}
                 source={require('../assets/bmobilsecurity.png')}
               />
@@ -758,54 +711,30 @@ const Home = ({navigation}) => {
                   borderRadius: 10,
                   color: 'white',
                   fontSize: 20,
-                  marginTop: 1,
+                  marginTop: RFValue(1),
                 }}>
                 bMobile
               </Text>
             </TouchableOpacity>
           </View>
         </View>
-        {/* <View>
-          <Image
-            style={{
-              height: 140,
-              width: 350,
-              marginLeft: '5%',
-              borderRadius: 20,
-              bottom: 100,
-            }}
-            source={require('../assets/Banner1.png')}
-          />
-        </View> */}
       </ScrollView>
     </SafeAreaView>
   );
 };
 export default Home;
 const styles = StyleSheet.create({
-  // slide1: {
-  //   flex: 1,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   backgroundColor: '#a3c9a8',
-  // },
   slide2: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#84b59f',
   },
-  dot: {
-    width: 10,
-    height: 10,
-    borderRadius: 5,
-    marginHorizontal: 4,
-    bottom: 10,
-  },
   slide1: {
-    
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: 'white',
+    width: Dimensions.get('window').width * 0.96,
+    height: Dimensions.get('window').height * 0.3,
   },
 });

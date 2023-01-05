@@ -1,9 +1,9 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import Login from '../Screens/Login';
 import SignUpScreen from '../Screens/SignUpScreen';
 import Tab_navi from './Tab_navi';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Welcome from '../Screens/Welcome';
 import CardDetails from '../Screens/CardDetails';
@@ -16,24 +16,42 @@ import Transaction from '../Screens/Transaction';
 import Addaccount from '../Screens/Addaccount';
 import Profile from '../Screens/Profile';
 import Paymentsuccess from '../Screens/Paymentsuccess';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
 const Stack = createNativeStackNavigator();
 function ActionBarIcon() {
   return (
-
     <Image
       source={require('../assets/Profile.png')}
-      style={{ width: 50, height: 50, borderRadius: 40 / 2,left:3 }}
+      style={{
+        width: responsiveWidth(13.5),
+        height: responsiveHeight(8),
+        borderRadius: RFValue(20),
+      }}
     />
-
   );
 }
 function ActionBarIcon1() {
-  return <MaterialCommunityIcons name="bell" size={25} style={{ right: 5 }} />;
+  return (
+    <MaterialCommunityIcons
+      name="bell"
+      size={RFValue(30)}
+      style={{right: RFValue(5)}}
+    />
+  );
 }
 function ActionBarIcon2() {
   return (
     <Image
-      style={{ width: 150, height: 50, backgroundColor: 'white', marginLeft: 55 }}
+      style={{
+        width: responsiveWidth(40),
+        height: responsiveHeight(8),
+        backgroundColor: 'white',
+        marginHorizontal: RFValue(50),
+      }}
       source={require('../assets/toplogo.jpeg')}></Image>
   );
 }
@@ -43,12 +61,12 @@ const Stacks = () => {
       <Stack.Screen
         name="Welcome"
         component={Welcome}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Login"
         component={Login}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
 
       <Stack.Screen
@@ -62,25 +80,25 @@ const Stacks = () => {
       <Stack.Screen
         name="Verify"
         component={Verify}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="SignUpScreen"
         component={SignUpScreen}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Tab_navi"
         component={Tab_navi}
-        options={({ navigation }) => ({
+        options={({navigation}) => ({
           headerLeft: props => {
-            return (<TouchableOpacity onPress={() =>
-              navigation.navigate('Profile')
-            }>
-              <ActionBarIcon {...props} />
-            </TouchableOpacity>)
+            return (
+              <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+                <ActionBarIcon {...props} />
+              </TouchableOpacity>
+            );
           },
-          headerBackVisible:(false),
+          headerBackVisible: false,
           headerRight: props => <ActionBarIcon1 {...props} />,
           headerTitle: props => <ActionBarIcon2 {...props} />,
         })}
@@ -88,17 +106,17 @@ const Stacks = () => {
       <Stack.Screen
         name="Topup"
         component={Topup}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Paymentsuccess"
         component={Paymentsuccess}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Paybill"
         component={Paybill}
-        options={{ headerShown: false }}
+        options={{headerShown: false}}
       />
       <Stack.Screen
         name="Addaccount"

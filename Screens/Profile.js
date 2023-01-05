@@ -6,36 +6,32 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import {ProfileService} from '../Services.js/LoginService';
+import {fbcred} from '../redux/actions/action';
 import Loader from '../ActivityIndicator/Activityindicator';
+import { useSelector} from 'react-redux';
 import {
   setItem,
   getItem,
-  multiRemove,
-  getAllKeys,
 } from '../utils/StorageHandling';
 import {
-  SCREEN_ROUTE_MAPPING,
-  LOGIN_SCREEN,
   ASYNC_KEY,
-  INVALID_INPUT,
-  DRAWER_CONTENT,
-  TRANSACTION_HISTORY,
-  ADD_CARD_ALERT,
-  HOME_SCREEN,
-  BuildType,
-} from '../utils/string';
-// import { TouchEventType } from 'react-native-gesture-handler/lib/typescript/TouchEventType';
-// import { ScrollView } from 'react-native-gesture-handler'
-// import { SafeAreaView } from 'react-native-safe-area-context'
 
+} from '../utils/string';
+import {
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
+import {RFValue} from 'react-native-responsive-fontsize';
 const Profile = ({navigation}) => {
-  const [loadervisible,setLoaderVisible] = useState(false);
+  
+  const storeData = useSelector(state =>state );
+  const [loadervisible, setLoaderVisible] = useState(false);
   async function logouttime() {
     try {
-      setLoaderVisible(true)
+      setLoaderVisible(true);
       const gettoken = await getItem(ASYNC_KEY.auth);
       const header = {
         headers: {
@@ -45,16 +41,15 @@ const Profile = ({navigation}) => {
       console.log(header);
       const response = await ProfileService.logout(header);
       console.log('singla', response);
-      if(response.data.success) {
+      if (response.data.success) {
         navigation.reset({
           index: 0,
-          routes: [{ name: 'Login' }],
+          routes: [{name: 'Login'}],
         });
       }
     } catch (e) {
       console.log(e);
-    }
-    finally{
+    } finally {
       setLoaderVisible(false);
     }
   }
@@ -64,47 +59,51 @@ const Profile = ({navigation}) => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}>
-          <Loader animating={loadervisible} />
+        <Loader animating={loadervisible} />
         <View>
           <View
             style={{
               backgroundColor: '#00E556',
-              width: '95%',
-              height: 130,
-              marginLeft: 10,
+              width: responsiveWidth(95),
+              height: responsiveHeight(28),
+              flex: 1,
               marginTop: 10,
               borderRadius: 15,
+              alignSelf: 'center',
+              justifyContent: 'center',
             }}>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', marginHorizontal: RFValue(20)}}>
               <Image
                 style={{
-                  height: 50,
-                  width: 50,
-                  marginLeft: '7%',
-                  marginTop: 45,
+                  height: responsiveHeight(8.5),
+                  width: responsiveWidth(14),
                 }}
                 source={require('../assets/Profile1.png')}
               />
               <Text
                 style={{
-                  marginTop: 50,
-                  marginLeft: 15,
+                  marginHorizontal: RFValue(10),
+                  marginTop:RFValue(5),
                   color: 'white',
                   fontWeight: 'bold',
+                  fontSize: RFValue(20),
                 }}>
-                a p{'\n'}18681111112
+                {storeData.credfb.name}{'\n'}{storeData.credfb.phonenumber}
               </Text>
               <TouchableOpacity
                 style={{
                   backgroundColor: '#5EC674',
                   width: '26%',
-                  height: 30,
-                  marginLeft: 80,
-                  marginTop: 55,
+                  height: responsiveHeight(8),
+                  width: responsiveWidth(35),
+                  justifyContent: 'center',
+                  borderRadius: RFValue(10),
+                  marginHorizontal: RFValue(20),
                 }}>
                 <Text
                   style={{
-                    marginTop: 5,
+                    fontSize: RFValue(15),
+
                     textAlign: 'center',
                     color: 'white',
                     fontWeight: 'bold',

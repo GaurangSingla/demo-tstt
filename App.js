@@ -1,6 +1,7 @@
 import { View, Text,LogBox } from 'react-native';
 import React,{useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import Stacks from './android/Stack';
 import Tab_navi from './android/Tab_navi';
 import Stacks from './android/Stack';
 
@@ -19,19 +20,18 @@ const App = (props) => {
   }, []);
  
   return (
-    <View style={{ flex: 1 ,backgroundColor:'#FFF'}}>
-      <Provider store={store}>
-      
-        <NavigationContainer>
-
-          <Stacks />
-
-        </NavigationContainer>
-      </Provider>
+    <View>
+      <Text>App</Text>
     </View>
+  )
+}
 
-  );
+export default  ()=>{
+  return(
+  <NavigationContainer>
+    <App/>
+  
+   <Tab_navi/>
+   
+  </NavigationContainer>)
 };
-export default App;
-
-

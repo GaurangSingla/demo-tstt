@@ -4,9 +4,11 @@ import {
   LOGOUT,
   SUBTRACTION,
   getApi,
+  facebookCred,
 } from '../actions/actiontype';
 
 const initialState = {
+  credfb: {},
   token: '',
   data: [],
 };
@@ -14,12 +16,11 @@ const initialState = {
 export const mainReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN:
-      // console.log(,action.payload)
       return {...state, token: action.payload};
-    // case LOGOUT:
-    //     return { ...state, data: state.data };
     case getApi:
-      return {...state, data: action.cardData};
+      return {...state, data: action.payload.cardData};
+    case facebookCred:
+      return {...state, credfb: action.payload.fbData};
     default:
       return state;
   }

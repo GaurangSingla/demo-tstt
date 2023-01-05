@@ -9,6 +9,8 @@ import {
 import React, {useState} from 'react';
 //import AnimatedDotsCarousel from 'react-native-animated-dots-carousel';
 import Carousel from 'pinar';
+import { RFValue } from 'react-native-responsive-fontsize';
+import { responsiveHeight, responsiveScreenHeight, responsiveScreenWidth, responsiveWidth } from 'react-native-responsive-dimensions';
 const Welcome = ({navigation}) => {
   return (
     <View style={{height: '100%', width: '100%'}}>
@@ -36,8 +38,9 @@ const Welcome = ({navigation}) => {
         <View style={styles.slide1}>
           <Image
             style={{
-              height: '100%',
-              width: '100%',
+              height: responsiveScreenHeight(100),
+              width: responsiveScreenWidth(100),
+            
             }}
             source={require('../assets/firstwlcm.png')}
           />
@@ -45,9 +48,9 @@ const Welcome = ({navigation}) => {
         <View style={styles.slide2}>
           <Image
             style={{
-              height: '100%',
-              width: '100%',
-              marginTop:-95
+              height: responsiveScreenHeight(100),
+              width: responsiveScreenWidth(100),
+             
             }}
             source={require('../assets/PayBill.png')}
           />
@@ -55,23 +58,21 @@ const Welcome = ({navigation}) => {
       </Carousel>
 
       <TouchableOpacity
-        style={{position: 'absolute', bottom: 10}}
+        style={{position: 'absolute', bottom: RFValue(30),alignSelf:'center',justifyContent:'center'}}
         onPress={() => navigation.navigate('Login')}>
         <Text
           style={{
             backgroundColor: '#00E556',
             textAlign: 'center',
-            width: '100%',
-            height: '100%',
-            fontSize: 20,
-            paddingTop: 15,
-            paddingBottom: 15,
-            paddingLeft: '35%',
-            paddingRight: '35%',
+            fontSize: RFValue(25),
             fontWeight: '900',
-            borderRadius: 10,
-            marginLeft:'7%',
-            bottom:10
+            borderRadius: RFValue(15),
+            justifyContent:'center',
+             height:responsiveHeight(8.5)
+             ,
+             paddingVertical:RFValue(10),
+
+             width:responsiveWidth(70)
           }}>
           Next
         </Text>
