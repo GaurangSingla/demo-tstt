@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "157745098950",
-    "project_id": "tstt-ce805",
-    "storage_bucket": "tstt-ce805.appspot.com"
+    "project_number": "340241123044",
+    "project_id": "clone-tstt",
+    "storage_bucket": "clone-tstt.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:157745098950:android:71e7f268c2bb3b49cea7c7",
+        "mobilesdk_app_id": "1:340241123044:android:66b9c19535f2b352c14ef1",
         "android_client_info": {
-          "package_name": "com.tstt_app"
+          "package_name": "com.tstt"
         }
       },
       "oauth_client": [
         {
-          "client_id": "157745098950-7tl1fjjf7urk51pa04crqonih8vna3p0.apps.googleusercontent.com",
+          "client_id": "340241123044-qqjiuq4gn4ptio0ion3fr9i31d98dssr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC2E0DdWf_OvGeNNNrciFXkfTUdn_SOpJo"
+          "current_key": "AIzaSyC9H09fHacrTcDpm0OJyrEmTNf8KsN9Vus"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "157745098950-7tl1fjjf7urk51pa04crqonih8vna3p0.apps.googleusercontent.com",
+              "client_id": "340241123044-qqjiuq4gn4ptio0ion3fr9i31d98dssr.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
