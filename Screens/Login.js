@@ -19,10 +19,11 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import Tab_navi from '../android/Tab_navi';
 import messaging from '@react-native-firebase/messaging';
 import {ProfileService} from '../ProfileService';
+import {Profile} from 'react-native-fbsdk-next';
 import {useDispatch, useSelector} from 'react-redux';
-import {login} from '../redux/actions/action';
+import {login,fbcred} from '../redux/actions/action';
 import CommonModal from '../Modal/Modal';
-import {FacebookAuth} from '../utils/auth';
+import {FacebookAuth,GoogleAuth} from '../utils/auth';
 import {store} from '../redux/store/store';
 
 import notificationService from '../Services.js/notificationService';
@@ -48,6 +49,12 @@ import {
   notificationListener,
 } from '../Services.js/notificationService';
 import Loader from '../ActivityIndicator/Activityindicator';
+import {
+  responsiveHeight,
+  responsiveScreenHeight,
+  responsiveScreenWidth,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
 const Login = ({navigation}) => {
   useEffect(() => {
     requestUserPermission();
@@ -100,6 +107,7 @@ const Login = ({navigation}) => {
   useEffect(() => {
     if (isFocused) {
       multiRemove(asyncKeys);
+      currentProfile
     }
 
     // printKeys();
@@ -109,11 +117,15 @@ const Login = ({navigation}) => {
   //    console.log('hello',token)
   //   })
   //  })
-  const storeData = useSelector(state => {
-    console.log(state);
-    return state;
-  });
 
+  const currentProfile = Profile.getCurrentProfile().then(
+    function(currentProfile) {
+      if (currentProfile) {
+        dispatch(fbcred(currentProfile.name))
+      }
+    }
+  
+  );
   const dispatch = useDispatch();
   async function hitApi() {
     let args = {
@@ -165,58 +177,63 @@ const Login = ({navigation}) => {
       setLoaderVisible(false);
     }
   }
-  async function fbHit(args) {
+  async function googleHit(args) {
+    console.log('args value',args);
     try {
-      const response = await ProfileService.facebookLogin(args);
-      console.log('fbHit Response::::: ' + JSON.stringify(response));
-      //   if (response.data.success) {
-      //     if (!response.data.result.token) {
-      //       fbHit(args);
-      //     } else {
-      //       await setItem(ASYNC_KEY.auth, 'Bearer ' + response.data.result.token);
-      //       await setItem(ASYNC_KEY.facebookIdToken, args.token);
-      //       ProfileApi(async () => {
-      //         navigation.reset({
-      //           index: 0,
-      //           routes: [{name: 'TabNavigation'}],
-      //         });
+      const response = await ProfileService.googleLogin(args);
+      console.log('GoogleHit Response::::: ' + JSON.stringify(response));
+      // if(response.data.success) {
+      //   navigation.navigate('Tab_navi')
+
+      // }
+      // if (response.data.success) {
+      //   if (!response.data.result.token) {
+      //     googleHit(args);
+      //   } 
+      // else {
+      //     await setItem(ASYNC_KEY.auth, 'Bearer ' + response.data.result.token);
+      //     await setItem(ASYNC_KEY.googleIdToken, args.token);
+      //     ProfileApi(async () => {
+      //       navigation.reset({
+      //         index: 0,
+      //         routes: [{name: 'TabNavigation'}],
       //       });
-      //       await setItem(ASYNC_KEY.loginMethod, 'facebook');
-      //       checked ? await setItem(ASYNC_KEY.LOGGEDIN, 'true') : null;
-      //     }
-      //   } else {
-      //     setAlertBody({
-      //       dialogBoxType: 'Error',
-      //       headerText: 'Error',
-      //       messageText: response.data.message,
       //     });
-      //     setshowAlertDialog(true);
+      //     await setItem(ASYNC_KEY.loginMethod, 'google');
+      //     checked ? await setItem(ASYNC_KEY.LOGGEDIN, 'true') : null;
       //   }
-      // } catch (e) {
-      //   console.log('Status----->', e.response.status);
-      //   if (e?.response?.status == 406) {
-      //     versionUpdate(
-      //       e?.response?.data?.result?.updateAndroidAppURL,
-      //       e?.response?.data?.result?.updateIosAppURL,
-      //     );
-      //   } else {
-      //     throw new Error(e.message);
-      //   }
+      // } else {
+      //   setAlertBody({
+      //     dialogBoxType: 'Error',
+      //     headerText: 'Error',
+      //     messageText: response.data.message,
+      //   });
+      //   setshowAlertDialog(true);
+      // }
     } catch (e) {
-      console.log('fbError', e);
+      // if (e?.response?.status == 406) {
+      //   versionUpdate(
+      //     e?.response?.data?.result?.updateAndroidAppURL,
+      //     e?.response?.data?.result?.updateIosAppURL,
+      //   );
+      // } else {
+      //   throw new Error(e.message);
+      // }
+      console.log('googleerror',e);
     }
   }
-  const faceBookPressed = async () => {
+  const signinwithgoogle = async () => {
     try {
-      var facebookAuthenticated = await FacebookAuth.login();
-      console.log('fbauthenticated', facebookAuthenticated);
-      if (facebookAuthenticated) {
+      var googleAuthenticated = await GoogleAuth.login();
+      console.log('google Authentication login screen ', googleAuthenticated);
+      if (googleAuthenticated) {
         const args = {
-          token: facebookAuthenticated.token,
+          token: googleAuthenticated.idToken,
         };
-        await fbHit(args);
+        await googleHit(args);
       } else {
         console.log('error else');
+
         setAlertBody({
           dialogBoxType: 'Error',
           headerText: 'Error',
@@ -230,7 +247,8 @@ const Login = ({navigation}) => {
         headerText: 'Error',
         messageText: 'Something Went Wrong',
       });
-    }
+      
+    } 
   };
 
   function handleErrorField() {
@@ -256,11 +274,9 @@ const Login = ({navigation}) => {
   }
 
   let dimensions = Dimensions.get('window');
-  let imageHeight = dimensions.height;
-  let imageWidth = dimensions.width;
   return (
     <View>
-      <SafeAreaView>
+      <SafeAreaView style={{flex: 1}}>
         <Loader animating={loadervisible} />
         {modalVisible ? (
           <CommonModal
@@ -274,11 +290,9 @@ const Login = ({navigation}) => {
 
         <Image
           style={{
-            height: imageHeight,
-            width: imageWidth,
-            resizeMode: 'contain',
+            height: responsiveScreenHeight(100),
+            width: responsiveScreenWidth(100),
             position: 'absolute',
-            bottom: '10%',
           }}
           source={require('../src/assets/babyChild.jpg')}
         />
@@ -288,7 +302,6 @@ const Login = ({navigation}) => {
           </Text>
         </View>
         <PhoneInput
-          style={{bottom: '80%'}}
           onChangeText={phoneNumber => {
             setPhoneNumber(phoneNumber);
             setUsrNameValid(true);
@@ -297,47 +310,48 @@ const Login = ({navigation}) => {
           defaultCode="IN"
           layout="first"
           containerStyle={{
-            borderRadius: 5,
-            width: '95%',
+            borderRadius: RFValue(5),
+            width: responsiveScreenWidth(90),
             backgroundColor: 'white',
-            borderWidth: 1,
+            borderWidth: RFValue(1),
             bottom: '27%',
 
             alignSelf: 'center',
 
-            height: '7%',
+            height: responsiveHeight(8),
             borderColor: '#B5B5B5',
           }}
-          textInputStyle={{height: 40}}
+          textInputStyle={{height: responsiveHeight(60)}}
           textContainerStyle={{}}
         />
         <Text
           style={{
-            color: 'red',
+            color: 'green',
             alignSelf: 'center',
             position: 'absolute',
-            bottom: '41%',
+            top:RFValue(368),
             flex: 1,
+            fontSize: RFValue(10),
           }}>
           {!usrNameValid ? 'Phone Number is required' : ' '}
         </Text>
-        <View>
+       
           <TextInput
             style={{
               backgroundColor: 'white',
-              fontSize: 13,
-              borderWidth: 1,
+              fontSize: RFValue(15),
+              borderWidth: RFValue(1),
               borderColor: '#B5B5B5',
-              padding: '1%',
-              height: 40,
-              marginTop: '1%',
-              bottom: '155%',
-              width: '95%',
+              position:'absolute',
+              height: responsiveHeight(7),
+              width: responsiveWidth(90),
+              top:RFValue(382),
               alignSelf: 'center',
-              borderRadius: 10,
+              borderRadius: RFValue(10),
             }}
+            textInputStyle={{height: responsiveHeight(60)}}
             placeholder="Password"
-            placeholderStyle={{top: 5, backgroundColor: 'white'}}
+            placeholderStyle={{top: 15, backgroundColor: 'white'}}
             placeholderTextColor="#979797"
             autoCapitalize="none"
             autoCorrect={false}
@@ -350,7 +364,7 @@ const Login = ({navigation}) => {
             secureTextEntry={!secureTextEntry ? false : true}
             right={
               <TextInput.Icon
-                style={{marginTop: 19}}
+               
                 name={!secureTextEntry ? 'eye' : 'eye-off'}
                 onPress={() => {
                   setSecureTextEntry(!secureTextEntry);
@@ -361,29 +375,39 @@ const Login = ({navigation}) => {
 
           <Text
             style={{
-              color: 'red',
-              left: '3%',
-              bottom: '115%',
+              color: 'green',
+              left: '6%',
+             top:RFValue(430),
               flex: 1,
+              marginVertical:RFValue(5),
               position: 'absolute',
+               fontSize:RFValue(10)
             }}>
             {!passValid ? 'Password is required' : ' '}
           </Text>
-        </View>
+      
 
-        <View style={{flexDirection: 'row'}}>
-          <View style={{flexDirection: 'row'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 1,
+            top: RFValue(446),
+            position: 'absolute',
+            justifyContent: 'space-between',
+          }}>
+          <View style={{flex:1,flexDirection:'row',marginHorizontal:RFValue(10)}}>
+          
             <Pressable
               style={{
-                height: 15,
-                width: 15,
+                height: responsiveHeight(2.5),
+                width: responsiveWidth(4),
                 backgroundColor: rememberme ? '#00E556' : null,
                 borderWidth: 3,
                 borderColor: '#DEDEDE',
-                bottom: '40%',
                 left: '4%',
                 marginLeft: '4%',
-                borderRadius: 15,
+                borderRadius: RFValue(10),
+                top: RFValue(3),
               }}
               onPress={() => {
                 setrememberme(!rememberme);
@@ -391,133 +415,149 @@ const Login = ({navigation}) => {
             <Text
               style={{
                 color: 'black',
-                bottom: '42%',
-                marginLeft: '6%',
+                marginLeft: RFValue(2),
+                fontSize: RFValue(15),
+                left:RFValue(4)
               }}>
               Remember Me
             </Text>
+
           </View>
-          <TouchableOpacity>
-            <Text
-              style={{
-                color: 'black',
-                textDecorationLine: 'underline',
-
-                bottom: '318%',
-
-                marginLeft: '46%',
-              }}>
-              Forgot Password
-            </Text>
-          </TouchableOpacity>
+          <View>
+            <TouchableOpacity>
+              <Text
+                style={{
+                  color: 'black',
+                  textDecorationLine: 'underline',
+                  fontSize: RFValue(15),
+                  right:RFValue(18)
+                }}>
+                Forgot Password
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <TouchableOpacity
-          style={{alignContent: 'center', bottom: '15%'}}
+          style={{alignContent: 'center',bottom:RFValue(17)}}
           onPress={() => {
             handleErrorField();
           }}>
           <Text style={styles.btn}>Sign In</Text>
         </TouchableOpacity>
 
-        <Text
-          style={{
-            color: 'white',
-            fontSize: 20,
-            textAlign: 'center',
-            bottom: '4%',
-          }}>
-          <View>
-            <Text
-              style={{
-                color: 'black',
+        <View style={{flex: 1, position: 'absolute', bottom: RFValue(-550),alignSelf:'center'}}>
+          <Text
+            style={{
+              color: 'black',
 
-                fontWeight: 'bold',
-                textAlign: 'center',
-              }}>
-              OR
-            </Text>
-          </View>
-        </Text>
+              fontWeight: 'bold',
+              textAlign: 'center',
+              fontSize:RFValue(14)
+            }}>
+            OR
+          </Text>
+        </View>
+
         <View
           style={{
+            flex: 1,
             flexDirection: 'row',
             alignSelf: 'center',
-            justifyContent: 'space-around',
+            justifyContent: 'space-between',
           }}>
-          <View
+          <TouchableOpacity
             style={{
               flexDirection: 'row',
-              borderWidth: 1,
-              borderColor: '#EA4335',
-              bottom: '30%',
-              width: 180,
-              borderRadius: 5,
-            }}>
-            <TouchableOpacity style={{flexDirection: 'row'}}>
-              <View>
-                <Image
-                  style={{
-                    height: 40,
-                    width: 40,
-                    top: 5,
-                    left: 5,
-                  }}
-                  source={require('../assets/google.png')}
-                />
-              </View>
-              <View>
-                <Text
-                  style={{
-                    marginTop: 14,
-                    marginLeft: 10,
-                    fontSize: 13,
-                    color: '#4D4848',
-                  }}>
-                  Sign in with google
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View
+              borderColor: 'orange',
+              borderWidth: RFValue(1),
+              height: responsiveHeight(8),
+              width: responsiveWidth(43),
+              borderRadius: RFValue(10),
+              justifyContent: 'center',
+              top: RFValue(80),
+              marginLeft:RFValue(10),
+              marginRight:RFValue(5)
+            }} onPress={() => {signinwithgoogle()}}>
+                  <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignSelf: 'center',
+                justifyContent: 'center',
+              }}>
+            <Image
+              style={{
+                height: responsiveHeight(5),
+                width: responsiveWidth(8),
+                top: RFValue(5),
+                left: RFValue(5),
+              }}
+              source={require('../assets/google.png')}
+            />
+
+            <Text
+              style={{
+                fontSize: RFValue(14),
+                color: '#4D4848',
+                marginVertical: RFValue(12),
+                marginLeft: RFValue(5),
+              }}>
+              Sign in with google
+            </Text></View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
             style={{
               flexDirection: 'row',
-              borderWidth: 1,
-              borderColor: '#3B5998',
-              marginHorizontal: '2%',
-              bottom: '30%',
-              width: 180,
-              borderRadius: 5,
-              height: 50,
-            }}>
-            <TouchableOpacity
-              style={{flexDirection: 'row'}}
-              onPress={faceBookPressed}>
-              <View>
-                <Image
-                  style={{
-                    height: 35,
-                    width: 35,
-                    top: 7,
-                    left: 5,
-                  }}
-                  source={require('../assets/facebook.webp')}
-                />
-              </View>
-              <View>
-                <Text
-                  style={{
-                    marginTop: 14,
-                    marginLeft: 10,
-                    fontSize: 13,
-                    color: '#4D4848',
-                  }}>
-                  Sign in with facebook
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+              borderWidth: RFValue(1),
+              borderColor: 'blue',
+              height: responsiveHeight(8),
+              width: responsiveWidth(43),
+              borderRadius: RFValue(10),
+              marginRight:RFValue(10),
+              marginLeft:RFValue(5),
+              justifyContent: 'center',
+              top: RFValue(80),
+            }}
+           >
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignSelf: 'center',
+                justifyContent: 'center',
+              }}>
+              <Image
+                style={{
+                  height: responsiveHeight(4.5),
+                  width: responsiveWidth(6),
+
+                  left: RFValue(5),
+                }}
+                source={require('../assets/facebook.webp')}
+              />
+
+              <Text
+                style={{
+                  fontSize: RFValue(14),
+                  color: '#4D4848',
+                  marginLeft: RFValue(10),
+                  top: RFValue(5),
+                  
+                }}>
+                Sign in with facebook
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
-        <View style={{flexDirection: 'row', bottom: '2%', alignSelf: 'center'}}>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: 'row',
+            top: RFValue(625),
+            alignSelf: 'center',
+            position: 'absolute',
+          }}>
           <View>
             <Text style={{fontSize: RFValue(16), color: '#989898'}}>
               Don't have an account?
@@ -531,7 +571,7 @@ const Login = ({navigation}) => {
                   paddingStart: '1%',
                   color: 'green',
                   textDecorationLine: 'underline',
-                  fontSize: 18,
+                  fontSize: RFValue(16),
                   color: '#00E556',
                 }}>
                 Sign up
@@ -539,8 +579,14 @@ const Login = ({navigation}) => {
             </TouchableOpacity>
           </View>
         </View>
-        <View>
-          <Text style={{bottom: '30%', textAlign: 'center', color: '#989898'}}>
+        <View style={{bottom: RFValue(-165), alignItems: 'center'}}>
+          <Text
+            style={{
+              textAlign: 'center',
+              color: '#989898',
+              position: 'absolute',
+              fontSize: RFValue(15),
+            }}>
             Version: DEV - 1.0.0
           </Text>
         </View>
@@ -551,9 +597,9 @@ const Login = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
-    borderRadius: 20,
-    height: '63%',
-    top: '39%',
+    borderRadius: RFValue(20),
+    height: responsiveHeight(60),
+    top: RFValue(255),
   },
   txt: {
     color: '#4D4848',
@@ -570,32 +616,30 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: '#00E556',
-    borderRadius: 10,
-    height: 48,
+    borderRadius: RFValue(10),
+    height: responsiveHeight(8),
     color: '#2E2F2F',
     alignSelf: 'center',
-    alignContent: 'center',
     fontSize: RFValue(18),
-    width: '93%',
+    width: responsiveWidth(90),
     textAlign: 'center',
     justifyContent: 'center',
-    padding: 10,
+    paddingVertical: RFValue(15),
     fontWeight: 'bold',
-    top: '140%',
+    
   },
   error: {
     color: 'red',
     alignSelf: 'center',
   },
   inputField: {
-    borderRadius: 4,
+    borderRadius: RFValue(5),
 
     backgroundColor: 'rgba(0,0,0,0)',
 
-    borderWidth: 1,
-    height: 50,
+    borderWidth: RFValue(1),
+    height: responsiveHeight(10),
     borderColor: '#B5B5B5',
-    borderWidth: 1,
     backgroundColor: 'white',
   },
 });

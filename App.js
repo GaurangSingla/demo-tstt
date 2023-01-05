@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text,LogBox } from 'react-native';
 import React,{useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Tab_navi from './android/Tab_navi';
@@ -11,11 +11,13 @@ import {
   requestUserPermission,
   notificationListener,
 } from './Services.js/notificationService';
+LogBox.ignoreAllLogs();
 const App = (props) => {
   useEffect(() => {
     requestUserPermission();
     notificationListener();
   }, []);
+ 
   return (
     <View style={{ flex: 1 ,backgroundColor:'#FFF'}}>
       <Provider store={store}>
