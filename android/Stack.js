@@ -22,7 +22,6 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
-import ChangePassword from '../Screens/ChangePassword';
 const Stack = createNativeStackNavigator();
 function ActionBarIcon() {
   return (
