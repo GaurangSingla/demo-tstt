@@ -14,6 +14,7 @@ import Topup from '../Screens/Topup';
 import Mycards from '../Screens/Mycards';
 import Transaction from '../Screens/Transaction';
 import Addaccount from '../Screens/Addaccount';
+import ChangePassword from '../Screens/ChangePassword';
 import Profile from '../Screens/Profile';
 import Paymentsuccess from '../Screens/Paymentsuccess';
 import {RFValue} from 'react-native-responsive-fontsize';
@@ -21,6 +22,7 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
+import ChangePassword from '../Screens/ChangePassword';
 const Stack = createNativeStackNavigator();
 function ActionBarIcon() {
   return (
@@ -68,7 +70,11 @@ const Stacks = () => {
         component={Login}
         options={{headerShown: false}}
       />
-
+<Stack.Screen
+        name="ChangePassword"
+        component={ChangePassword}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="CardDetails"
         component={CardDetails}
