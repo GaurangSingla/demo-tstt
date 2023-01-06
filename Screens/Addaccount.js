@@ -87,7 +87,7 @@ const Addaccount = ({navigation}) => {
         argument,
         header,
       );
-      console.log('anything', JSON.stringify(response));
+      // console.log('anything', JSON.stringify(response));
       if (response.data.success) {
         console.log(response.data);
         await setItem(ASYNC_KEY.token, response.headers['access-medium']);

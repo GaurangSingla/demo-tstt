@@ -19,7 +19,7 @@ export const GoogleAuth = {
         if (googleCredential) {
           await auth().signInWithCredential(googleCredential);
           var currentUser = auth().currentUser;
-          console.log('google creds ', JSON.stringify(currentUser));
+          // console.log('google creds ', JSON.stringify(currentUser));
           if (currentUser) {
             return {
               ...currentUser,

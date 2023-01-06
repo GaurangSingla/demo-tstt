@@ -43,10 +43,10 @@ const Paybill = ({navigation}) => {
       };
       console.log('header ===== ', header);
       const response = await PaymentService.billPayGet(header);
-      console.log(
-        '==========> billpay response',
-        JSON.stringify(response.data),
-      );
+      // console.log(
+      //   '==========> billpay response',
+      //   JSON.stringify(response.data),
+      // );
       if (response.data.success) {
         console.log(
           '==========> billpay responseId',

@@ -1,34 +1,29 @@
-import React,{useState,useRef} from 'react'
-import {View,Text,Image,StyleSheet,TextInput,Button, TouchableOpacity} from 'react-native';
+import React, {useState, useRef,useEffect} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  Dimensions,
+  SafeAreaView,
+  Pressable,
+} from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
-import Tab_navi from '../android/Tab_navi';
-import messaging from '@react-native-firebase/messaging';
 import {ProfileService} from '../ProfileService';
 import {Profile} from 'react-native-fbsdk-next';
-import {useDispatch, useSelector} from 'react-redux';
-import {login,fbcred} from '../redux/actions/action';
+import {useDispatch} from 'react-redux';
+import {login, fbcred} from '../redux/actions/action';
 import CommonModal from '../Modal/Modal';
-import {FacebookAuth,GoogleAuth} from '../utils/auth';
-import {store} from '../redux/store/store';
-
-import notificationService from '../Services.js/notificationService';
 import {
-  SCREEN_ROUTE_MAPPING,
-  LOGIN_SCREEN,
   ASYNC_KEY,
-  INVALID_INPUT,
   DRAWER_CONTENT,
   TRANSACTION_HISTORY,
   ADD_CARD_ALERT,
-  HOME_SCREEN,
-  BuildType,
 } from '../utils/string';
-import {
-  setItem,
-  getItem,
-  multiRemove,
-  getAllKeys,
-} from '../utils/StorageHandling';
+import { useIsFocused } from '@react-navigation/native';
+import {setItem, getItem, multiRemove} from '../utils/StorageHandling';
 import {
   requestUserPermission,
   notificationListener,
@@ -40,6 +35,7 @@ import {
   responsiveScreenWidth,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
+import {RFValue} from 'react-native-responsive-fontsize';
 const Login = ({navigation}) => {
   useEffect(() => {
     requestUserPermission();
@@ -92,7 +88,7 @@ const Login = ({navigation}) => {
   useEffect(() => {
     if (isFocused) {
       multiRemove(asyncKeys);
-      currentProfile
+      currentProfile;
     }
 
     // printKeys();
@@ -103,14 +99,13 @@ const Login = ({navigation}) => {
   //   })
   //  })
 
-  const currentProfile = Profile.getCurrentProfile().then(
-    function(currentProfile) {
-      if (currentProfile) {
-        dispatch(fbcred(currentProfile.name))
-      }
+  const currentProfile = Profile.getCurrentProfile().then(function (
+    currentProfile,
+  ) {
+    if (currentProfile) {
+      dispatch(fbcred(currentProfile.name));
     }
-  
-  );
+  });
   const dispatch = useDispatch();
   async function hitApi() {
     let args = {
@@ -131,7 +126,7 @@ const Login = ({navigation}) => {
       console.log('header ===== ', header);
       // console.log('fcm token is .....', fcmToken);
       const response = await ProfileService.loginService(args, header);
-      console.log(JSON.stringify(response.data));
+      // console.log(JSON.stringify(response.data));
       if (response.data.success) {
         console.log(
           '==========> billpay responseId',
@@ -163,10 +158,10 @@ const Login = ({navigation}) => {
     }
   }
   async function googleHit(args) {
-    console.log('args value',args);
+    console.log('args value', args);
     try {
       const response = await ProfileService.googleLogin(args);
-      console.log('GoogleHit Response::::: ' + JSON.stringify(response));
+      // console.log('GoogleHit Response::::: ' + JSON.stringify(response));
       // if(response.data.success) {
       //   navigation.navigate('Tab_navi')
 
@@ -174,7 +169,7 @@ const Login = ({navigation}) => {
       // if (response.data.success) {
       //   if (!response.data.result.token) {
       //     googleHit(args);
-      //   } 
+      //   }
       // else {
       //     await setItem(ASYNC_KEY.auth, 'Bearer ' + response.data.result.token);
       //     await setItem(ASYNC_KEY.googleIdToken, args.token);
@@ -204,7 +199,7 @@ const Login = ({navigation}) => {
       // } else {
       //   throw new Error(e.message);
       // }
-      console.log('googleerror',e);
+      console.log('googleerror', e);
     }
   }
   const signinwithgoogle = async () => {
@@ -232,8 +227,7 @@ const Login = ({navigation}) => {
         headerText: 'Error',
         messageText: 'Something Went Wrong',
       });
-      
-    } 
+    }
   };
 
   function handleErrorField() {
@@ -314,63 +308,61 @@ const Login = ({navigation}) => {
             color: 'green',
             alignSelf: 'center',
             position: 'absolute',
-            top:RFValue(368),
+            top: RFValue(368),
             flex: 1,
             fontSize: RFValue(10),
           }}>
           {!usrNameValid ? 'Phone Number is required' : ' '}
         </Text>
-       
-          <TextInput
-            style={{
-              backgroundColor: 'white',
-              fontSize: RFValue(15),
-              borderWidth: RFValue(1),
-              borderColor: '#B5B5B5',
-              position:'absolute',
-              height: responsiveHeight(7),
-              width: responsiveWidth(90),
-              top:RFValue(382),
-              alignSelf: 'center',
-              borderRadius: RFValue(10),
-            }}
-            textInputStyle={{height: responsiveHeight(60)}}
-            placeholder="Password"
-            placeholderStyle={{top: 15, backgroundColor: 'white'}}
-            placeholderTextColor="#979797"
-            autoCapitalize="none"
-            autoCorrect={false}
-            textContentType="password"
-            onChangeText={password => {
-              setPassword(password);
-              setPassValid(true);
-            }}
-            defaultValue={password}
-            secureTextEntry={!secureTextEntry ? false : true}
-            right={
-              <TextInput.Icon
-               
-                name={!secureTextEntry ? 'eye' : 'eye-off'}
-                onPress={() => {
-                  setSecureTextEntry(!secureTextEntry);
-                }}
-              />
-            }
-          />
 
-          <Text
-            style={{
-              color: 'green',
-              left: '6%',
-             top:RFValue(430),
-              flex: 1,
-              marginVertical:RFValue(5),
-              position: 'absolute',
-               fontSize:RFValue(10)
-            }}>
-            {!passValid ? 'Password is required' : ' '}
-          </Text>
-      
+        {/* <TextInput
+          style={{
+            backgroundColor: 'white',
+            fontSize: RFValue(15),
+            borderWidth: RFValue(1),
+            borderColor: '#B5B5B5',
+            position: 'absolute',
+            height: responsiveHeight(7),
+            width: responsiveWidth(90),
+            top: RFValue(382),
+            alignSelf: 'center',
+            borderRadius: RFValue(10),
+          }}
+          textInputStyle={{height: responsiveHeight(60)}}
+          placeholder="Password"
+          placeholderStyle={{top: 15, backgroundColor: 'white'}}
+          placeholderTextColor="#979797"
+          autoCapitalize="none"
+          autoCorrect={false}
+          textContentType="password"
+          onChangeText={password => {
+            setPassword(password);
+            setPassValid(true);
+          }}
+          defaultValue={password}
+          secureTextEntry={!secureTextEntry ? false : true}
+          right={
+            <TextInput.Icon
+              name={!secureTextEntry ? 'eye' : 'eye-off'}
+              onPress={() => {
+                setSecureTextEntry(!secureTextEntry);
+              }}
+            />
+          }
+        /> */}
+
+        <Text
+          style={{
+            color: 'green',
+            left: '6%',
+            top: RFValue(430),
+            flex: 1,
+            marginVertical: RFValue(5),
+            position: 'absolute',
+            fontSize: RFValue(10),
+          }}>
+          {!passValid ? 'Password is required' : ' '}
+        </Text>
 
         <View
           style={{
@@ -380,8 +372,12 @@ const Login = ({navigation}) => {
             position: 'absolute',
             justifyContent: 'space-between',
           }}>
-          <View style={{flex:1,flexDirection:'row',marginHorizontal:RFValue(10)}}>
-          
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              marginHorizontal: RFValue(10),
+            }}>
             <Pressable
               style={{
                 height: responsiveHeight(2.5),
@@ -402,11 +398,10 @@ const Login = ({navigation}) => {
                 color: 'black',
                 marginLeft: RFValue(2),
                 fontSize: RFValue(15),
-                left:RFValue(4)
+                left: RFValue(4),
               }}>
               Remember Me
             </Text>
-
           </View>
           <View>
             <TouchableOpacity>
@@ -415,7 +410,7 @@ const Login = ({navigation}) => {
                   color: 'black',
                   textDecorationLine: 'underline',
                   fontSize: RFValue(15),
-                  right:RFValue(18)
+                  right: RFValue(18),
                 }}>
                 Forgot Password
               </Text>
@@ -423,21 +418,27 @@ const Login = ({navigation}) => {
           </View>
         </View>
         <TouchableOpacity
-          style={{alignContent: 'center',bottom:RFValue(17)}}
+          style={{alignContent: 'center', bottom: RFValue(17)}}
           onPress={() => {
             handleErrorField();
           }}>
           <Text style={styles.btn}>Sign In</Text>
         </TouchableOpacity>
 
-        <View style={{flex: 1, position: 'absolute', bottom: RFValue(-550),alignSelf:'center'}}>
+        <View
+          style={{
+            flex: 1,
+            position: 'absolute',
+            bottom: RFValue(-550),
+            alignSelf: 'center',
+          }}>
           <Text
             style={{
               color: 'black',
 
               fontWeight: 'bold',
               textAlign: 'center',
-              fontSize:RFValue(14)
+              fontSize: RFValue(14),
             }}>
             OR
           </Text>
@@ -460,35 +461,39 @@ const Login = ({navigation}) => {
               borderRadius: RFValue(10),
               justifyContent: 'center',
               top: RFValue(80),
-              marginLeft:RFValue(10),
-              marginRight:RFValue(5)
-            }} onPress={() => {signinwithgoogle()}}>
-                  <View
+              marginLeft: RFValue(10),
+              marginRight: RFValue(5),
+            }}
+            onPress={() => {
+              signinwithgoogle();
+            }}>
+            <View
               style={{
                 flex: 1,
                 flexDirection: 'row',
                 alignSelf: 'center',
                 justifyContent: 'center',
               }}>
-            <Image
-              style={{
-                height: responsiveHeight(5),
-                width: responsiveWidth(8),
-                top: RFValue(5),
-                left: RFValue(5),
-              }}
-              source={require('../assets/google.png')}
-            />
+              <Image
+                style={{
+                  height: responsiveHeight(5),
+                  width: responsiveWidth(8),
+                  top: RFValue(5),
+                  left: RFValue(5),
+                }}
+                source={require('../assets/google.png')}
+              />
 
-            <Text
-              style={{
-                fontSize: RFValue(14),
-                color: '#4D4848',
-                marginVertical: RFValue(12),
-                marginLeft: RFValue(5),
-              }}>
-              Sign in with google
-            </Text></View>
+              <Text
+                style={{
+                  fontSize: RFValue(14),
+                  color: '#4D4848',
+                  marginVertical: RFValue(12),
+                  marginLeft: RFValue(5),
+                }}>
+                Sign in with google
+              </Text>
+            </View>
           </TouchableOpacity>
 
           <TouchableOpacity
@@ -499,12 +504,11 @@ const Login = ({navigation}) => {
               height: responsiveHeight(8),
               width: responsiveWidth(43),
               borderRadius: RFValue(10),
-              marginRight:RFValue(10),
-              marginLeft:RFValue(5),
+              marginRight: RFValue(10),
+              marginLeft: RFValue(5),
               justifyContent: 'center',
               top: RFValue(80),
-            }}
-           >
+            }}>
             <View
               style={{
                 flex: 1,
@@ -528,7 +532,6 @@ const Login = ({navigation}) => {
                   color: '#4D4848',
                   marginLeft: RFValue(10),
                   top: RFValue(5),
-                  
                 }}>
                 Sign in with facebook
               </Text>
@@ -611,7 +614,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: RFValue(15),
     fontWeight: 'bold',
-    
   },
   error: {
     color: 'red',

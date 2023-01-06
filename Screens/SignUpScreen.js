@@ -66,9 +66,9 @@ const SignUpScreen = ({navigation}) => {
         password: password,
       };
 
-      console.log('signup request == >', JSON.stringify(args));
+      // console.log('signup request == >', JSON.stringify(args));
       const response = await SignService.signUpDetails(args);
-      console.log('signup response == >', JSON.stringify(response));
+      // console.log('signup response == >', JSON.stringify(response));
 
       if (response.data.success) {
         console.log('check', response.data.result);
@@ -92,7 +92,7 @@ const SignUpScreen = ({navigation}) => {
         setModalVisible(true);
       }
     } catch (e) {
-      console.log('signup catch response == >', JSON.stringify(e));
+      console.log('signup catch response == >', e);
     }
   };
   const [emptyName, setEmptyName] = useState(false);

@@ -252,7 +252,7 @@ const CardDetails = ({navigation, route}) => {
       };
       console.log('header', header);
       const response = await PaymentService.getCards(header);
-      console.log('fetch card respones == ', JSON.stringify(response.data));
+      // console.log('fetch card respones == ', JSON.stringify(response.data));
 
       if (response.data.success) {
         setData(response.data.result.cards);
@@ -287,7 +287,7 @@ const CardDetails = ({navigation, route}) => {
           Authorization: authToken,
         },
       };
-      console.log('My Api Data===>' + JSON.stringify(response));
+      // console.log('My Api Data===>' + JSON.stringify(response));
       const args = {
         mobile: route.params.mobile,
         amount: route.params.amount,
@@ -306,13 +306,13 @@ const CardDetails = ({navigation, route}) => {
           postalCode: text != null ? selectedCardData.billingAddress.postalCode : zipCode,
         },
       };
-      console.log('==========> TopUpApi args', JSON.stringify(args));
+      // console.log('==========> TopUpApi args', JSON.stringify(args));
 
       const response = await getCardsService.topUp(args, header);
-      console.log(
-        '==========> TopUpApi response',
-        JSON.stringify(response.data),
-      );
+      // console.log(
+      //   '==========> TopUpApi response',
+      //   JSON.stringify(response.data),
+      // );
 
       if (response.data.success) {
         console.log('==========> TopUpApi success response');
@@ -355,7 +355,7 @@ const CardDetails = ({navigation, route}) => {
           Authorization: authToken,
         },
       };
-      console.log('My BillPay Api Data===>' + JSON.stringify(response));
+      // console.log('My BillPay Api Data===>' + JSON.stringify(response));
       const args = {
         amount: route.params.amount,
         requestId: route.params.requestId,
@@ -374,13 +374,13 @@ const CardDetails = ({navigation, route}) => {
           postalCode: text != null ? selectedCardData.billingAddress.postalCode : zipCode,
         },
       };
-      console.log('==========> BillPay args', JSON.stringify(args));
+      // console.log('==========> BillPay args', JSON.stringify(args));
 
       const response = await getCardsService.billPay(args, header);
-      console.log(
-        '==========> BillPay response',
-        JSON.stringify(response.data),
-      );
+      // console.log(
+      //   '==========> BillPay response',
+      //   JSON.stringify(response.data),
+      // );
         if (response.data.success) {
           console.log(
             '==========> BillPay success response',

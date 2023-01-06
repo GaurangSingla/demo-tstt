@@ -20,7 +20,7 @@ const postUser=() => {
     }
   })
   .then(function (response) {
-    console.log("response", JSON.stringify(response.data))
+    // console.log("response", JSON.stringify(response.data))
   })
   .catch(function (error) {
     console.log("error", error)
