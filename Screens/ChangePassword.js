@@ -4,12 +4,13 @@ import {
     SafeAreaView,
     Image,
     StyleSheet,
-    TextInput,
     TouchableOpacity,
   } from 'react-native';
+  import { TextInput } from 'react-native-paper';
   import React, {useState} from 'react';
   import {RFValue} from 'react-native-responsive-fontsize';
   import {setItem, getItem} from '../utils/StorageHandling';
+  import Loader from '../ActivityIndicator/Activityindicator';
   import CommonModal from '../Modal/Modal';
   import {
     ASYNC_KEY,
@@ -34,6 +35,7 @@ import {
     const [matchPass, setMatchPass] = useState(true);
     const [currentPassword, setCurrentPassword] = useState();
     const [currentValid, setCurrentValid] = useState(true);
+    const [loadervisible, setLoaderVisible] = useState(false);
     const asyncKeys = [
       ADD_CARD_ALERT.CARDS,
       ASYNC_KEY.LOGGEDIN,
@@ -57,6 +59,8 @@ import {
       confirmationFunction: null,
     });
     const [showAlertDialog, setshowAlertDialog] = useState(false);
+    const [showRightIcon,showLeftIcon] = useState(false);
+    const [rightIconName,leftIconName] =useState(false);
     function handleErrorField() {
       if (password != confirmpassword) {
         setMatchPass(false);
@@ -97,6 +101,7 @@ import {
 
     async function Validate() {
       try {
+        setLoaderVisible(true);
         const authToken = await getItem(ASYNC_KEY.auth);
         const header = {
           headers: {
@@ -137,9 +142,13 @@ import {
       catch(e) {
         console.log('catch error',e)
       }
+      finally {
+        setLoaderVisible(false);
+      }
     }
     return (
       <SafeAreaView>
+        <Loader animating={loadervisible} />
          {modalVisible ? (
           <CommonModal
             modalVisible={modalVisible}
@@ -185,6 +194,41 @@ import {
           }}
           defaultValue={currentPassword}
           secureTextEntry={!secureTextEntry ? false : true}
+
+          // right={
+          //   showRightIcon ? (
+          //     <TextInput.Icon
+          //       icon={rightIconName}
+          //       color={'#CCCFD5'}
+          //       style={{
+          //         top: '15%',
+          //       }}
+          //       size={RFValue(16)}
+          //     />
+          //   ) : null
+          // }
+          // left={
+          //   showLeftIcon ? (
+          //     <TextInput.Icon
+          //       icon={leftIconName}
+          //       color={'#CCCFD5'}
+          //       style={{
+          //         top: '15%',
+          //       }}
+          //       size={RFValue(16)}
+          //     />
+          //   ) : null
+          // }
+
+          right={
+            <TextInput.Icon
+              name={!secureTextEntry ? 'eye' : 'eye-off'}
+              onPress={() => {
+                setSecureTextEntry(!secureTextEntry);
+              }}
+            />
+          }
+          
         />
         <Text
           style={{
@@ -228,6 +272,14 @@ import {
           }}
           defaultValue={password}
           secureTextEntry={!secureTextEntry ? false : true}
+          right={
+            <TextInput.Icon
+              name={!secureTextEntry ? 'eye' : 'eye-off'}
+              onPress={() => {
+                setSecureTextEntry(!secureTextEntry);
+              }}
+            />
+          }
         />
         <Text
           style={{
@@ -274,6 +326,14 @@ import {
           }}
           defaultValue={confirmpassword}
           secureTextEntry={!secureTextEntry ? false : true}
+          right={
+            <TextInput.Icon
+              name={!secureTextEntry ? 'eye' : 'eye-off'}
+              onPress={() => {
+                setSecureTextEntry(!secureTextEntry);
+              }}
+            />
+          }
         />
         <Text
           style={{

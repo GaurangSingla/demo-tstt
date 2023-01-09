@@ -4,12 +4,12 @@ import {
   Text,
   Image,
   StyleSheet,
-  TextInput,
   TouchableOpacity,
   Dimensions,
   SafeAreaView,
   Pressable,
 } from 'react-native';
+import { TextInput } from 'react-native-paper';
 import PhoneInput from 'react-native-phone-number-input';
 import {ProfileService} from '../ProfileService';
 // import {Profile} from 'react-native-fbsdk-next';
@@ -271,14 +271,14 @@ const Login = ({navigation}) => {
           }}
           defaultValue={password}
           secureTextEntry={!secureTextEntry ? false : true}
-          // right={
-          //   <TextInput.Icon
-          //     name={!secureTextEntry ? 'eye' : 'eye-off'}
-          //     onPress={() => {
-          //       setSecureTextEntry(!secureTextEntry);
-          //     }}
-          //   />
-          // }
+          right={
+            <TextInput.Icon
+              name={!secureTextEntry ? 'eye' : 'eye-off'}
+              onPress={() => {
+                setSecureTextEntry(!secureTextEntry);
+              }}
+            />
+          }
         />
 
         <Text
