@@ -12,8 +12,8 @@ import {
 } from 'react-native';
 import PhoneInput from 'react-native-phone-number-input';
 import {ProfileService} from '../ProfileService';
-import {Profile} from 'react-native-fbsdk-next';
-import {useDispatch} from 'react-redux';
+// import {Profile} from 'react-native-fbsdk-next';
+import {useDispatch,useSelector} from 'react-redux';
 import {login, fbcred} from '../redux/actions/action';
 import CommonModal from '../Modal/Modal';
 import {
@@ -41,6 +41,9 @@ const Login = ({navigation}) => {
     requestUserPermission();
     notificationListener();
   }, []);
+  const storeData = useSelector(state => state
+    );
+  
 
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [password, setPassword] = useState();
@@ -88,7 +91,7 @@ const Login = ({navigation}) => {
   useEffect(() => {
     if (isFocused) {
       multiRemove(asyncKeys);
-      currentProfile;
+      // currentProfile;
     }
 
     // printKeys();
@@ -99,13 +102,13 @@ const Login = ({navigation}) => {
   //   })
   //  })
 
-  const currentProfile = Profile.getCurrentProfile().then(function (
-    currentProfile,
-  ) {
-    if (currentProfile) {
-      dispatch(fbcred(currentProfile.name));
-    }
-  });
+  // const currentProfile = Profile.getCurrentProfile().then(function (
+  //   currentProfile,
+  // ) {
+  //   if (currentProfile) {
+  //     // dispatch(fbcred(currentProfile.name));
+  //   }
+  // });
   const dispatch = useDispatch();
   async function hitApi() {
     let args = {
@@ -157,79 +160,6 @@ const Login = ({navigation}) => {
       setLoaderVisible(false);
     }
   }
-  async function googleHit(args) {
-    console.log('args value', args);
-    try {
-      const response = await ProfileService.googleLogin(args);
-      // console.log('GoogleHit Response::::: ' + JSON.stringify(response));
-      // if(response.data.success) {
-      //   navigation.navigate('Tab_navi')
-
-      // }
-      // if (response.data.success) {
-      //   if (!response.data.result.token) {
-      //     googleHit(args);
-      //   }
-      // else {
-      //     await setItem(ASYNC_KEY.auth, 'Bearer ' + response.data.result.token);
-      //     await setItem(ASYNC_KEY.googleIdToken, args.token);
-      //     ProfileApi(async () => {
-      //       navigation.reset({
-      //         index: 0,
-      //         routes: [{name: 'TabNavigation'}],
-      //       });
-      //     });
-      //     await setItem(ASYNC_KEY.loginMethod, 'google');
-      //     checked ? await setItem(ASYNC_KEY.LOGGEDIN, 'true') : null;
-      //   }
-      // } else {
-      //   setAlertBody({
-      //     dialogBoxType: 'Error',
-      //     headerText: 'Error',
-      //     messageText: response.data.message,
-      //   });
-      //   setshowAlertDialog(true);
-      // }
-    } catch (e) {
-      // if (e?.response?.status == 406) {
-      //   versionUpdate(
-      //     e?.response?.data?.result?.updateAndroidAppURL,
-      //     e?.response?.data?.result?.updateIosAppURL,
-      //   );
-      // } else {
-      //   throw new Error(e.message);
-      // }
-      console.log('googleerror', e);
-    }
-  }
-  const signinwithgoogle = async () => {
-    try {
-      var googleAuthenticated = await GoogleAuth.login();
-      console.log('google Authentication login screen ', googleAuthenticated);
-      if (googleAuthenticated) {
-        const args = {
-          token: googleAuthenticated.idToken,
-        };
-        await googleHit(args);
-      } else {
-        console.log('error else');
-
-        setAlertBody({
-          dialogBoxType: 'Error',
-          headerText: 'Error',
-          messageText: 'Something Went Wrong',
-        });
-      }
-    } catch (e) {
-      console.log('error catch ' + e.message);
-      setAlertBody({
-        dialogBoxType: 'Error',
-        headerText: 'Error',
-        messageText: 'Something Went Wrong',
-      });
-    }
-  };
-
   function handleErrorField() {
     const phonevalid = validatePhone();
     const passwordvalid = validatePassword();
@@ -252,7 +182,7 @@ const Login = ({navigation}) => {
     return true;
   }
 
-  let dimensions = Dimensions.get('window');
+  // let dimensions = Dimensions.get('window');
   return (
     <View>
       <SafeAreaView style={{flex: 1}}>
@@ -315,7 +245,7 @@ const Login = ({navigation}) => {
           {!usrNameValid ? 'Phone Number is required' : ' '}
         </Text>
 
-        {/* <TextInput
+        <TextInput
           style={{
             backgroundColor: 'white',
             fontSize: RFValue(15),
@@ -341,15 +271,15 @@ const Login = ({navigation}) => {
           }}
           defaultValue={password}
           secureTextEntry={!secureTextEntry ? false : true}
-          right={
-            <TextInput.Icon
-              name={!secureTextEntry ? 'eye' : 'eye-off'}
-              onPress={() => {
-                setSecureTextEntry(!secureTextEntry);
-              }}
-            />
-          }
-        /> */}
+          // right={
+          //   <TextInput.Icon
+          //     name={!secureTextEntry ? 'eye' : 'eye-off'}
+          //     onPress={() => {
+          //       setSecureTextEntry(!secureTextEntry);
+          //     }}
+          //   />
+          // }
+        />
 
         <Text
           style={{
@@ -464,9 +394,7 @@ const Login = ({navigation}) => {
               marginLeft: RFValue(10),
               marginRight: RFValue(5),
             }}
-            onPress={() => {
-              signinwithgoogle();
-            }}>
+            >
             <View
               style={{
                 flex: 1,

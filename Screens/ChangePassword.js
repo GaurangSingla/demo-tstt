@@ -9,13 +9,23 @@ import {
   } from 'react-native';
   import React, {useState} from 'react';
   import {RFValue} from 'react-native-responsive-fontsize';
+  import {setItem, getItem} from '../utils/StorageHandling';
+  import CommonModal from '../Modal/Modal';
+  import {
+    ASYNC_KEY,
+    DRAWER_CONTENT,
+    TRANSACTION_HISTORY,
+    ADD_CARD_ALERT,
+  } from '../utils/string';
   import {
     responsiveHeight,
     responsiveScreenHeight,
     responsiveScreenWidth,
     responsiveWidth,
   } from 'react-native-responsive-dimensions';
-  const ChangePassword = () => {
+  import { ProfileService } from '../ProfileService';
+  const ChangePassword = ({navigation}) => {
+    const [modalVisible, setModalVisible] = useState(false);
     const [secureTextEntry, setSecureTextEntry] = useState(true);
     const [password, setPassword] = useState();
     const [passValid, setPassValid] = useState(true);
@@ -24,6 +34,29 @@ import {
     const [matchPass, setMatchPass] = useState(true);
     const [currentPassword, setCurrentPassword] = useState();
     const [currentValid, setCurrentValid] = useState(true);
+    const asyncKeys = [
+      ADD_CARD_ALERT.CARDS,
+      ASYNC_KEY.LOGGEDIN,
+      ASYNC_KEY.auth,
+      ASYNC_KEY.token,
+      ASYNC_KEY.loginMethod,
+      TRANSACTION_HISTORY.txnHistory,
+      DRAWER_CONTENT.names,
+      DRAWER_CONTENT.mobileNumber,
+      ASYNC_KEY.MOBILE,
+      ASYNC_KEY.Promo_Api_Response,
+      ASYNC_KEY.MOBILE_VISIBLE,
+      ASYNC_KEY.ACCOUNTS,
+      ASYNC_KEY.USER_PROFILE_DATA,
+      ASYNC_KEY.LOGGEDIN_CREDS,
+    ];
+    const [alertBody, setAlertBody] = useState({
+      dialogBoxType: '',
+      headerText: '',
+      messageText: '',
+      confirmationFunction: null,
+    });
+    const [showAlertDialog, setshowAlertDialog] = useState(false);
     function handleErrorField() {
       if (password != confirmpassword) {
         setMatchPass(false);
@@ -34,6 +67,9 @@ import {
       // }
       const confirmvalid = validateConfirmPassword();
       const currentvalid = validateCurrentPassword();
+      if(passwordvalid && confirmvalid && currentvalid){
+        Validate();
+      }
     }
     function validateConfirmPassword() {
       if (!confirmpassword || confirmpassword == '') {
@@ -58,8 +94,61 @@ import {
       }
       return true;
     }
+
+    async function Validate() {
+      try {
+        const authToken = await getItem(ASYNC_KEY.auth);
+        const header = {
+          headers: {
+            Authorization: authToken,
+          },
+        };
+        const args = {
+          currentPassword: currentPassword,
+          newPassword: password,
+        };
+        console.log(JSON.stringify(args) + ' : ' + JSON.stringify(header));
+        const response = await ProfileService.userChangePassword(args, header);
+        console.log('msgs',response)
+        if (response.data.success == true) {
+          console.log('hhhhh',response.data)
+          setAlertBody({
+            dialogBoxType: 'Success',
+            headerText: '',
+            messageText: response.data.message,
+            confirmationFunction: () => {
+              navigation.navigate('Profile');
+              setModalVisible(false);
+            },
+          });
+          setModalVisible(true);
+        } else {
+          setAlertBody({
+            dialogBoxType: 'Error',
+            headerText: 'Error',
+            messageText: response.data.message,
+            confirmationFunction: () => {
+              setModalVisible(false);
+            },
+          });
+          setModalVisible(true);
+        }
+      }
+      catch(e) {
+        console.log('catch error',e)
+      }
+    }
     return (
       <SafeAreaView>
+         {modalVisible ? (
+          <CommonModal
+            modalVisible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(false);
+            }}
+            alertBody={alertBody}
+          />
+        ) : null}
         <Image
           style={{
             height: '100%',
@@ -225,7 +314,9 @@ import {
         </TouchableOpacity>
         <TouchableOpacity
           style={{alignItems: 'center', justifyContent: 'center', top: '38%'}}>
-          <Text style={{color: '#00E556', fontWeight: 'bold'}}>Cancel</Text>
+          <Text style={{color: '#00E556', fontWeight: 'bold'}}
+          onPress={() => navigation.navigate('Profile')}
+          >Cancel</Text>
         </TouchableOpacity>
       </SafeAreaView>
     );

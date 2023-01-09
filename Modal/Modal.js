@@ -39,7 +39,11 @@ const CommonModal = ({modalVisible, alertBody, onRequestClose}) => {
             <Text style={{bottom: '80%'}}> {alertBody.messageText} </Text>
             <Pressable
               style={[styles.button, styles.buttonClose]}
-              onPress={onRequestClose}>
+              onPress={
+                alertBody && alertBody.confirmationFunction
+                  ? alertBody.confirmationFunction
+                  : onRequestClose
+              }>
               <Text style={styles.textStyle}>OK</Text>
             </Pressable>
           </View>
@@ -103,7 +107,8 @@ const CommonModal = ({modalVisible, alertBody, onRequestClose}) => {
                     padding: 12,
                   }}>
                   {'        TTD '}
-                  {alertBody.amount}{".00"}
+                  {alertBody.amount}
+                  {'.00'}
                 </Text>
               </View>
               <View
@@ -147,9 +152,10 @@ const CommonModal = ({modalVisible, alertBody, onRequestClose}) => {
                   }}>
                   Total Amount
                 </Text>
-                <Text style={{padding: 12,color:'#00E556'}}>
+                <Text style={{padding: 12, color: '#00E556'}}>
                   {'        TTD '}
-                  {alertBody.amount}{".00"}
+                  {alertBody.amount}
+                  {'.00'}
                 </Text>
               </View>
             </View>
@@ -172,7 +178,8 @@ const CommonModal = ({modalVisible, alertBody, onRequestClose}) => {
                 onPress={onRequestClose}>
                 <Text style={{fontSize: 20, color: 'black'}}>Cancel</Text>
               </Pressable>
-              <Pressable onPress={alertBody.handlerFunction}
+              <Pressable
+                onPress={alertBody.handlerFunction}
                 style={{
                   backgroundColor: '#00E556',
                   height: 45,

@@ -2,10 +2,8 @@ import {View, Text, SafeAreaView, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 const Paymentsuccess = ({navigation}) => {
-  const storeData = useSelector(state => {
-    console.log(state);
-    return state;
-  });
+  const storeData = useSelector(state => state
+  );
 
   return (
     <SafeAreaView>

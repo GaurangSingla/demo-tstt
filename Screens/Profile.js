@@ -7,10 +7,9 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
-import LinearGradient from 'react-native-linear-gradient';
 import {ProfileService} from '../Services.js/LoginService';
-import {fbcred} from '../redux/actions/action';
 import Loader from '../ActivityIndicator/Activityindicator';
+import ChangePassword from '../Screens/ChangePassword';
 import { useSelector} from 'react-redux';
 import {
   setItem,
@@ -219,7 +218,9 @@ const Profile = ({navigation}) => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={{flexDirection: 'row', height: 60, width: '80%'}}>
+              style={{flexDirection: 'row', height: 60, width: '80%'}}
+              onPress={() =>navigation.navigate('ChangePassword')}
+              >
               <Image
                 style={{
                   height: 42,
