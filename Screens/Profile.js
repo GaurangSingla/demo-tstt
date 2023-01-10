@@ -70,7 +70,7 @@ const Profile = ({navigation}) => {
             style={{
               backgroundColor: '#00E556',
               width: responsiveWidth(95),
-              height: responsiveHeight(28),
+              height: responsiveHeight(18),
               flex: 1,
               marginTop: 10,
               borderRadius: 15,
@@ -81,7 +81,7 @@ const Profile = ({navigation}) => {
               <Image
                 style={{
                   height: responsiveHeight(8.5),
-                  width: responsiveWidth(14),
+                  width: responsiveWidth(17),
                 }}
                 source={require('../assets/Profile1.png')}
               />
@@ -101,6 +101,7 @@ const Profile = ({navigation}) => {
                 style={{
                   backgroundColor: '#5EC674',
                   width: '26%',
+                  left:'100%',
                   height: responsiveHeight(8),
                   width: responsiveWidth(35),
                   justifyContent: 'center',

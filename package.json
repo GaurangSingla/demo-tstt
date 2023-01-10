@@ -32,7 +32,6 @@
     "react": "18.1.0",
     "react-native": "0.70.6",
     "react-native-animated-dots-carousel": "^1.0.2",
-    "react-native-appearance": "^0.3.4",
     "react-native-axios": "^0.17.1",
     "react-native-calendars": "^1.1291.1",
     "react-native-country-codes-picker": "^2.2.0",
