@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import {SCREEN_ROUTE_MAPPING, ASYNC_KEY} from '../utils/string';
 import {setItem, getItem} from '../utils/StorageHandling';
+import {useTheme} from '@react-navigation/native';
 import * as Yup from 'yup';
 import PhoneInput from 'react-native-phone-number-input';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -29,6 +30,7 @@ import Transaction from './Transaction';
 import {SafeAreaView} from 'react-native-safe-area-context';
 const SignUpScreen = ({navigation}) => {
   const [date, setDate] = useState(new Date(1598051730000));
+  const {colors} = useTheme();
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [name, setName] = useState('');
@@ -78,7 +80,6 @@ const SignUpScreen = ({navigation}) => {
           phone: number,
           selectedCountry: '91',
         });
-      
       } else {
         console.log('wrong crentials');
         setAlertBody({
@@ -196,13 +197,26 @@ const SignUpScreen = ({navigation}) => {
           alertBody={alertBody}></CommonModal>
       ) : null}
 
-      <KeyboardAvoidingView style={{backgroundColor: 'white'}}>
-        <View style={{alignSelf: 'center'}}>
+      <KeyboardAvoidingView
+        style={{
+          backgroundColor: colors.background == '#171717' ? '#2E2F2F' : 'white',
+        }}>
+        <View
+          style={{
+            alignSelf: 'center',
+            backgroundColor:
+              colors.background == '#171717' ? '#2E2F2F' : 'white',
+          }}>
           <Image
             style={{width: 260, height: 90, resizeMode: 'cover'}}
             source={require('../src/assets/bmobilsecurity.png')}></Image>
         </View>
-        <View style={styles.wrapper}>
+        <View
+          style={{
+            ...styles.wrapper,
+            backgroundColor:
+              colors.background == '#171717' ? '#2E2F2F' : 'white',
+          }}>
           <Text
             style={{
               textAlign: 'center',

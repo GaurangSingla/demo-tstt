@@ -16,6 +16,7 @@ import {ProfileService} from '../ProfileService';
 import {useDispatch, useSelector} from 'react-redux';
 import {login, fbcred} from '../redux/actions/action';
 import CommonModal from '../Modal/Modal';
+import {useTheme} from '@react-navigation/native';
 import {
   ASYNC_KEY,
   DRAWER_CONTENT,
@@ -85,7 +86,7 @@ const Login = ({navigation}) => {
   });
   const [emptyPassword, setEmptyPassword] = useState(false);
   const [emptyPhone, setEmptyPhone] = useState(false);
-
+  const {colors} = useTheme();
   useEffect(() => {
     if (isFocused) {
       multiRemove(asyncKeys);
@@ -203,7 +204,12 @@ const Login = ({navigation}) => {
           }}
           source={require('../src/assets/babyChild.jpg')}
         />
-        <View style={styles.container}>
+        <View
+          style={{
+            ...styles.container,
+            backgroundColor:
+              colors.background == '#171717' ? '#2E2F2F' : 'white',
+          }}>
           <Text style={styles.txt}>
             Welcome To <Text style={styles.clr}>bMobile</Text>
           </Text>
@@ -323,7 +329,7 @@ const Login = ({navigation}) => {
               }}></Pressable>
             <Text
               style={{
-                color: 'black',
+                color: colors.background == '#171717' ? 'white' : 'black',
                 marginLeft: RFValue(2),
                 fontSize: RFValue(15),
                 left: RFValue(4),
@@ -335,7 +341,7 @@ const Login = ({navigation}) => {
             <TouchableOpacity>
               <Text
                 style={{
-                  color: 'black',
+                  color: colors.background == '#171717' ? 'white' : 'black',
                   textDecorationLine: 'underline',
                   fontSize: RFValue(15),
                   right: RFValue(18),
@@ -346,7 +352,7 @@ const Login = ({navigation}) => {
           </View>
         </View>
         <TouchableOpacity
-          style={{alignContent: 'center', bottom: RFValue(17)}}
+          style={{alignContent: 'center', bottom: RFValue(5)}}
           onPress={() => {
             handleErrorField();
           }}>
@@ -357,7 +363,7 @@ const Login = ({navigation}) => {
           style={{
             flex: 1,
             position: 'absolute',
-            bottom: RFValue(-550),
+            bottom: RFValue(-555),
             alignSelf: 'center',
           }}>
           <Text
@@ -384,11 +390,11 @@ const Login = ({navigation}) => {
               flexDirection: 'row',
               borderColor: 'orange',
               borderWidth: RFValue(1),
-              height: responsiveHeight(8),
-              width: responsiveWidth(43),
+              height: responsiveHeight(6),
+              width: responsiveWidth(44),
               borderRadius: RFValue(10),
               justifyContent: 'center',
-              top: RFValue(80),
+              top: RFValue(86),
               marginLeft: RFValue(10),
               marginRight: RFValue(5),
             }}>
@@ -411,8 +417,8 @@ const Login = ({navigation}) => {
 
               <Text
                 style={{
-                  fontSize: RFValue(14),
-                  color: '#4D4848',
+                  fontSize: RFValue(13),
+                  color: colors.background == '#171717' ? 'white' : 'black',
                   marginVertical: RFValue(12),
                   marginLeft: RFValue(5),
                 }}>
@@ -426,13 +432,13 @@ const Login = ({navigation}) => {
               flexDirection: 'row',
               borderWidth: RFValue(1),
               borderColor: 'blue',
-              height: responsiveHeight(8),
-              width: responsiveWidth(43),
+              height: responsiveHeight(6),
+              width: responsiveWidth(45),
               borderRadius: RFValue(10),
               marginRight: RFValue(10),
               marginLeft: RFValue(5),
               justifyContent: 'center',
-              top: RFValue(80),
+              top: RFValue(86),
             }}>
             <View
               style={{
@@ -453,8 +459,8 @@ const Login = ({navigation}) => {
 
               <Text
                 style={{
-                  fontSize: RFValue(14),
-                  color: '#4D4848',
+                  fontSize: RFValue(13),
+                  color: colors.background == '#171717' ? 'white' : 'black',
                   marginLeft: RFValue(10),
                   top: RFValue(5),
                 }}>
