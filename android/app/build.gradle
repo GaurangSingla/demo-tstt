@@ -213,7 +213,15 @@ android {
             include (*reactNativeArchitectures())
         }
     }
-    signingConfigs {
+         signingConfigs {
+        release {
+            if (project.hasProperty('MYAPP_UPLOAD_STORE_FILE')) {
+                storeFile file(MYAPP_UPLOAD_STORE_FILE)
+                storePassword MYAPP_UPLOAD_STORE_PASSWORD
+                keyAlias MYAPP_UPLOAD_KEY_ALIAS
+                keyPassword MYAPP_UPLOAD_KEY_PASSWORD
+            }
+        }
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'
@@ -221,6 +229,7 @@ android {
             keyPassword 'android'
         }
     }
+   
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
@@ -228,7 +237,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -255,6 +264,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:11.1.0'
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation platform('com.google.firebase:firebase-bom:31.1.0')
+    implementation "com.android.support:appcompat-v7:23.0.1"
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
     //  classpath 'com.google.gms:google-services:4.3.13'
