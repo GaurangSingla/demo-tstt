@@ -6,28 +6,31 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {ProfileService} from '../Services.js/LoginService';
 import Loader from '../ActivityIndicator/Activityindicator';
+import {useTheme} from '@react-navigation/native';
+import {EventRegister} from 'react-native-event-listeners';
 import ChangePassword from '../Screens/ChangePassword';
-import { useSelector} from 'react-redux';
-import {
-  setItem,
-  getItem,
-} from '../utils/StorageHandling';
-import {
-  ASYNC_KEY,
-
-} from '../utils/string';
+import {useSelector} from 'react-redux';
+import {setItem, getItem} from '../utils/StorageHandling';
+import {ASYNC_KEY} from '../utils/string';
 import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import {RFValue} from 'react-native-responsive-fontsize';
 const Profile = ({navigation}) => {
-  
-  const storeData = useSelector(state =>state );
+  const [switchTheme, setSwitchTheme] = useState(true);
+  const {colors} = useTheme();
+  // const [connected, setConnected] = useState(true);
+  // const [darkThemeSelected, setDarkThemeSelected] = useState(useTheme().dark);
+  const storeData = useSelector(state => state);
   const [loadervisible, setLoaderVisible] = useState(false);
+  // useEffect(() => {
+  //   setSwitchTheme(colors.background == '#171717' ? true : false);
+  //   setDarkThemeSelected(colors.background == '#171717' ? true : false);
+  // });
   async function logouttime() {
     try {
       setLoaderVisible(true);
@@ -52,7 +55,10 @@ const Profile = ({navigation}) => {
       setLoaderVisible(false);
     }
   }
-
+  const navigationSwitchTheme = () => {
+    EventRegister.emit('changeTheme', !switchTheme);
+    console.log('colours', colors.background == '#171717' ? 'white' : 'black');
+  };
   return (
     <SafeAreaView>
       <ScrollView
@@ -82,12 +88,14 @@ const Profile = ({navigation}) => {
               <Text
                 style={{
                   marginHorizontal: RFValue(10),
-                  marginTop:RFValue(5),
+                  marginTop: RFValue(5),
                   color: 'white',
                   fontWeight: 'bold',
                   fontSize: RFValue(20),
                 }}>
-                {storeData.credfb.name}{'\n'}{storeData.credfb.phonenumber}
+                {storeData.credfb.name}
+                {'\n'}
+                {storeData.credfb.phonenumber}
               </Text>
               <TouchableOpacity
                 style={{
@@ -114,7 +122,8 @@ const Profile = ({navigation}) => {
           </View>
           <View
             style={{
-              backgroundColor: 'white',
+              backgroundColor:
+                colors.background == '#171717' ? '#2E2F2F' : 'white',
               width: '95%',
               height: 540,
               marginLeft: 10,
@@ -132,7 +141,12 @@ const Profile = ({navigation}) => {
                 }}
                 source={require('../assets/manageAccount.png')}
               />
-              <Text style={{marginLeft: 15, color: '#4D4848', marginTop: 25}}>
+              <Text
+                style={{
+                  marginLeft: 15,
+                  color: colors.background == '#171717' ? 'white' : 'black',
+                  marginTop: 25,
+                }}>
                 Manage Account
               </Text>
             </TouchableOpacity>
@@ -148,7 +162,12 @@ const Profile = ({navigation}) => {
                 }}
                 source={require('../assets/Recharge.png')}
               />
-              <Text style={{marginLeft: 15, color: '#4D4848', marginTop: 25}}>
+              <Text
+                style={{
+                  marginLeft: 15,
+                  color: colors.background == '#171717' ? 'white' : 'black',
+                  marginTop: 25,
+                }}>
                 Recharge
               </Text>
             </TouchableOpacity>
@@ -164,7 +183,12 @@ const Profile = ({navigation}) => {
                 }}
                 source={require('../assets/manageAccount.png')}
               />
-              <Text style={{marginLeft: 15, color: '#4D4848', marginTop: 25}}>
+              <Text
+                style={{
+                  marginLeft: 15,
+                  color: colors.background == '#171717' ? 'white' : 'black',
+                  marginTop: 25,
+                }}>
                 Pay Bills
               </Text>
             </TouchableOpacity>
@@ -180,7 +204,12 @@ const Profile = ({navigation}) => {
                 }}
                 source={require('../assets/Transaction_History.png')}
               />
-              <Text style={{marginLeft: 15, color: '#4D4848', marginTop: 25}}>
+              <Text
+                style={{
+                  marginLeft: 15,
+                  color: colors.background == '#171717' ? 'white' : 'black',
+                  marginTop: 25,
+                }}>
                 Transaction History
               </Text>
             </TouchableOpacity>
@@ -196,13 +225,21 @@ const Profile = ({navigation}) => {
                 }}
                 source={require('../assets/Servicelocator.png')}
               />
-              <Text style={{marginLeft: 15, color: '#4D4848', marginTop: 25}}>
+              <Text
+                style={{
+                  marginLeft: 15,
+                  color: colors.background == '#171717' ? 'white' : 'black',
+                  marginTop: 25,
+                }}>
                 Service Store Locator
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={{flexDirection: 'row', height: 60, width: '80%'}}>
+              style={{flexDirection: 'row', height: 60, width: '80%'}}
+              onPress={() => {
+                setSwitchTheme(!switchTheme), navigationSwitchTheme();
+              }}>
               <Image
                 style={{
                   height: 42,
@@ -212,15 +249,19 @@ const Profile = ({navigation}) => {
                 }}
                 source={require('../assets/Switch_Theme.png')}
               />
-              <Text style={{marginLeft: 15, color: '#4D4848', marginTop: 25}}>
+              <Text
+                style={{
+                  marginLeft: 15,
+                  color: colors.background == '#171717' ? 'white' : 'black',
+                  marginTop: 25,
+                }}>
                 Switch Theme
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={{flexDirection: 'row', height: 60, width: '80%'}}
-              onPress={() =>navigation.navigate('ChangePassword')}
-              >
+              onPress={() => navigation.navigate('ChangePassword')}>
               <Image
                 style={{
                   height: 42,
@@ -230,7 +271,12 @@ const Profile = ({navigation}) => {
                 }}
                 source={require('../assets/changepassword.png')}
               />
-              <Text style={{marginLeft: 15, color: '#4D4848', marginTop: 25}}>
+              <Text
+                style={{
+                  marginLeft: 15,
+                  color: colors.background == '#171717' ? 'white' : 'black',
+                  marginTop: 25,
+                }}>
                 Change Password
               </Text>
             </TouchableOpacity>
@@ -246,7 +292,12 @@ const Profile = ({navigation}) => {
                 }}
                 source={require('../assets/manageAccount.png')}
               />
-              <Text style={{marginLeft: 15, color: '#4D4848', marginTop: 25}}>
+              <Text
+                style={{
+                  marginLeft: 15,
+                  color: colors.background == '#171717' ? 'white' : 'black',
+                  marginTop: 25,
+                }}>
                 FAQ's
               </Text>
             </TouchableOpacity>

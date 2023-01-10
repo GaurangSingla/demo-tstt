@@ -1,4 +1,4 @@
-import React, {useState, useRef,useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
   View,
   Text,
@@ -9,11 +9,11 @@ import {
   SafeAreaView,
   Pressable,
 } from 'react-native';
-import { TextInput } from 'react-native-paper';
+import {TextInput} from 'react-native-paper';
 import PhoneInput from 'react-native-phone-number-input';
 import {ProfileService} from '../ProfileService';
 // import {Profile} from 'react-native-fbsdk-next';
-import {useDispatch,useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {login, fbcred} from '../redux/actions/action';
 import CommonModal from '../Modal/Modal';
 import {
@@ -22,7 +22,7 @@ import {
   TRANSACTION_HISTORY,
   ADD_CARD_ALERT,
 } from '../utils/string';
-import { useIsFocused } from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 import {setItem, getItem, multiRemove} from '../utils/StorageHandling';
 import {
   requestUserPermission,
@@ -41,9 +41,7 @@ const Login = ({navigation}) => {
     requestUserPermission();
     notificationListener();
   }, []);
-  const storeData = useSelector(state => state
-    );
-  
+  const storeData = useSelector(state => state);
 
   const [secureTextEntry, setSecureTextEntry] = useState(true);
   const [password, setPassword] = useState();
@@ -393,8 +391,7 @@ const Login = ({navigation}) => {
               top: RFValue(80),
               marginLeft: RFValue(10),
               marginRight: RFValue(5),
-            }}
-            >
+            }}>
             <View
               style={{
                 flex: 1,

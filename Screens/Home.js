@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Carousel from 'pinar';
-import Listhorizontal from './Listhorizontal';
 import {
   responsiveHeight,
   responsiveScreenHeight,
