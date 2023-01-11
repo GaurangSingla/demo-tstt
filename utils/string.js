@@ -64,6 +64,7 @@ export const MANAGE_SCREEN = {
     NotificationFlag: 'Flag',
     LOOKUP: 'Lookup key',
     WELCOME_SCREEN_VISITED: 'Welcome Screen',
+    LIGHTTHEMESELECTED:'ChangedTheme',
     SELECTED_THEME:'Selected Theme',
     LOGGEDIN:'is Logged in',
     LOGGEDIN_CREDS:'LoginCredentials',
