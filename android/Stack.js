@@ -1,10 +1,10 @@
 import {View, Text, Image, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Login from '../Screens/Login';
 import SignUpScreen from '../Screens/SignUpScreen';
 import Tab_navi from './Tab_navi';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Welcome from '../Screens/Welcome';
 import CardDetails from '../Screens/CardDetails';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -22,7 +22,9 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
+import {ASYNC_KEY} from '../utils/string';
 const Stack = createNativeStackNavigator();
+
 function ActionBarIcon() {
   return (
     <Image
@@ -56,9 +58,11 @@ function ActionBarIcon2() {
       source={require('../assets/toplogo.jpeg')}></Image>
   );
 }
-const Stacks = () => {
+
+const Stacks = ({initialScreen}) => {
+  console.log(initialScreen);
   return (
-    <Stack.Navigator initialRouteName="Welcome">
+    <Stack.Navigator initialRouteName={initialScreen}>
       <Stack.Screen
         name="Welcome"
         component={Welcome}
@@ -69,7 +73,7 @@ const Stacks = () => {
         component={Login}
         options={{headerShown: false}}
       />
-<Stack.Screen
+      <Stack.Screen
         name="ChangePassword"
         component={ChangePassword}
         options={{headerShown: false}}

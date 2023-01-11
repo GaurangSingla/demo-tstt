@@ -22,3 +22,4 @@ export async function getAllKeys() {
   const keys= await AsyncStorage.getAllKeys();
   console.log(keys);
 }
+

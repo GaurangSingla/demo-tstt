@@ -11,6 +11,7 @@ import {ProfileService} from '../Services.js/LoginService';
 import Loader from '../ActivityIndicator/Activityindicator';
 import {useTheme} from '@react-navigation/native';
 import {EventRegister} from 'react-native-event-listeners';
+import {fbcred} from '../redux/actions/action';
 import ChangePassword from '../Screens/ChangePassword';
 import {useSelector} from 'react-redux';
 import {setItem, getItem} from '../utils/StorageHandling';
@@ -20,6 +21,7 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import {RFValue} from 'react-native-responsive-fontsize';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Profile = ({navigation}) => {
   const [switchTheme, setSwitchTheme] = useState(true);
   const {colors} = useTheme();
@@ -44,6 +46,8 @@ const Profile = ({navigation}) => {
       const response = await ProfileService.logout(header);
       console.log('singla', response);
       if (response.data.success) {
+        AsyncStorage.removeItem(ASYNC_KEY.auth);
+        await setItem(ASYNC_KEY.LOGGEDIN, 'false');
         navigation.reset({
           index: 0,
           routes: [{name: 'Login'}],
