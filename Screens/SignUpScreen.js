@@ -270,7 +270,7 @@ const SignUpScreen = ({navigation}) => {
                       },
                     ]}>
                     <TextInput
-                      style={styles.inputFieldText}
+                      style={{...styles.inputFieldText,backgroundColor:colors.background == '#171717' ? '#FFFFFF' : 'white'}}
                       placeholder="First Name"
                       label="First Name"
                       placeholderTextColor="#979797"
@@ -302,7 +302,7 @@ const SignUpScreen = ({navigation}) => {
                       },
                     ]}>
                     <TextInput
-                      style={styles.inputFieldText}
+                      style={{...styles.inputFieldText,backgroundColor:colors.background == '#171717' ? '#FFFFFF' : 'white'}}
                       placeholder="last name*"
                       label="Last Name"
                       placeholderTextColor="#979797"
@@ -334,7 +334,7 @@ const SignUpScreen = ({navigation}) => {
                       },
                     ]}>
                     <TextInput
-                      style={styles.inputFieldText}
+                      style={{...styles.inputFieldText,backgroundColor:colors.background == '#171717' ? '#FFFFFF' : 'white'}}
                       placeholder="Date Of Birth"
                       label="Date Of Birth"
                       placeholderTextColor="#979797"
@@ -397,7 +397,7 @@ const SignUpScreen = ({navigation}) => {
                       },
                     ]}>
                     <TextInput
-                      style={styles.inputFieldText}
+                      style={{...styles.inputFieldText,backgroundColor:colors.background == '#171717' ? '#FFFFFF' : 'white'}}
                       label="Email"
                       placeholder="Email"
                       placeholderTextColor="#979797"
@@ -430,7 +430,7 @@ const SignUpScreen = ({navigation}) => {
                       },
                     ]}>
                     <TextInput
-                      style={styles.inputFieldText}
+                      style={{...styles.inputFieldText,backgroundColor:colors.background == '#171717' ? '#FFFFFF' : 'white'}}
                       label="City"
                       placeholder="City"
                       placeholderTextColor="#979797"
@@ -463,7 +463,7 @@ const SignUpScreen = ({navigation}) => {
                       },
                     ]}>
                     <TextInput
-                      style={styles.inputFieldText}
+                      style={{...styles.inputFieldText,backgroundColor:colors.background == '#171717' ? '#FFFFFF' : 'white'}}
                       label="Password"
                       placeholder="Password"
                       placeholderTextColor="#979797"
@@ -505,7 +505,7 @@ const SignUpScreen = ({navigation}) => {
                       },
                     ]}>
                     <TextInput
-                      style={styles.inputFieldText}
+                      style={{...styles.inputFieldText,backgroundColor:colors.background == '#171717' ? '#FFFFFF' : 'white'}}
                       placeholder="Confirm Password"
                       label="Confirm Password"
                       placeholderTextColor="#979797"
@@ -517,10 +517,10 @@ const SignUpScreen = ({navigation}) => {
                         setEmptyConfirmPassword(false);
                       }}
                       defaultValue={confirmpassword}
-                      secureTextEntry={!secureTextEntry ? false : true}
+                      secureTextEntry={!confirmsecureTextEntry ? false : true}
                       right={
                         <TextInput.Icon
-                          name={!secureTextEntry ? 'eye' : 'eye-off'}
+                          name={!confirmsecureTextEntry ? 'eye' : 'eye-off'}
                           onPress={() => {
                             setConfirmsetSecureTextEntry(
                               !confirmsecureTextEntry,
@@ -586,7 +586,7 @@ const styles = StyleSheet.create({
   inputFieldText: {
     fontSize: 15,
     padding: 5,
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     width: '100%',
     borderRadius: 10,
     height: 45,
@@ -597,10 +597,10 @@ const styles = StyleSheet.create({
     color: '#989898',
   },
   inputField: {
-    borderRadius: 4,
+    borderRadius: 3,
     alignSelf: 'center',
     width: '95%',
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
   },
   emailInput: {
     width: 250,

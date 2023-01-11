@@ -450,7 +450,7 @@ const Login = ({navigation}) => {
             position: 'absolute',
             height: responsiveHeight(7),
             width: responsiveWidth(90),
-            top: RFValue(382),
+            top: RFValue(388),
             alignSelf: 'center',
             borderRadius: RFValue(10),
           }}
@@ -507,7 +507,7 @@ const Login = ({navigation}) => {
             <Pressable
               style={{
                 height: responsiveHeight(2.5),
-                width: responsiveWidth(4),
+                width: responsiveWidth(5),
                 backgroundColor: rememberme ? '#00E556' : null,
                 borderWidth: 3,
                 borderColor: '#DEDEDE',
@@ -544,7 +544,7 @@ const Login = ({navigation}) => {
           </View>
         </View>
         <TouchableOpacity
-          style={{alignContent: 'center', bottom: RFValue(5)}}
+          style={{alignContent: 'center'}}
           onPress={() => {
             handleErrorField();  
       // currentProfile
@@ -556,7 +556,7 @@ const Login = ({navigation}) => {
           style={{
             flex: 1,
             position: 'absolute',
-            bottom: RFValue(-555),
+            bottom: RFValue(-562),
             alignSelf: 'center',
           }}>
           <Text
@@ -590,7 +590,7 @@ const Login = ({navigation}) => {
               width: responsiveWidth(44),
               borderRadius: RFValue(10),
               justifyContent: 'center',
-              top: RFValue(86),
+              top: RFValue(93),
               marginLeft: RFValue(10),
               marginRight: RFValue(5),
             }}>
@@ -603,10 +603,10 @@ const Login = ({navigation}) => {
               }}>
               <Image
                 style={{
-                  height: responsiveHeight(5),
+                  height: responsiveHeight(4),
                   width: responsiveWidth(8),
-                  top: RFValue(5),
-                  left: RFValue(5),
+                  top: RFValue(6),
+                  left: RFValue(3),
                 }}
                 source={require('../assets/google.png')}
               />
@@ -635,7 +635,7 @@ const Login = ({navigation}) => {
               marginRight: RFValue(10),
               marginLeft: RFValue(5),
               justifyContent: 'center',
-              top: RFValue(86),
+              top: RFValue(93),
             }}>
             <View
               style={{
@@ -647,11 +647,11 @@ const Login = ({navigation}) => {
               <Image
                 style={{
                   height: responsiveHeight(4.5),
-                  width: responsiveWidth(6),
+                  width: responsiveWidth(8),
 
-                  left: RFValue(5),
+                  left: RFValue(9),
                 }}
-                source={require('../assets/facebook.webp')}
+                source={require('../assets/facebook.png')}
               />
 
               <Text
