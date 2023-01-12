@@ -11,6 +11,9 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Paybill from '../Screens/Paybill';
 import Verify from '../Screens/Verify';
 import Topup from '../Screens/Topup';
+import ManageAccount from '../Screens/ManageAccount';
+import ServiceStoreLocator from '../Screens/ServiceStoreLocator';
+import FAQ from '../Screens/FAQ';
 import Mycards from '../Screens/Mycards';
 import Transaction from '../Screens/Transaction';
 import Addaccount from '../Screens/Addaccount';
@@ -23,6 +26,7 @@ import {
   responsiveWidth,
 } from 'react-native-responsive-dimensions';
 import {ASYNC_KEY} from '../utils/string';
+import ViewProfile from '../Screens/ViewProfile';
 const Stack = createNativeStackNavigator();
 
 function ActionBarIcon() {
@@ -144,6 +148,30 @@ const Stacks = ({initialScreen}) => {
         }}
       />
       <Stack.Screen
+        name="ManageAccount"
+        component={ManageAccount}
+        options={{
+          headerRight: props => <ActionBarIcon1 {...props} />,
+          headerTitle: props => <ActionBarIcon2 {...props} />,
+        }}
+      />
+      <Stack.Screen
+        name="ServiceStoreLocator"
+        component={ServiceStoreLocator}
+        options={{
+          headerRight: props => <ActionBarIcon1 {...props} />,
+          headerTitle: props => <ActionBarIcon2 {...props} />,
+        }}
+      />
+      <Stack.Screen
+        name="FAQ"
+        component={FAQ}
+        options={{
+          headerRight: props => <ActionBarIcon1 {...props} />,
+          headerTitle: props => <ActionBarIcon2 {...props} />,
+        }}
+      />
+      <Stack.Screen
         name="Mycards"
         component={Mycards}
         options={{
@@ -151,7 +179,14 @@ const Stacks = ({initialScreen}) => {
           headerTitle: props => <ActionBarIcon2 {...props} />,
         }}
       />
-
+      <Stack.Screen
+        name="ViewProfile"
+        component={ViewProfile}
+        options={{
+          headerRight: props => <ActionBarIcon1 {...props} />,
+          headerTitle: props => <ActionBarIcon2 {...props} />,
+        }}
+      />
       <Stack.Screen
         name="Transaction"
         component={Transaction}

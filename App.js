@@ -21,12 +21,12 @@ const App = props => {
   const [loadervisible, setLoaderVisible] = useState(false);
   const [check,setCheck]=useState(null);
  
-  getData = async () => {
+  const getData = async () => {
    
     try {
-      const value = await getItem(ASYNC_KEY.auth)
+      const value = await getItem(ASYNC_KEY.LOGGEDIN)
       console.log(value)
-      if(value !== null) {
+      if(value == 'true') {
        
          setCheck("Tab_navi");
       }else{

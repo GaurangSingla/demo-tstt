@@ -34,6 +34,32 @@ const Profile = ({navigation}) => {
   //   setSwitchTheme(colors.background == '#171717' ? true : false);
   //   setDarkThemeSelected(colors.background == '#171717' ? true : false);
   // });
+  const [DOB, setDOB] = React.useState(false);
+  const [city, setCity] = React.useState(false);
+  const [firstName, setFirstName] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
+  const [email, setEmail] = React.useState('');
+  const [phoneNumber, setPhoneNumber] = React.useState('');
+  const [loginMethod,setLoginMethod] = useState('')
+  useEffect(() => {
+    lookupData();
+    // getAccountsDetails();
+  }, []);
+  async function lookupData() {
+      try {
+        const CityJSON = await getItem(ASYNC_KEY.USER_PROFILE_DATA);
+        console.log('viewpeofile',JSON.parse(CityJSON))
+        setLoginMethod(JSON.parse(CityJSON).signUpMethod)
+        setFirstName(JSON.parse(CityJSON).firstName)
+        setLastName(JSON.parse(CityJSON).lastName)
+        setDOB(JSON.parse(CityJSON).dob)
+        setPhoneNumber(JSON.parse(CityJSON).phone)
+        setEmail(JSON.parse(CityJSON).email)
+      }
+      catch(e) {
+        console.log(e)
+      }
+  }
   async function logouttime() {
     try {
       setLoaderVisible(true);
@@ -114,7 +140,9 @@ const Profile = ({navigation}) => {
                   justifyContent: 'center',
                   borderRadius: RFValue(10),
                   marginHorizontal: RFValue(20),
-                }}>
+                }}
+                onPress={() => navigation.navigate('ViewProfile')}
+                >
                 <Text
                   style={{
                     fontSize: RFValue(15),
@@ -123,7 +151,7 @@ const Profile = ({navigation}) => {
                     color: 'white',
                     fontWeight: 'bold',
                   }}>
-                  View Profile
+                  { loginMethod !='MOBILE' ?  `Edit Profile`: `View Profile`}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -139,7 +167,9 @@ const Profile = ({navigation}) => {
               borderRadius: 15,
             }}>
             <TouchableOpacity
-              style={{flexDirection: 'row', height: 60, width: '80%'}}>
+              style={{flexDirection: 'row', height: 60, width: '80%'}}
+              onPress={() => navigation.navigate('ManageAccount')}
+              >
               <Image
                 style={{
                   height: 42,
@@ -160,7 +190,9 @@ const Profile = ({navigation}) => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={{flexDirection: 'row', height: 60, width: '80%'}}>
+              style={{flexDirection: 'row', height: 60, width: '80%'}}
+              onPress={() => navigation.navigate('Topup')}
+              >
               <Image
                 style={{
                   height: 42,
@@ -181,7 +213,9 @@ const Profile = ({navigation}) => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={{flexDirection: 'row', height: 60, width: '80%'}}>
+              style={{flexDirection: 'row', height: 60, width: '80%'}}
+              onPress={() => navigation.navigate('Paybill')}
+              >
               <Image
                 style={{
                   height: 42,
@@ -202,7 +236,9 @@ const Profile = ({navigation}) => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={{flexDirection: 'row', height: 60, width: '80%'}}>
+              style={{flexDirection: 'row', height: 60, width: '80%'}}
+              onPress={() => navigation.navigate('Transaction')}
+              >
               <Image
                 style={{
                   height: 42,
@@ -223,7 +259,9 @@ const Profile = ({navigation}) => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={{flexDirection: 'row', height: 60, width: '80%'}}>
+              style={{flexDirection: 'row', height: 60, width: '80%'}}
+              onPress={() => navigation.navigate('ServiceStoreLocator')}
+              >
               <Image
                 style={{
                   height: 42,
@@ -290,7 +328,9 @@ const Profile = ({navigation}) => {
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={{flexDirection: 'row', height: 60, width: '80%'}}>
+              style={{flexDirection: 'row', height: 60, width: '80%'}}
+              onPress={() => navigation.navigate('FAQ')}
+              >
               <Image
                 style={{
                   height: 42,

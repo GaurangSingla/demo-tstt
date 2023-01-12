@@ -115,6 +115,7 @@ const Login = ({navigation}) => {
 //     // }
 //   }
 // );
+
   async function ProfileApi() {
     try {
       console.log('appppppp');
@@ -141,7 +142,7 @@ const Login = ({navigation}) => {
             console.log('No Account created :::===>>>>>>');
             await setItem(ASYNC_KEY.ACCOUNTS, '');
           }
-
+         
           await setItem(
             ASYNC_KEY.USER_PROFILE_DATA,
             JSON.stringify(response.data.result),
@@ -339,6 +340,7 @@ const Login = ({navigation}) => {
         await setItem(ASYNC_KEY.LOGGEDIN, 'true');
         setData(response.data.result);
         navigation.navigate('Tab_navi');
+        ProfileApi();
       } else {
         console.log('wrong crentials');
         setAlertBody({
